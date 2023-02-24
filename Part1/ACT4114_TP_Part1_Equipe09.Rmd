@@ -51,7 +51,7 @@ Dans le jeu de données se retrouvent trois colonnes contenant des informations 
 
 # Titre 2
 ```{r data import, echo = T}
-data.raw <- read_csv("Flood_California.csv")
+data.raw <- read.csv("Flood_California.csv")
 ```
 
 ```{r data setup, echo = T}
