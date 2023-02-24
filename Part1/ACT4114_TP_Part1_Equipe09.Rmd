@@ -27,11 +27,85 @@ inst <- liste.paquetage %in% installed.packages()
 if(length(liste.paquetage[!inst]) > 0) install.packages(liste.paquetage[!inst])
 
 lapply(liste.paquetage, require, character.only = TRUE)
-
+library(ggplot2)
+library(maps)
+library(mice)
 ```
 
 # Titre 1
 
 ## Sous-titre 1
 
+\section{Sélection des variables}
+
+La première étape du travail a consisté à réduire la dimension du jeu de données. En effet, celui-ci est constitué de 41 variables, dont une bonne partie n'étant pas utiles dans le contecte de l'analyse des montants de réclamation. 
+\newline
+\newline
+Sans effectuer aucune analyse statistique, nous avons jugé adéquat de retirer plusieurs variables du modèle, notamment, toutes les variables contenant beaucoup de valeurs manquantes, comme baseFloodElevation, basementEnclosureCrawlspace, elevationCertificateIndicator, elevationDifference, rateMethod et lowestAdjacentGrade. Ces variables sont aussi toutes issues de l'évaluation de quelques uns des bâtiments assurés, alors que plusieurs autres variables telles que numberOfFloorsInTheInsuredBuilding, originalConstructionDate ou encore lowestFloorElevation  auront un impact probablement plus marqué sur le modèle sans devoir nécessiter un travail ardu et approximatif d'estimation d'une grande quantité de données manquantes.
+\newline
+\newline
+Nous avons aussi pris la décision d'enlever les variables temporelles à l'exception de la date de construction du bâtiment (originalConstructionDate) et la date du sinistre (dateOfLoss), puisqu'elles sont les seules variables temporelles pertinentes à notre analyse selon nous. 
+
+\section{Création de la nouvelle variable réponse}
+Dans le jeu de données se retrouvent trois colonnes contenant des informations sur les montants de prestations payés en lien avec le bâtiment (amountPaidOnBuildingClaim), les biens (amountPaidOnContentsClaim) et l'augmentation des coûts en lien avec la conformité (amountPaidOnIncreasedCostOfComplianceClaim). 
+
 # Titre 2
+```{r data import, echo = T}
+data.raw <- read_csv("Flood_California.csv")
+```
+
+```{r data setup, echo = T}
+## Retirer les variables inutiles
+data.rm <- data.raw[, c(1, 3, 4, 5, 6, 13, 14, 15, 16, 21, 25, 28, 33, 39, 41)]
+data <- data.raw[, -c(1, 3, 4, 5, 6, 13, 14, 15, 16, 21, 25, 28, 33, 39, 41)]
+
+# Combiner les variables réponses (totalAmount)
+data$amountPaidOnBuildingClaim[is.na(data$amountPaidOnBuildingClaim)] <- 0
+data$amountPaidOnBuildingClaim <-
+  abs(data$amountPaidOnBuildingClaim)
+data$amountPaidOnContentsClaim[is.na(data$amountPaidOnContentsClaim)] <-0
+data$amountPaidOnContentsClaim <-
+  abs(data$amountPaidOnContentsClaim)
+data$amountPaidOnIncreasedCostOfComplianceClaim[is.na(data$amountPaidOnIncreasedCostOfComplianceClaim)] <- 0
+data$amountPaidOnIncreasedCostOfComplianceClaim <-
+  abs(data$amountPaidOnIncreasedCostOfComplianceClaim)
+data$totalAmount <- apply(data[, 17:19], 1, sum)
+data <- data[, -c(17, 18, 19)]
+
+# Retirer les lignes n'étant pas localisées en Californie
+data <- data[!is.na(data$longitude),]
+data <- data[data$longitude <= -110,]
+
+xdf <- which(is.na(data$countyCode))
+
+# Imputation par régression linéaire des codes de régions (countyCode)
+mod.county <- lm(countyCode ~ latitude + longitude, data = data)
+pred.county <- predict(mod.county, newdata = data[is.na(data$countyCode),], type = "response")
+data$countyCode[is.na(data$countyCode)] <- pred.county
+data <- data[data$countyCode != 32031,]
+
+# Imputation par régression linéaire des codes de régions (countyCode)
+# data$communityRatingSystemDiscount <- as.factor(data$communityRatingSystemDiscount)
+# levels(data$communityRatingSystemDiscount) <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "H")
+# mod.communityRating <- lm(communityRatingSystemDiscount ~ ., data = data)
+# pred.CR <- predict(mod.communityRating, newdata = data[is.na(data$communityRatingSystemDiscount),], type = "response")
+# data$communityRatingSystemDiscount[is.na(data$communityRatingSystemDiscount)] <- pred.CR
+
+
+```
+
+```{r geolocalisation, echo = T}
+mapUSA <- borders(database = "state", 
+                  colour="gray50", fill="white")
+ggplot(data = data, aes(x = longitude, y = latitude)) +
+    mapUSA + geom_point(alpha = .4)
+
+mapCalifornia <- borders(database = "county", region = "california",
+                  colour="gray50", fill="white")
+ggplot(data = data, aes(x = longitude, y = latitude)) +
+    mapCalifornia + geom_point(alpha = .4)
+
+md.pattern(data)
+
+```
+
