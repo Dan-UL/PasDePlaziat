@@ -2,8 +2,8 @@
 output:
   pdf_document:
     includes:
-      before_body: TP-title.tex
-      in_header: preamble-latex.tex
+      before_body: "TP-title.tex"
+      in_header: "preamble-latex.tex"
 ---  
 \centering  
 
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
 ### Liste des paquetages
-liste.paquetage <- c("")
+liste.paquetage <- c("ggplot2", "maps", "mice")
 
 ### On installe les paquetages de la liste qu'on a pas déjà
 inst <- liste.paquetage %in% installed.packages()
@@ -105,7 +105,7 @@ mapCalifornia <- borders(database = "county", region = "california",
 ggplot(data = data, aes(x = longitude, y = latitude)) +
     mapCalifornia + geom_point(alpha = .4)
 
-md.pattern(data)
+md.pattern(data, rotate.names = T)
 
 ```
 
