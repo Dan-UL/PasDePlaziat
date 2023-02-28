@@ -47,6 +47,7 @@ Sans effectuer aucune analyse statistique, nous avons jugé adéquat de retirer 
 Nous avons aussi pris la décision d'enlever les variables temporelles à l'exception de la date de construction du bâtiment (originalConstructionDate) et la date du sinistre (dateOfLoss), puisqu'elles sont les seules variables temporelles pertinentes à notre analyse selon nous. 
 
 ## Création de la nouvelle variable réponse
+
 Dans le jeu de données se retrouvent trois colonnes contenant des informations sur les montants de prestations payés en lien avec le bâtiment (amountPaidOnBuildingClaim), les biens (amountPaidOnContentsClaim) et l'augmentation des coûts en lien avec la conformité (amountPaidOnIncreasedCostOfComplianceClaim). 
 
 
@@ -112,6 +113,97 @@ md.pattern(data, rotate.names = T)
 ## Explication des variables
 
 
+
+```{r}
+colnames(data) <- c("EstAgricole",
+                    "EstCondo",
+                    "NbPolice",
+                    "CountyCode",
+                    "TypeRabais",
+                    "DateSiniste",
+                    "EstElevé",
+                    "EstReligieux",
+                    "Latitude",
+                    "Longitude",
+                    "LocContenu",
+                    "ÉlévationPlancher",
+                    "NbÉtage",
+                    "EstNonProfit",
+                    "TypeHabitation",
+                    "DateConstruction",
+                    "ApresFIRM",
+                    "EstPME",
+                    "État",
+                    "CouvertureBatiment",
+                    "CouvertureContenu",
+                    "AnneePerte",
+                    "EstResPrimaire",
+                    "PerteTotal")
+
+
+data$EstAgricole <- factor(data$EstAgricole)
+
+data$EstCondo[data$EstCondo == ""] <- "NA"
+data$EstCondo[data$EstCondo == "N"] <- "0"
+data$EstCondo[data$EstCondo == "A" | data$EstCondo == "H" | data$EstCondo == "L" | data$EstCondo == "U"] <- "1"
+data$EstCondo <- factor(data$EstCondo)
+
+data$TypeRabais <- factor(data$TypeRabais)
+
+#data$DateSinistre
+
+data$EstElevé <- factor(data$EstElevé)
+
+data$EstReligieux <- factor(data$EstReligieux)
+
+data$LocContenu <- factor(data$LocContenu)
+
+data$NbÉtage <- factor(data$NbÉtage)
+
+data$EstNonProfit <- factor(data$EstNonProfit)
+
+data$TypeHabitation <- factor(data$TypeHabitation)
+# On rassemble des categories?
+
+# DateConstruction
+
+data$ApresFIRM <- factor(data$ApresFIRM)
+
+data$EstPME <- factor(data$EstPME)
+
+# Enlever etat?
+
+data$EstResPrimaire <- factor(data$EstResPrimaire)
+
+data$PerteTotal <- abs(data$PerteTotal)
+
+```
+## Transformation des variables
+
+```{r}
+str(data)
+summary(data)
+
+table(data$EstCondo)
+
+#Changement d'echelle, log
+ggplot(data = data, aes(x = EstAgricole, y = log(PerteTotal) ))+
+  geom_boxplot()
+
+#Changement d'echelle, log
+ggplot(data = data, aes(x = EstCondo, y = log(PerteTotal) ))+
+  geom_boxplot()
+
+ggplot(data = data, aes(x = NbPolice, y = PerteTotal ))+
+  geom_point()
+
+ggplot(data = data, aes(x = TypeRabais, y = log(PerteTotal) ))+
+  geom_boxplot()
+
+ggplot(data = data, aes(x = AnneePerte, y = PerteTotal ))+
+  geom_point()
+
+```
 
 
 
