@@ -32,11 +32,11 @@ library(maps)
 library(mice)
 ```
 
-# Titre 1
+# Introduction
 
-## Sous-titre 1
+# Analyse exploratoire des données
 
-\section{Sélection des variables}
+## Sélection des variables
 
 La première étape du travail a consisté à réduire la dimension du jeu de données. En effet, celui-ci est constitué de 41 variables, dont une bonne partie n'étant pas utiles dans le contecte de l'analyse des montants de réclamation. 
 \newline
@@ -46,10 +46,10 @@ Sans effectuer aucune analyse statistique, nous avons jugé adéquat de retirer 
 \newline
 Nous avons aussi pris la décision d'enlever les variables temporelles à l'exception de la date de construction du bâtiment (originalConstructionDate) et la date du sinistre (dateOfLoss), puisqu'elles sont les seules variables temporelles pertinentes à notre analyse selon nous. 
 
-\section{Création de la nouvelle variable réponse}
+## Création de la nouvelle variable réponse
 Dans le jeu de données se retrouvent trois colonnes contenant des informations sur les montants de prestations payés en lien avec le bâtiment (amountPaidOnBuildingClaim), les biens (amountPaidOnContentsClaim) et l'augmentation des coûts en lien avec la conformité (amountPaidOnIncreasedCostOfComplianceClaim). 
 
-# Titre 2
+
 ```{r data import, echo = T}
 data.raw <- read.csv("Flood_California.csv")
 ```
@@ -102,10 +102,30 @@ ggplot(data = data, aes(x = longitude, y = latitude)) +
 
 mapCalifornia <- borders(database = "county", region = "california",
                   colour="gray50", fill="white")
-ggplot(data = data, aes(x = longitude, y = latitude)) +
-    mapCalifornia + geom_point(alpha = .4)
+ggplot(data = data, aes(x = longitude, y = latitude, col= )) +
+    mapCalifornia + geom_point(alpha = .4)  
 
 md.pattern(data, rotate.names = T)
 
 ```
+
+## Explication des variables
+
+
+
+
+
+\newpage
+# Conclusion
+
+
+\newpage
+# Bibliographie
+
+
+]\newpage
+# Annexe
+
+
+
 
