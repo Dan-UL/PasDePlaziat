@@ -1,0 +1,284 @@
+---
+output:
+  pdf_document:
+    includes:
+      before_body: "TP-title.tex"
+      in_header: "preamble-latex.tex"
+---  
+\centering  
+
+\clearpage  
+  
+\tableofcontents   
+
+\justify  
+\clearpage  
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
+### Liste des paquetages
+liste.paquetage <- c("ggplot2", "maps", "mice", "FNN")
+
+### On installe les paquetages de la liste qu'on a pas déjà
+inst <- liste.paquetage %in% installed.packages()
+if(length(liste.paquetage[!inst]) > 0) install.packages(liste.paquetage[!inst])
+
+lapply(liste.paquetage, require, character.only = TRUE)
+library(ggplot2)
+library(maps)
+library(mice)
+library(FNN)
+```
+
+# Introduction
+
+# Analyse exploratoire des données
+
+## Sélection des variables
+
+La première étape du travail a consisté à réduire la dimension du jeu de données. En effet, celui-ci est constitué de 41 variables, dont une bonne partie n'étant pas utiles dans le contecte de l'analyse des montants de réclamation. 
+\newline
+\newline
+Sans effectuer aucune analyse statistique, nous avons jugé adéquat de retirer plusieurs variables du modèle, notamment, toutes les variables contenant beaucoup de valeurs manquantes, comme baseFloodElevation, basementEnclosureCrawlspace, elevationCertificateIndicator, elevationDifference, rateMethod et lowestAdjacentGrade. Ces variables sont aussi toutes issues de l'évaluation de quelques uns des bâtiments assurés, alors que plusieurs autres variables telles que numberOfFloorsInTheInsuredBuilding, originalConstructionDate ou encore lowestFloorElevation  auront un impact probablement plus marqué sur le modèle sans devoir nécessiter un travail ardu et approximatif d'estimation d'une grande quantité de données manquantes.
+\newline
+\newline
+Nous avons aussi pris la décision d'enlever les variables temporelles à l'exception de la date de construction du bâtiment (originalConstructionDate) et la date du sinistre (dateOfLoss), puisqu'elles sont les seules variables temporelles pertinentes à notre analyse selon nous. 
+\newline
+\newline
+On observe aussi que les variables
+
+
+## Création de la nouvelle variable réponse
+
+Dans le jeu de données se retrouvent trois colonnes contenant des informations sur les montants de prestations payés en lien avec le bâtiment (amountPaidOnBuildingClaim), les biens (amountPaidOnContentsClaim) et l'augmentation des coûts en lien avec la conformité (amountPaidOnIncreasedCostOfComplianceClaim). 
+
+
+```{r data import, echo = T}
+data.raw <- read.csv("Flood_California.csv")
+```
+
+```{r data setup, echo = T}
+## Retirer les variables inutiles
+data.rm <- data.raw[, c(1, 3, 4, 5, 6, 13, 14, 15, 16, 21, 25, 27, 28, 33, 39, 41)]
+data <- data.raw[, -c(1, 3, 4, 5, 6, 13, 14, 15, 16, 21, 25, 27, 28, 33, 39, 41)]
+
+# Combiner les variables réponses (totalAmount)
+data$amountPaidOnBuildingClaim[is.na(data$amountPaidOnBuildingClaim)] <- 0
+data$amountPaidOnBuildingClaim <-
+  abs(data$amountPaidOnBuildingClaim)
+data$amountPaidOnContentsClaim[is.na(data$amountPaidOnContentsClaim)] <-0
+data$amountPaidOnContentsClaim <-
+  abs(data$amountPaidOnContentsClaim)
+data$amountPaidOnIncreasedCostOfComplianceClaim[is.na(data$amountPaidOnIncreasedCostOfComplianceClaim)] <- 0
+data$amountPaidOnIncreasedCostOfComplianceClaim <-
+  abs(data$amountPaidOnIncreasedCostOfComplianceClaim)
+data$totalAmount <- apply(data[, 17:19], 1, sum)
+data <- data[, -c(17, 18, 19)]
+
+# Retirer les lignes n'étant pas localisées en Californie
+data <- data[!is.na(data$longitude),]
+data <- data[data$longitude <= -110,]
+
+# Imputation par régression linéaire des codes de régions (countyCode)
+mod.county <- lm(countyCode ~ latitude + longitude, data = data)
+pred.county <- predict(mod.county, newdata = data[is.na(data$countyCode),], type = "response")
+data$countyCode[is.na(data$countyCode)] <- pred.county
+data <- data[data$countyCode != 32031,]
+
+# Attribution de la classe 10 aux données manquantes de la variable communityRatingSystemDiscount (Les valeurs manquantes sont dans des zones qui ne participent pas au système de rabais, et la classe 10 indique les zones n'ayant pas droit à un rabais.)
+
+data$communityRatingSystemDiscount[is.na(data$communityRatingSystemDiscount)] <- 10
+
+# Reclassifiaction de la variable occupancyType
+data$occupancyType <- as.factor(data$occupancyType)
+levels(data$occupancyType) <- c("1", "2", "2", "3", "1", "1", "2", "2", "1", "2", "2", "3", "3", "3")
+
+# Niveau 1: Résidences familiales
+# Niveau 2: Copropriétés résidentielles
+# Niveau 3: Non-résidentiel
+
+# Attribution de la classe 6 de la variable occupancy à la classe 2 selon la proportion initiale des données dans la classe 6 ressemblant à ceux de la classe 1 (6 n'étant pas dans la description des classes par FEMA)
+
+# Éliminaion des données manquant la variable occupancyType
+data <- data[-which(is.na(data$occupancyType)),]
+
+# Imputation des données manquantes de la variable numberOfFloorsInTheInsuredBuilding de facon aléatoire selon la proportion de la variable occupancyType de type 1
+
+prop.occ1 <- cumsum(prop.table(table(data$numberOfFloorsInTheInsuredBuilding[which(data$occupancyType == 1)])))
+
+
+imp.occ1 <- data$numberOfFloorsInTheInsuredBuilding[which(is.na(data$numberOfFloorsInTheInsuredBuilding))]
+set.seed(6969)
+RNG <- runif(length(imp.occ1))
+for(i in 1:length(imp.occ1)){
+  if(RNG[1] <= prop.occ1[1])
+    imp.occ1[i] <- 1
+if(RNG[i] > prop.occ1[1] & RNG[i] <= prop.occ1[2])
+    imp.occ1[i] <- 2
+  if(RNG[i] > prop.occ1[2] & RNG[i] <= prop.occ1[3])
+    imp.occ1[i] <- 3
+if(RNG[i] > prop.occ1[3] & RNG[i] <= prop.occ1[4])
+    imp.occ1[i] <- 4
+  if(RNG[i] > prop.occ1[4] & RNG[i] <= prop.occ1[5])
+    imp.occ1[i] <- 5
+  if(RNG[i] > prop.occ1[5])
+    imp.occ1[i] <- 6
+}
+
+data$numberOfFloorsInTheInsuredBuilding[which(is.na(data$numberOfFloorsInTheInsuredBuilding))] <- imp.occ1
+
+
+# Changement du type de variable pour les dates
+data$dateOfLoss <- as.Date(data$dateOfLoss)
+
+sum(format(data$dateOfLoss, "%Y") != data$yearOfLoss)
+# La variable YearofLoss peut être summprimée
+data <- subset(data, select = -c(yearOfLoss))
+```
+
+```{r condoz, echo = T}
+#Gestion des donnees manquantes de la variables condoIndicator
+
+condoz <- numeric(length(data$condominiumIndicator))
+for(i in 1:length(condoz)) {
+  if (data$condominiumIndicator[i] == "N")
+    condoz[i] <- 0
+  if (data$condominiumIndicator[i] == "A" |
+      data$condominiumIndicator[i] == "L" |
+      data$condominiumIndicator[i] == "U" |
+      data$condominiumIndicator[i] == "H")
+    condoz[i] <- 1
+  if (data$condominiumIndicator[i] == "")
+    condoz[i] <- NA
+}
+
+data$condominiumIndicator <- condoz
+
+xdf <- data[which(is.na(data$condominiumIndicator)), ]
+
+xdg <- numeric(nrow(xdf))
+for(i in 1:nrow(xdf)){
+  if(xdf$occupancyType[i] == "2")
+    xdg[i] <- 1
+  else
+    xdg[i] <- 0
+}
+data$condominiumIndicator[which(is.na(data$condominiumIndicator))] <- xdg
+data$condominiumIndicator <- as.factor(data$condominiumIndicator)
+
+```
+
+```{r geolocalisation, echo = T}
+mapUSA <- borders(database = "state", 
+                  colour="gray50", fill="white")
+ggplot(data = data, aes(x = longitude, y = latitude)) +
+    mapUSA + geom_point(alpha = .4)
+
+mapCalifornia <- borders(database = "county", region = "california",
+                  colour="gray50", fill="white")
+ggplot(data = data, aes(x = longitude, y = latitude, col= )) +
+    mapCalifornia + geom_point(alpha = .4)  
+
+md.pattern(data, rotate.names = T)
+
+```
+
+## Explication des variables
+
+
+
+```{r}
+# Changement des noms de variables
+
+colnames(data) <- c("EstAgricole",
+                    "EstCondo",
+                    "NbPolice",
+                    "CountyCode",
+                    "TypeRabais",
+                    "DateSiniste",
+                    "EstElevé",
+                    "EstReligieux",
+                    "Latitude",
+                    "Longitude",
+                    "LocContenu",
+                    "ÉlévationPlancher",
+                    "NbÉtage",
+                    "EstNonProfit",
+                    "TypeHabitation",
+                    "ApresFIRM",
+                    "EstPME",
+                    "État",
+                    "CouvertureBatiment",
+                    "CouvertureContenu",
+                    "EstResPrimaire",
+                    "PerteTotal")
+
+
+# Transformations des variables en classes appropriées
+
+data$EstAgricole <- factor(data$EstAgricole)
+
+data$TypeRabais <- factor(data$TypeRabais)
+
+data$EstElevé <- factor(data$EstElevé)
+
+data$EstReligieux <- factor(data$EstReligieux)
+
+data$LocContenu <- factor(data$LocContenu)
+
+data$NbÉtage <- factor(data$NbÉtage)
+
+data$EstNonProfit <- factor(data$EstNonProfit)
+
+data$TypeHabitation <- factor(data$TypeHabitation)
+
+data$ApresFIRM <- factor(data$ApresFIRM)
+
+data$EstPME <- factor(data$EstPME)
+
+data$EstResPrimaire <- factor(data$EstResPrimaire)
+```
+
+
+```{r}
+str(data)
+summary(data)
+data <- subset(data, data$PerteTotal > 1)
+table(data$EstPME)
+
+#Changement d'echelle, log
+ggplot(data = data, aes(x = EstAgricole, y = log(PerteTotal) ))+
+  geom_boxplot()
+
+#Changement d'echelle, log
+ggplot(data = data, aes(x = EstPME, y = log(PerteTotal) ))+
+  geom_boxplot()
+
+ggplot(data = data, aes(x = NbPolice, y = PerteTotal ))+
+  geom_point()
+
+ggplot(data = data, aes(x = TypeRabais, y = log(PerteTotal) ))+
+  geom_boxplot()
+
+
+```
+
+
+
+\newpage
+# Conclusion
+
+
+\newpage
+# Bibliographie
+
+
+\newpage
+# Annexe
+
+
+
+

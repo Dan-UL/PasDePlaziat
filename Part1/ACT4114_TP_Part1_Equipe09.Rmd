@@ -18,6 +18,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+ <!-- https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v1 -->
+
 ```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
 ### Liste des paquetages
 liste.paquetage <- c("ggplot2", "maps", "mice")
@@ -38,7 +40,7 @@ library(mice)
 
 ## Sélection des variables
 
-La première étape du travail a consisté à réduire la dimension du jeu de données. En effet, celui-ci est constitué de 41 variables, dont une bonne partie n'étant pas utiles dans le contecte de l'analyse des montants de réclamation. 
+La première étape du travail a consisté à réduire la dimension du jeu de données. En effet, celui-ci est constitué de 41 variables, dont une bonne partie n'étant pas utiles dans le contexte de l'analyse des montants de réclamation. 
 \newline
 \newline
 Sans effectuer aucune analyse statistique, nous avons jugé adéquat de retirer plusieurs variables du modèle, notamment, toutes les variables contenant beaucoup de valeurs manquantes, comme baseFloodElevation, basementEnclosureCrawlspace, elevationCertificateIndicator, elevationDifference, rateMethod et lowestAdjacentGrade. Ces variables sont aussi toutes issues de l'évaluation de quelques uns des bâtiments assurés, alors que plusieurs autres variables telles que numberOfFloorsInTheInsuredBuilding, originalConstructionDate ou encore lowestFloorElevation  auront un impact probablement plus marqué sur le modèle sans devoir nécessiter un travail ardu et approximatif d'estimation d'une grande quantité de données manquantes.
@@ -51,11 +53,11 @@ Nous avons aussi pris la décision d'enlever les variables temporelles à l'exce
 Dans le jeu de données se retrouvent trois colonnes contenant des informations sur les montants de prestations payés en lien avec le bâtiment (amountPaidOnBuildingClaim), les biens (amountPaidOnContentsClaim) et l'augmentation des coûts en lien avec la conformité (amountPaidOnIncreasedCostOfComplianceClaim). 
 
 
-```{r data import, echo = T}
+```{r data import, echo = F}
 data.raw <- read.csv("Flood_California.csv")
 ```
 
-```{r data setup, echo = T}
+```{r data setup, echo = F}
 ## Retirer les variables inutiles
 data.rm <- data.raw[, c(1, 3, 4, 5, 6, 13, 14, 15, 16, 21, 25, 28, 33, 39, 41)]
 data <- data.raw[, -c(1, 3, 4, 5, 6, 13, 14, 15, 16, 21, 25, 28, 33, 39, 41)]
@@ -95,7 +97,7 @@ data <- data[data$countyCode != 32031,]
 
 ```
 
-```{r geolocalisation, echo = T}
+```{r geolocalisation, echo = F}
 mapUSA <- borders(database = "state", 
                   colour="gray50", fill="white")
 ggplot(data = data, aes(x = longitude, y = latitude)) +
@@ -103,8 +105,9 @@ ggplot(data = data, aes(x = longitude, y = latitude)) +
 
 mapCalifornia <- borders(database = "county", region = "california",
                   colour="gray50", fill="white")
-ggplot(data = data, aes(x = longitude, y = latitude, col= )) +
-    mapCalifornia + geom_point(alpha = .4)  
+ggplot(data = data, aes(x = longitude, y = latitude, col = totalAmount )) +
+    mapCalifornia + 
+    geom_point(alpha = .7)  
 
 md.pattern(data, rotate.names = T)
 
@@ -120,7 +123,7 @@ colnames(data) <- c("EstAgricole",
                     "NbPolice",
                     "CountyCode",
                     "TypeRabais",
-                    "DateSiniste",
+                    "DateSinistre",
                     "EstElevé",
                     "EstReligieux",
                     "Latitude",
@@ -150,7 +153,10 @@ data$EstCondo <- factor(data$EstCondo)
 
 data$TypeRabais <- factor(data$TypeRabais)
 
-#data$DateSinistre
+
+patron <- "%Y-%m-%dT%H:%M:%S"
+data$DateSinistre <- as.POSIXct(factor(data$DateSinistre), patron, tz = "UTC")
+data$DateConstruction <- as.POSIXct(factor(data$DateConstruction), patron, tz = "UTC")
 
 data$EstElevé <- factor(data$EstElevé)
 
@@ -165,13 +171,10 @@ data$EstNonProfit <- factor(data$EstNonProfit)
 data$TypeHabitation <- factor(data$TypeHabitation)
 # On rassemble des categories?
 
-# DateConstruction
 
 data$ApresFIRM <- factor(data$ApresFIRM)
 
 data$EstPME <- factor(data$EstPME)
-
-# Enlever etat?
 
 data$EstResPrimaire <- factor(data$EstResPrimaire)
 
@@ -200,9 +203,8 @@ ggplot(data = data, aes(x = NbPolice, y = PerteTotal ))+
 ggplot(data = data, aes(x = TypeRabais, y = log(PerteTotal) ))+
   geom_boxplot()
 
-ggplot(data = data, aes(x = AnneePerte, y = PerteTotal ))+
-  geom_point()
-
+ggplot(data = data, aes(x = AnneePerte))+
+  geom_histogram(binwidth = 1)
 ```
 
 
