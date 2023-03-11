@@ -1,6 +1,7 @@
 ---
 output:
   pdf_document:
+    df_print: kable
     includes:
       before_body: "TP-title.tex"
       in_header: "preamble-latex.tex"
@@ -301,16 +302,40 @@ Tel qu'on peut le voir dans les graphiques précédants, les quatres variables i
 
 ## Variable *condominiumIndicator*
 
-```{r, echo=F}
+```{r, echo=F, warning = F}
 ggplot(data, aes(x = condominiumIndicator, y = log(totalAmount), col = condominiumIndicator))+
   geom_boxplot()+
   theme_minimal()+
   labs( x = "Est un condominium",y = "Montant total (échelle log)")+
   theme(legend.position = "none")
 
-## Moyenne, ecartype, mediane, min , max
 
 ```
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  Condominium = c(min(data$totalAmount[data$condominiumIndicator == 1]),
+                  max(data$totalAmount[data$condominiumIndicator == 1]), 
+                  median(data$totalAmount[data$condominiumIndicator == 1]),
+                  mean(data$totalAmount[data$condominiumIndicator == 1]),
+                  sd(data$totalAmount[data$condominiumIndicator == 1])),
+  
+  Autre = c(min(data$totalAmount[data$condominiumIndicator == 0]),
+            max(data$totalAmount[data$condominiumIndicator == 0]),
+            median(data$totalAmount[data$condominiumIndicator == 0]),
+            mean(data$totalAmount[data$condominiumIndicator == 0]),
+            sd(data$totalAmount[data$condominiumIndicator == 0]))
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
+```
+
 
 Variable indicatrice, 1 si l’habitation est un condominium, 0 sinon.
 
@@ -339,6 +364,42 @@ p2 <- ggplot(data, aes(x = communityRatingSystemDiscount, y = log(totalAmount), 
   theme(legend.position = "none")
 
 grid.arrange(p1, p2, ncol = 1)
+```
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  Aucun = c(min(data$totalAmount[data$communityRatingSystemDiscount == 1]),
+                  max(data$totalAmount[data$communityRatingSystemDiscount == 1]), 
+                  median(data$totalAmount[data$communityRatingSystemDiscount == 1]),
+                  mean(data$totalAmount[data$communityRatingSystemDiscount == 1]),
+                  sd(data$totalAmount[data$communityRatingSystemDiscount == 1])),
+  
+  "5% - 20%" = c(min(data$totalAmount[data$communityRatingSystemDiscount == 2]),
+            max(data$totalAmount[data$communityRatingSystemDiscount == 2]),
+            median(data$totalAmount[data$communityRatingSystemDiscount == 2]),
+            mean(data$totalAmount[data$communityRatingSystemDiscount == 2]),
+            sd(data$totalAmount[data$communityRatingSystemDiscount == 2])),
+  
+  "25% - 35%" = c(min(data$totalAmount[data$communityRatingSystemDiscount == 3]),
+            max(data$totalAmount[data$communityRatingSystemDiscount == 3]),
+            median(data$totalAmount[data$communityRatingSystemDiscount == 3]),
+            mean(data$totalAmount[data$communityRatingSystemDiscount == 3]),
+            sd(data$totalAmount[data$communityRatingSystemDiscount == 3])),
+    
+   "Plus de 40%" = c(min(data$totalAmount[data$communityRatingSystemDiscount == 4]),
+            max(data$totalAmount[data$communityRatingSystemDiscount == 4]),
+            median(data$totalAmount[data$communityRatingSystemDiscount == 4]),
+            mean(data$totalAmount[data$communityRatingSystemDiscount == 4]),
+            sd(data$totalAmount[data$communityRatingSystemDiscount == 4]))
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
 ```
 
 Cette variable représente le pourcentage de rabais accordé lors de la tarrification. 
@@ -370,6 +431,30 @@ ggplot(data, aes(x = elevatedBuildingIndicator, y = log(totalAmount), col = elev
   theme_minimal()+
   labs( x = "Le bâtiment est élevé",y = "Montant total (échelle log)")+
   theme(legend.position = "none")
+```
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "Le bâtiment est élevé" = c(min(data$totalAmount[data$elevatedBuildingIndicator == 1]),
+                  max(data$totalAmount[data$elevatedBuildingIndicator == 1]), 
+                  median(data$totalAmount[data$elevatedBuildingIndicator == 1]),
+                  mean(data$totalAmount[data$elevatedBuildingIndicator == 1]),
+                  sd(data$totalAmount[data$elevatedBuildingIndicator == 1])),
+  
+  "Ne l'est pas"  = c(min(data$totalAmount[data$elevatedBuildingIndicator == 0]),
+            max(data$totalAmount[data$elevatedBuildingIndicator == 0]),
+            median(data$totalAmount[data$elevatedBuildingIndicator == 0]),
+            mean(data$totalAmount[data$elevatedBuildingIndicator == 0]),
+            sd(data$totalAmount[data$elevatedBuildingIndicator == 0]))
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
 ```
 
 Variable indicatrice, 1 si le bâtiment est élevé, c’est-à-dire, au dessusdu nieveau du sol, 0 sinon.
@@ -435,6 +520,37 @@ p4 <- ggplot(data, aes(x = locationOfContents, y = log(totalAmount), col = locat
 grid.arrange(p3, p4, ncol = 1)
 ```
 
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "Sous-sol" = c(min(data$totalAmount[data$locationOfContents == 1]),
+                  max(data$totalAmount[data$locationOfContents == 1]), 
+                  median(data$totalAmount[data$locationOfContents == 1]),
+                  mean(data$totalAmount[data$locationOfContents == 1]),
+                  sd(data$totalAmount[data$locationOfContents == 1])),
+  
+  "Premier étage seulement" = c(min(data$totalAmount[data$locationOfContents == 2]),
+            max(data$totalAmount[data$locationOfContents == 2]),
+            median(data$totalAmount[data$locationOfContents == 2]),
+            mean(data$totalAmount[data$locationOfContents == 2]),
+            sd(data$totalAmount[data$locationOfContents == 2])),
+  
+  "Premier étage et plus" = c(min(data$totalAmount[data$locationOfContents == 3]),
+            max(data$totalAmount[data$locationOfContents == 3]),
+            median(data$totalAmount[data$locationOfContents == 3]),
+            mean(data$totalAmount[data$locationOfContents == 3]),
+            sd(data$totalAmount[data$locationOfContents == 3]))
+    
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
+```
+
 Variable catégoritielle indiquant où se trouve le contenu du bâtiment assuré qui a été endomagé.
 
 On remarque pour la variable locationOfContents, qu'il y a plusieurs catégories ne comportant qu'un faible nombre d'observations. Certaines seront donc combinées pour former les nouvelles catégories suivantes:
@@ -445,7 +561,7 @@ On remarque pour la variable locationOfContents, qu'il y a plusieurs catégories
 
 
 
-## Variable *lowersFlorElevation*  
+## Variable *lowestFloorElevation*  
 
 ```{r, echo = F, warning = F}
 data.x <- subset(data, data$lowestFloorElevation < 2000)
@@ -456,6 +572,21 @@ ggplot(data.x, aes(x = lowestFloorElevation, y = totalAmount))+
   theme_minimal()+
   labs(x = "La hauteur du plus bas étage (Pieds)", y = "Montant total", title = "Montant des réclamations en fonction de l'élévation de plus bas étage" )
   
+```
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "Hauteur (en pieds)" = c(min(data$lowestFloorElevation),
+                  max(data$lowestFloorElevation))
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max")
+
+df
 ```
 
 Cette variable représente la hauteur du plus bas étage de l'habitation, en pieds.
@@ -481,6 +612,7 @@ p2 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding, y = log(totalAmou
 
 grid.arrange(p1, p2, ncol = 1)
 ```
+
 ```{r, echo = F}
 levels(data$numberOfFloorsInTheInsuredBuilding) <- c("1","2","3","2","1","3")
 
@@ -501,6 +633,39 @@ p4 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding, y = log(totalAmou
 
 grid.arrange(p3, p4, ncol = 1)
 ```
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "1 étage" = c(min(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 1]),
+                  max(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 1]), 
+                  median(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 1]),
+                  mean(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 1]),
+                  sd(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 1])),
+  
+  "2 étages" = c(min(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 2]),
+            max(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 2]),
+            median(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 2]),
+            mean(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 2]),
+            sd(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 2])),
+  
+  "3 étages et plus" = c(min(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 3]),
+            max(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 3]),
+            median(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 3]),
+            mean(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 3]),
+            sd(data$totalAmount[data$numberOfFloorsInTheInsuredBuilding == 3]))
+    
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
+```
+
+
 
 Cette variabe comportait 6 catégories d'habitation, nous avons conservé les trois premiers niveaux, et nous avons combinés les trois dernières selon leur nombre d'étages. Nous avons ainsi obtenu les niveaux suivants :
 
@@ -526,6 +691,37 @@ ggplot(data, aes(x=occupancyType, y= log(totalAmount), col = occupancyType))+
 
 ```
 
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "Résidences familiales" = c(min(data$totalAmount[data$occupancyType == 1]),
+                  max(data$totalAmount[data$occupancyType == 1]), 
+                  median(data$totalAmount[data$occupancyType == 1]),
+                  mean(data$totalAmount[data$occupancyType == 1]),
+                  sd(data$totalAmount[data$occupancyType == 1])),
+  
+  "Copropriétés résidentielles" = c(min(data$totalAmount[data$occupancyType == 2]),
+            max(data$totalAmount[data$occupancyType == 2]),
+            median(data$totalAmount[data$occupancyType == 2]),
+            mean(data$totalAmount[data$occupancyType == 2]),
+            sd(data$totalAmount[data$occupancyType == 2])),
+  
+  "Non-résidentiel" = c(min(data$totalAmount[data$occupancyType == 3]),
+            max(data$totalAmount[data$occupancyType == 3]),
+            median(data$totalAmount[data$occupancyType == 3]),
+            mean(data$totalAmount[data$occupancyType == 3]),
+            sd(data$totalAmount[data$occupancyType == 3]))
+    
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
+```
+
 Cette variable catégorielle indique le type de résidence du bâtiment.
 
 * Niveau 1: Résidences familiales
@@ -544,7 +740,24 @@ ggplot(data, aes(x = totalCoverage, y = totalAmount))+
   theme_minimal()+
   labs(x = "Montant de la couverture d'assurance", y = "Montant total", title = "Montant des réclamations en fonction de la couverture d'assurance" )
 
+data <- subset(data , select = -c(totalBuildingInsuranceCoverage, totalContentsInsuranceCoverage))
 
+```
+
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "Couverture d'assurance" = c(min(data$totalCoverage),
+                  max(data$totalCoverage))
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max")
+
+df
 ```
 
 Dans le jeu de données, les montants de couverture (totalBuildingInsuranceCoverage & totalContentsInsuranceCoverage) pour le bâtiment et pour les biens personnels étaient séparés, nous avons jugés plus logique de combiner les deux variables en une (totalCoverage), puisque nous avions déjà réunis les montants des réclamations.
@@ -558,6 +771,31 @@ ggplot(data, aes(x = primaryResidence, y = log(totalAmount), col = primaryReside
   theme_minimal()+
   labs( x = "Le bâtiment est une résidence primaire",y = "Montant total (échelle log)")+
   theme(legend.position = "none")
+```
+
+
+```{r, echo = F}
+## Moyenne, ecartype, mediane, min , max
+
+df <- data.frame(rbind(
+  "Résidence primaire" = c(min(data$totalAmount[data$primaryResidence == 1]),
+                  max(data$totalAmount[data$primaryResidence == 1]), 
+                  median(data$totalAmount[data$primaryResidence == 1]),
+                  mean(data$totalAmount[data$primaryResidence == 1]),
+                  sd(data$totalAmount[data$primaryResidence == 1])),
+  
+  "Ne l'est pas"  = c(min(data$totalAmount[data$primaryResidence == 0]),
+            max(data$totalAmount[data$primaryResidence == 0]),
+            median(data$totalAmount[data$primaryResidence == 0]),
+            mean(data$totalAmount[data$primaryResidence == 0]),
+            sd(data$totalAmount[data$primaryResidence == 0]))
+  ))
+  
+
+
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
+
+df
 ```
 
 Variable indicatrice indiquant si le bâtiment assuré est la résidence primaire, 1 si oui, 0 sinon.
