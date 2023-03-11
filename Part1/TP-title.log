@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.24)  24 FEB 2023 15:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  11 MAR 2023 15:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **TP-title.tex
 (./TP-title.tex
 LaTeX2e <2022-11-01> patch level 1
-L3 programming layer <2023-02-07>
+L3 programming layer <2023-02-22>
 
 ! LaTeX Error: Environment titlepage undefined.
 
@@ -39,8 +39,8 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 15--15
 ! Undefined control sequence.
 <recently read> \LARGE 
                        
-l.16 \textsc{\LARGE Travail Pratique}
-                                     \\[1.0cm] % LAISSER TP OU METTRE UN VRA...
+l.16 \textsc{\LARGE Premier rapport}
+                                    \\[1.0cm] % LAISSER TP OU METTRE UN VRAI...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -48,25 +48,25 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (38.66092pt too wide) in paragraph at lines 16--16
- \OT1/cmr/m/sc/10 Travail 
+Overfull \hbox (41.1053pt too wide) in paragraph at lines 16--16
+ \OT1/cmr/m/sc/10 Premier 
  []
 
 
-Overfull \hbox (23.34984pt too wide) in paragraph at lines 16--16
- \OT1/cmr/m/sc/10 Pra- 
+Overfull \hbox (21.511pt too wide) in paragraph at lines 16--16
+ \OT1/cmr/m/sc/10 rap- 
  []
 
 
-Overfull \hbox (26.99986pt too wide) in paragraph at lines 16--16
- \OT1/cmr/m/sc/10 tique 
+Overfull \hbox (23.19986pt too wide) in paragraph at lines 16--16
+ \OT1/cmr/m/sc/10 port 
  []
 
 ! Undefined control sequence.
 <recently read> \Large 
                        
-l.17 \textsc{\Large Cours d'université}
-                                        \\[0.2cm] % NOM DU COURS
+l.17 ...ge Apprentissage statistique en actuariat}
+                                                  \\[0.2cm] % NOM DU COURS
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -74,19 +74,49 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (30.94984pt too wide) in paragraph at lines 17--17
- []\OT1/cmr/m/sc/10 Cours 
+Overfull \hbox (73.01625pt too wide) in paragraph at lines 17--17
+ []\OT1/cmr/m/sc/10 Apprentissage 
  []
 
 
-Overfull \hbox (61.5497pt too wide) in paragraph at lines 17--17
- \OT1/cmr/m/sc/10 d'universit[]e 
+Overfull \hbox (32.57755pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 statis- 
+ []
+
+
+Overfull \hbox (26.99986pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 tique 
+ []
+
+
+Overfull \hbox (11.71106pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 en 
+ []
+
+
+Overfull \hbox (15.5999pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 ac- 
+ []
+
+
+Overfull \hbox (15.82213pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 tu- 
+ []
+
+
+Overfull \hbox (15.93326pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 ar- 
+ []
+
+
+Overfull \hbox (14.3999pt too wide) in paragraph at lines 17--17
+ \OT1/cmr/m/sc/10 iat 
  []
 
 ! Undefined control sequence.
 <recently read> \large 
                        
-l.18 \textsc{\large ABC-1234}
+l.18 \textsc{\large ACT-4114}
                              \\[0.7cm] % SIGLE
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -95,19 +125,19 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (27.48584pt too wide) in paragraph at lines 18--18
- []\OT1/cmr/m/sc/10 ABC- 
+Overfull \hbox (27.34695pt too wide) in paragraph at lines 18--18
+ []\OT1/cmr/m/sc/10 ACT- 
  []
 
 
 Overfull \hbox (22.1109pt too wide) in paragraph at lines 18--18
- \OT1/cmr/m/sc/10 1234 
+ \OT1/cmr/m/sc/10 4114 
  []
 
 ! Undefined control sequence.
 <recently read> \large 
                        
-l.19 \textsc{\large Équipe 55}
+l.19 \textsc{\large Équipe 09}
                                \\[0.7cm] % ÉQUIPE
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -122,7 +152,7 @@ Overfull \hbox (34.08311pt too wide) in paragraph at lines 19--19
 
 
 Overfull \hbox (11.05545pt too wide) in paragraph at lines 19--19
- \OT1/cmr/m/sc/10 55 
+ \OT1/cmr/m/sc/10 09 
  []
 
 ! Undefined control sequence.
@@ -182,17 +212,39 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no y in font nullfont!
-LaTeX Font Info:    Trying to load font information for +cmr on input line 34.
-LaTeX Font Info:    No file cmr.fd. on input line 34.
+Missing character: There is no M in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no j in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no I in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no H in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no F in font nullfont!
+LaTeX Font Info:    Trying to load font information for +cmr on input line 37.
+LaTeX Font Info:    No file cmr.fd. on input line 37.
 
 LaTeX Font Warning: Font shape `/cmr/m/n' undefined
-(Font)              using `/cmr/m/n' instead on input line 34.
+(Font)              using `/cmr/m/n' instead on input line 37.
 
 ! Corrupted NFSS tables.
 wrong@fontshape ...message {Corrupted NFSS tables}
                                                   error@fontshape else let f...
-l.34         É
-               tudiant \textsc{2}\\
+l.37         Fé
+                lix-Antoine \textsc{Paris}
 This error message was generated by an \errmessage
 command, so I can't give any explicit help.
 Pretend that you're Hercule Poirot: Examine all clues,
@@ -200,36 +252,19 @@ and deduce the truth by order and method.
 
 
 LaTeX Font Warning: Font shape `/cmr/m/n' undefined
-(Font)              using `OT1/cmr/m/n' instead on input line 34.
+(Font)              using `OT1/cmr/m/n' instead on input line 37.
 
-Missing character: There is no t in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no d in font nullfont!
+Missing character: There is no l in font nullfont!
 Missing character: There is no i in font nullfont!
-Missing character: There is no a in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no A in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no d in font nullfont!
+Missing character: There is no o in font nullfont!
 Missing character: There is no i in font nullfont!
-Missing character: There is no a in font nullfont!
 Missing character: There is no n in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 39.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -243,51 +278,51 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Z in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no D in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no D in font nullfont!
-Missing character: There is no X in font nullfont!
-Missing character: There is no Y in font nullfont!
-Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 3 in font nullfont!
 
 Overfull \hbox (3276.74998pt too wide) in paragraph at lines 30--50
  []$[]$ 
@@ -314,15 +349,15 @@ Overfull \hbox (5.87822pt too wide) in paragraph at lines 52--52
  []
 
 
-Overfull \hbox (37.82895pt too wide) in paragraph at lines 53--53
- []\OT1/cmr/m/it/10 Madame 
+Overfull \hbox (42.115pt too wide) in paragraph at lines 53--53
+ []\OT1/cmr/m/it/10 Monsieur 
  []
 
 ! Undefined control sequence.
 <recently read> \Large 
                        
-l.54 \textsc{\Large Prof \textsc{d'Université}}
-                                                \\[1.0cm]
+l.54 \textsc{\Large Olivier}
+                             \textsc{Côté}\\[1.0cm]
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -330,20 +365,20 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (24.92763pt too wide) in paragraph at lines 54--54
- []\OT1/cmr/m/sc/10 Prof 
+Overfull \hbox (37.35533pt too wide) in paragraph at lines 54--54
+ []\OT1/cmr/m/sc/10 Olivier 
  []
 
 
-Overfull \hbox (63.55519pt too wide) in paragraph at lines 54--54
- \OT1/cmr/m/sc/10 d'Universit[]e 
+Overfull \hbox (25.70538pt too wide) in paragraph at lines 54--54
+ \OT1/cmr/m/sc/10 C[]ot[]e 
  []
 
 ! Undefined control sequence.
 <recently read> \large 
                        
-l.56 \textsc{\large 32 avril 2025}
-                                  \\[1cm] % Date, change the \today to a set...
+l.56 \textsc{\large 13 mars 2023}
+                                 \\[1cm] % Date, change the \today to a set ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -352,17 +387,17 @@ and I'll forget about whatever was undefined.
 
 
 Overfull \hbox (11.05545pt too wide) in paragraph at lines 56--56
- []\OT1/cmr/m/sc/10 32 
+ []\OT1/cmr/m/sc/10 13 
  []
 
 
-Overfull \hbox (25.55545pt too wide) in paragraph at lines 56--56
- \OT1/cmr/m/sc/10 avril 
+Overfull \hbox (24.1999pt too wide) in paragraph at lines 56--56
+ \OT1/cmr/m/sc/10 mars 
  []
 
 
 Overfull \hbox (22.1109pt too wide) in paragraph at lines 56--56
- \OT1/cmr/m/sc/10 2025 
+ \OT1/cmr/m/sc/10 2023 
  []
 
 ! Undefined control sequence.
@@ -419,11 +454,11 @@ or  <return>  to continue without it.
 
  
 Here is how much of TeX's memory you used:
- 42 strings out of 476029
- 627 string characters out of 5794158
- 1851340 words of memory out of 5000000
- 20583 multiletter control sequences out of 15000+600000
+ 42 strings out of 476024
+ 624 string characters out of 5794010
+ 1851382 words of memory out of 5000000
+ 20588 multiletter control sequences out of 15000+600000
  513242 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 23i,3n,32p,147b,258s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 23i,3n,32p,146b,258s stack positions out of 10000i,1000n,20000p,200000b,200000s
 !  ==> Fatal error occurred, no output PDF file produced!

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  28 FEB 2023 19:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  11 MAR 2023 15:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -146,7 +146,7 @@ Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
 ) (c:/texlive/2022/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2022/06/23 v3.0f Micro-typographical refinements (RS)
+Package: microtype 2023/03/06 v3.1 Micro-typographical refinements (RS)
 (c:/texlive/2022/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks23
@@ -157,23 +157,23 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \MT@toks=\toks24
 \MT@tempbox=\box53
 \MT@count=\count272
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1045.
-LaTeX Info: Redefining \leftprotrusion on input line 1046.
-LaTeX Info: Redefining \rightprotrusion on input line 1056.
-LaTeX Info: Redefining \textls on input line 1234.
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1060.
+LaTeX Info: Redefining \leftprotrusion on input line 1061.
+\MT@prot@toks=\toks25
+LaTeX Info: Redefining \rightprotrusion on input line 1079.
+LaTeX Info: Redefining \textls on input line 1355.
 \MT@outer@kern=\dimen150
-LaTeX Info: Redefining \textmicrotypecontext on input line 1858.
+LaTeX Info: Redefining \textmicrotypecontext on input line 1975.
 \MT@listname@count=\count273
 (c:/texlive/2022/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2022/06/23 v3.0f Definitions specific to pdftex (RS)
-
-LaTeX Info: Redefining \lsstyle on input line 900.
-LaTeX Info: Redefining \lslig on input line 900.
+File: microtype-pdftex.def 2023/03/06 v3.1 Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 903.
+LaTeX Info: Redefining \lslig on input line 903.
 \MT@outer@space=\skip53
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 (c:/texlive/2022/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2022/06/23 v3.0f microtype main configuration file (RS)
+File: microtype.cfg 2023/03/06 v3.1 microtype main configuration file (RS)
 )) (c:/texlive/2022/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
 (c:/texlive/2022/texmf-dist/tex/latex/kvoptions/kvoptions.sty
@@ -216,7 +216,7 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutheight=\dimen156
 \Gm@layouthoffset=\dimen157
 \Gm@layoutvoffset=\dimen158
-\Gm@dimlist=\toks25
+\Gm@dimlist=\toks26
 ) (c:/texlive/2022/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
 \FV@CodeLineNo=\count277
@@ -281,7 +281,7 @@ LaTeX Warning: Command \@arrayparboxrestore  has changed.
 
 (c:/texlive/2022/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2022/03/08 v6.0d a miscellany of footnote facilities
-\FN@temptoken=\toks26
+\FN@temptoken=\toks27
 \footnotemargin=\dimen173
 \@outputbox@depth=\dimen174
 Package footmisc Info: Declaring symbol style bringhurst on input line 695.
@@ -450,6 +450,7 @@ Package microtype Info: Applying patch `item' on input line 132.
 Package microtype Info: Applying patch `toc' on input line 132.
 Package microtype Info: Applying patch `eqnum' on input line 132.
 Package microtype Info: Applying patch `footnote' on input line 132.
+Package microtype Info: Applying patch `verbatim' on input line 132.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -470,12 +471,12 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 \scratchbox=\box56
 \nofMPsegments=\count296
 \nofMParguments=\count297
-\everyMPshowfont=\toks27
+\everyMPshowfont=\toks28
 \MPscratchCnt=\count298
 \MPscratchDim=\dimen180
 \MPnumerator=\count299
 \makeMPintoPDFobject=\count300
-\everyMPtoPDFconversion=\toks28
+\everyMPtoPDFconversion=\toks29
 ) (c:/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -590,170 +591,224 @@ l.205 \clearpage
                  [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 217--236
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/USA map 1-1.pdf, id=64, 469.755pt
+ x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/USA map 1-1.pdf Graphic file
+ (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/USA map 1-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/USA map 1
+-1.pdf  used on input line 247.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
+Underfull \hbox (badness 10000) in paragraph at lines 247--251
+[][]
  []
 
+[2
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--236
-
- []
-
+ <./ACT4114_TP_Part1_Equipe09_files/figure-latex/USA map 1-1.pdf>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-48.
+61.
 (c:/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 255.
-
-LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 255.
-
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-272.
-(c:/texlive/2022/texmf-dist/tex/latex/lm/ts1lmtt.fd
-File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [2
-
-]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-1.pdf, id=52, 469
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-1.pdf, id=81, 469
 .755pt x 325.215pt>
 File: ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-1.pdf Graphi
 c file (type pdf)
 <use ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-1.pdf>
 Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocali
-sation-1.pdf  used on input line 302.
+sation-1.pdf  used on input line 269.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-2.pdf, id=53, 469
-.755pt x 325.215pt>
-File: ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-2.pdf Graphi
-c file (type pdf)
-<use ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-2.pdf>
-Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocali
-sation-2.pdf  used on input line 313.
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/initial md pattern-1.pdf, id=82, 
+469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/initial md pattern-1.pdf Gra
+phic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/initial md pattern-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/initial m
+d pattern-1.pdf  used on input line 278.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 278--288
+[][]
+ []
+
 [3 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-1.pdf>]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-3.pdf, id=67, 469
-.755pt x 325.215pt>
-File: ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-3.pdf Graphi
-c file (type pdf)
-<use ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-3.pdf>
-Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocali
-sation-3.pdf  used on input line 321.
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/final md pattern-1.pdf, id=98, 46
+9.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/final md pattern-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/final md pattern-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/final md 
+pattern-1.pdf  used on input line 319.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[4 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-2.pdf>] [5 <
-./ACT4114_TP_Part1_Equipe09_files/figure-latex/geolocalisation-3.pdf>] [6]
-Underfull \vbox (badness 10000) detected at line 465
- []
-
-
-Underfull \vbox (badness 10000) detected at line 465
- []
-
-[7]
-Overfull \hbox (23.74355pt too wide) in paragraph at lines 503--503
-[]\T1/lmtt/m/n/10 ##  $ TypeRabais        : Factor w/ 9 levels "1","2","3","5",
-..: NA 7 5 NA NA NA 1 NA NA 5 ...[] 
- []
-
-
-Overfull \hbox (275.74281pt too wide) in paragraph at lines 503--503
-[]\T1/lmtt/m/n/10 ##  $ DateSiniste       : chr  "1995-01-09T00:00:00.000Z" "20
-17-01-22T00:00:00.000Z" "1998-02-03T00:00:00.000Z" "1999-03-03T00:00:00.000Z" .
-..[] 
- []
-
-
-Overfull \hbox (275.74281pt too wide) in paragraph at lines 503--503
-[]\T1/lmtt/m/n/10 ##  $ DateConstruction  : chr  "1970-01-01T00:00:00.000Z" "19
-69-01-01T00:00:00.000Z" "1954-01-01T00:00:00.000Z" "1981-07-01T00:00:00.000Z" .
-..[] 
- []
-
-
-Overfull \hbox (60.49344pt too wide) in paragraph at lines 503--503
-[]\T1/lmtt/m/n/10 ##  $ CouvertureBatiment: int  185000 250000 203500 120000 25
-0000 20000 173700 185000 86400 20000 ...[] 
- []
-
-
-Overfull \hbox (2.7436pt too wide) in paragraph at lines 503--503
-[]\T1/lmtt/m/n/10 ##  $ CouvertureContenu : int  60000 100000 63000 0 100000 80
-00 30000 10000 20800 5000 ...[] 
- []
-
-[8]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-1.pdf, id=109, 46
+[4 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/initial md pattern-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-1.pdf, id=111, 46
 9.755pt x 325.215pt>
 File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-1.pdf Graphi
 c file (type pdf)
 <use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
-hunk-2-1.pdf  used on input line 578.
+hunk-2-1.pdf  used on input line 349.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[9]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-2.pdf, id=114, 46
+[5 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/final md pattern-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-3-1.pdf, id=126, 46
 9.755pt x 325.215pt>
-File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-2.pdf Graphi
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-3-1.pdf Graphi
 c file (type pdf)
-<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-2.pdf>
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
-hunk-2-2.pdf  used on input line 592.
+hunk-3-1.pdf  used on input line 361.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[10 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-1.pdf>]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-3.pdf, id=124, 46
+[6 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-4-1.pdf, id=139, 46
 9.755pt x 325.215pt>
-File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-3.pdf Graphi
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-4-1.pdf Graphi
 c file (type pdf)
-<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-3.pdf>
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
-hunk-2-3.pdf  used on input line 601.
+hunk-4-1.pdf  used on input line 372.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[11 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-2.pdf>]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-4.pdf, id=134, 46
+[7 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-3-1.pdf>]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
+83.
+(c:/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+404.
+(c:/texlive/2022/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-5-1.pdf, id=152, 46
 9.755pt x 325.215pt>
-File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-4.pdf Graphi
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-5-1.pdf Graphi
 c file (type pdf)
-<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-4.pdf>
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
-hunk-2-4.pdf  used on input line 614.
+hunk-5-1.pdf  used on input line 408.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[12 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-3.pdf>]
-<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-5.pdf, id=145, 46
+[8 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-4-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-6-1.pdf, id=165, 46
 9.755pt x 325.215pt>
-File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-5.pdf Graphi
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-6-1.pdf Graphi
 c file (type pdf)
-<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-5.pdf>
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
-hunk-2-5.pdf  used on input line 623.
+hunk-6-1.pdf  used on input line 414.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[13 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-4.pdf>] [14
- <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-2-5.pdf>] [15] [
-16] [17] (./ACT4114_TP_Part1_Equipe09.aux) ) 
+[9 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-5-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-7-1.pdf, id=179, 46
+9.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-7-1.pdf Graphi
+c file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-7-1.pdf  used on input line 435.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[10 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-6-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-8-1.pdf, id=190, 46
+9.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-8-1.pdf Graphi
+c file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-8-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-8-1.pdf  used on input line 441.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[11 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-7-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-9-1.pdf, id=206, 46
+9.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-9-1.pdf Graphi
+c file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-9-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-9-1.pdf  used on input line 443.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[12 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-8-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-10-1.pdf, id=217, 4
+69.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-10-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-10-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-10-1.pdf  used on input line 466.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[13 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-9-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-11-1.pdf, id=228, 4
+69.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-11-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-11-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-11-1.pdf  used on input line 475.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-12-1.pdf, id=229, 4
+69.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-12-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-12-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-12-1.pdf  used on input line 476.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--477
+[]
+ []
+
+[14 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-10-1.pdf>]
+Overfull \vbox (20.78995pt too high) has occurred while \output is active []
+
+[15 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-11-1.pdf> <./
+ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-12-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-13-1.pdf, id=257, 4
+69.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-13-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-13-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-13-1.pdf  used on input line 497.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-14-1.pdf, id=258, 4
+69.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-14-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-14-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-14-1.pdf  used on input line 527.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[16 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-13-1.pdf>]
+<ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-15-1.pdf, id=270, 4
+69.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-15-1.pdf Graph
+ic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-15-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-c
+hunk-15-1.pdf  used on input line 540.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[17 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-14-1.pdf>] [1
+8 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-15-1.pdf>] [19]
+[20] [21] (./ACT4114_TP_Part1_Equipe09.aux) ) 
 Here is how much of TeX's memory you used:
- 15616 strings out of 476024
- 255403 string characters out of 5794010
- 1901382 words of memory out of 5000000
- 35700 multiletter control sequences out of 15000+600000
- 577006 words of font info for 109 fonts, out of 8000000 for 9000
+ 15960 strings out of 476024
+ 263687 string characters out of 5794010
+ 1858382 words of memory out of 5000000
+ 35957 multiletter control sequences out of 15000+600000
+ 582422 words of font info for 130 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 77i,11n,81p,1022b,642s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{c:/texlive/2022/texmf-dist/fonts/e
-nc/dvips/lm/lm-ts1.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
-}<c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2022/
-texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/t
-ype1/public/lm/lmcsc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lm
-r10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive
-/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2022/texmf-dist/f
-onts/type1/public/lm/lmri12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/
-lm/lmro10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtko10.pfb><c:
-/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2022/texm
-f-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on ACT4114_TP_Part1_Equipe09.pdf (18 pages, 5232808 bytes).
+ 77i,12n,81p,1022b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{c:/texlive/2022/texmf-dist/fonts/
+enc/dvips/lm/lm-ts1.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.en
+c}<c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2022
+/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/
+type1/public/lm/lmbxi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/l
+mcsc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texl
+ive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2022/texmf-dis
+t/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publ
+ic/lm/lmtt10.pfb>
+Output written on ACT4114_TP_Part1_Equipe09.pdf (22 pages, 4090911 bytes).
 PDF statistics:
- 266 PDF objects out of 1000 (max. 8388607)
- 201 compressed objects within 3 object streams
- 35 named destinations out of 1000 (max. 500000)
- 36974 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 432 PDF objects out of 1000 (max. 8388607)
+ 347 compressed objects within 4 object streams
+ 65 named destinations out of 1000 (max. 500000)
+ 41224 words of extra memory for PDF output out of 42996 (max. 10000000)
 
