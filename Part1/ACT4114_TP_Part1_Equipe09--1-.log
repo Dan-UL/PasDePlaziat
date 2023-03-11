@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  8 MAR 2023 14:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  10 MAR 2023 18:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -424,8 +424,7 @@ Package: xurl 2022/01/09 v 0.10 modify URL breaks
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count294
 \l__pdf_internal_box=\box55
-)
-No file ACT4114_TP_Part1_Equipe09--1-.aux.
+) (./ACT4114_TP_Part1_Equipe09--1-.aux)
 \openout1 = `ACT4114_TP_Part1_Equipe09--1-.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 132.
@@ -570,21 +569,183 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 172
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (c:/texlive/2022/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-))
-Runaway argument?
-{\Large Olivier \textsc {Côté}\\[1.0cm] \textsc {\large 13 mars 202\ETC.
-! File ended while scanning use of \textsc .
-<inserted text> 
-                \par 
-<*> ACT4114_TP_Part1_Equipe09--1-.tex
-                                      
-Here is how much of TeX's memory you used:
- 15498 strings out of 476024
- 249715 string characters out of 5794010
- 1851382 words of memory out of 5000000
- 35674 multiletter control sequences out of 15000+600000
- 561969 words of font info for 87 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 77i,4n,81p,1026b,392s stack positions out of 10000i,1000n,20000p,200000b,200000s
+)
+<ul-actuariat.png, id=4, 445.1832pt x 217.2918pt>
+File: ul-actuariat.png Graphic file (type png)
+<use ul-actuariat.png>
+Package pdftex.def Info: ul-actuariat.png  used on input line 191.
+(pdftex.def)             Requested size: 284.54266pt x 138.8839pt.
+[1
 
-!  ==> Fatal error occurred, no output PDF file produced!
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./ul-actuariat.
+png>] (./ACT4114_TP_Part1_Equipe09--1-.toc)
+\tf@toc=\write4
+\openout4 = `ACT4114_TP_Part1_Equipe09--1-.toc'.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.205 \clearpage
+                 [1
+
+]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/USA map 1-1.pdf, id=44, 469.7
+55pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/USA map 1-1.pdf Graphic 
+file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/USA map 1-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/USA m
+ap 1-1.pdf  used on input line 251.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 251--255
+[][]
+ []
+
+[2
+
+]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
+65.
+(c:/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/geolocalisation-1.pdf, id=53,
+ 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/geolocalisation-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/geolocalisation-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/geolo
+calisation-1.pdf  used on input line 273.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[3 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/USA map 1-1.pdf>]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/initial md pattern-1.pdf, id=
+68, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/initial md pattern-1.pdf
+ Graphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/initial md pattern-1.pdf>
+
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/initi
+al md pattern-1.pdf  used on input line 282.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 282--292
+[][]
+ []
+
+[4 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/geolocalisation-1.pdf>]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/final md pattern-1.pdf, id=83
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/final md pattern-1.pdf G
+raphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/final md pattern-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/final
+ md pattern-1.pdf  used on input line 323.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[5 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/initial md pattern-1.pdf
+>]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-2-1.pdf, id=96,
+ 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-2-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-2-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-2-1.pdf  used on input line 354.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[6 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/final md pattern-1.pdf>]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-3-1.pdf, id=112
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-3-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-3-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-3-1.pdf  used on input line 362.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[7 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-2-1.pdf>]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
+71.
+(c:/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-4-1.pdf, id=123
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-4-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-4-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-4-1.pdf  used on input line 383.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[8 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-3-1.pdf>]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-5-1.pdf, id=134
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-5-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-5-1.pdf  used on input line 400.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-6-1.pdf, id=135
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-6-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-6-1.pdf  used on input line 401.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-7-1.pdf, id=136
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-7-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-7-1.pdf  used on input line 402.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--403
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--403
+[]
+ []
+
+[9 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-4-1.pdf>] 
+[10 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-5-1.pdf>]
+[11 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-6-1.pdf>]
+<ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-8-1.pdf, id=165
+, 469.755pt x 325.215pt>
+File: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-8-1.pdf Gr
+aphic file (type pdf)
+<use ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-8-1.pdf>
+Package pdftex.def Info: ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnam
+ed-chunk-8-1.pdf  used on input line 447.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[12 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-7-1.pdf>]
+[13 <./ACT4114_TP_Part1_Equipe09--1-_files/figure-latex/unnamed-chunk-8-1.pdf>]
+[14] [15] [16] (./ACT4114_TP_Part1_Equipe09--1-.aux) ) 
+Here is how much of TeX's memory you used:
+ 15815 strings out of 476024
+ 259103 string characters out of 5794010
+ 1856382 words of memory out of 5000000
+ 35857 multiletter control sequences out of 15000+600000
+ 577343 words of font info for 124 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 77i,12n,81p,1026b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{c:/texlive/2022/texmf-di
+st/fonts/enc/dvips/lm/lm-ts1.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm
+/lm-ec.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/tex
+live/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2022/texmf-di
+st/fonts/type1/public/lm/lmcsc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/pu
+blic/lm/lmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb>
+<c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2022/t
+exmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on ACT4114_TP_Part1_Equipe09--1-.pdf (17 pages, 2723153 bytes).
+PDF statistics:
+ 284 PDF objects out of 1000 (max. 8388607)
+ 223 compressed objects within 3 object streams
+ 40 named destinations out of 1000 (max. 500000)
+ 39061 words of extra memory for PDF output out of 42996 (max. 10000000)
+
