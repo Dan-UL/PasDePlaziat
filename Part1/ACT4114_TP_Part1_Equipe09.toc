@@ -1,0 +1,21 @@
+\contentsline {section}{Introduction}{2}{section*.2}%
+\contentsline {section}{Sélection des variables}{2}{section*.3}%
+\contentsline {section}{Sélection des observations}{2}{section*.4}%
+\contentsline {section}{Imputation des données manquantes}{4}{section*.5}%
+\contentsline {section}{Création de la nouvelle variable réponse}{6}{section*.6}%
+\contentsline {section}{Analyse exploratoire des données}{6}{section*.7}%
+\contentsline {subsection}{Variables non pertinentes}{7}{section*.8}%
+\contentsline {subsection}{Variable \emph {condominiumIndicator}}{8}{section*.9}%
+\contentsline {subsection}{Variable \emph {communityRatingSystemDiscount}}{9}{section*.10}%
+\contentsline {subsection}{Variable \emph {dateOfLoss}}{10}{section*.11}%
+\contentsline {subsection}{Variable \emph {elevatedBuildingIndicator}}{11}{section*.12}%
+\contentsline {subsection}{Variables \emph {latitude} et \emph {longitude}}{12}{section*.13}%
+\contentsline {subsection}{Variable \emph {locationOfContents}}{13}{section*.14}%
+\contentsline {subsection}{Variable \emph {lowestFloorElevation}}{15}{section*.15}%
+\contentsline {subsection}{Variable \emph {numberOfFloorsInTheInsuredBuilding}}{16}{section*.16}%
+\contentsline {subsection}{Variable \emph {occupancyType}}{18}{section*.17}%
+\contentsline {subsection}{Variable \emph {totalCoverage}}{19}{section*.18}%
+\contentsline {subsection}{Variable \emph {primaryResidence}}{20}{section*.19}%
+\contentsline {section}{Conclusion}{21}{section*.20}%
+\contentsline {section}{Bibliographie}{22}{section*.21}%
+\contentsline {section}{Annexe}{23}{section*.22}%

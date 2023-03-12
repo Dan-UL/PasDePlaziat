@@ -43,7 +43,9 @@ data.raw <- read.csv("Flood_California.csv")
 
 # Introduction
 
+Le jeu de données utilisé est une base de données de réclamations d'assurance faites, par contrat, à la suite d'inondations aux États-Unis par FEMA. Étant donné que le jeu de données est trop volumineux, l'analyse se fera seulement sur l'état de la Californie. La variable réponse est le montant total payé par réclamation en dollar USD (totalAmount). Cette variable est obtenue en additionnant le montant payé sur la réclamation du bâtiment (amountPaidOnBuildingClaim), le montant payé sur la réclamation des biens (amountPaidOnContentsCaim) et le montant payé sur l’augmentation des coûts de la conformité (amountPaidOnIncreasedCostOfComplianceClaim).
 
+<!-- FEMA exposition -->
 
 # Sélection des variables
 
@@ -64,12 +66,15 @@ Nous avons aussi pris la décision d'enlever les variables temporelles à l'exce
 
 Les sujets d'intérêts sont, pour se remémoriser, les polices d'assurances couvrant le risque d'inondation pour des bâtiments de l'État de la Californie. Il est donc important de s'assurer que les données proviennent uniquement de la Californie. On peut effectuer cette sélection grâce aux données de coordonnées (latitude et logitude) ainsi qu'avec les code de comtés disponibles dans le jeu de données. 
 
-```{r USA map 1, message=FALSE, echo = F, warning=F}
+
+```{r USA map 1,  echo = F, warning=F}
 ## Carte des états-unis contanant toutes les données
 mapUSA <- borders(database = "state", 
                   colour="gray50", fill="white")
 ggplot(data = data, aes(x = longitude, y = latitude)) +
-    mapUSA + geom_point(alpha = .4)
+    mapUSA + geom_point(alpha = .4)+
+  labs(title = "Validation de la localication des polices d'assurance",y = "Latitude", x = "Longitude")+
+  theme_minimal()
 ```
 Grâce à cette carte, on peut facilement voir que certaines données ne sont visiblement pas situées en Californie. Ces observations sont retirées du jeu de données.
 
@@ -88,11 +93,13 @@ data <- data[data$countyCode != 32031,]
 
 Voici à quoi ressemble la distribution des données restantes sur la carte de la Californie.
 
-```{r geolocalisation, echo = T, warning=F}
+```{r geolocalisation, echo = F, warning=F}
 mapCalifornia <- borders(database = "county", region = "california",
                   colour="gray50", fill="white")
 ggplot(data = data, aes(x = longitude, y = latitude )) +
-    mapCalifornia + geom_point(alpha = .4)  
+    mapCalifornia + geom_point(alpha = .4)  +
+  labs(title = "Polices d'assurance en Californie",y = "Latitude", x = "Longitude")+
+  theme_minimal()
 ```
 
 # Imputation des données manquantes
@@ -109,11 +116,11 @@ Attaquons la variable communityRatingDiscount en premier. En effet, celle-ci ind
 data$communityRatingSystemDiscount[is.na(data$communityRatingSystemDiscount)] <- 10
 ```
 
-Ensuite, la variable du nombre d'étages du bâtiment (variable numberOfFloorsInTheInsuredBuilding) arborait un certain nombre de données manquantes pouvant être imputées. Nous avons commencé par reclassifier cette la  du type d'occupartion du bâtiment (occupancyType) en trois classes plus intuitives selon les descriptions des 14 classes offertes par le publicateur des données. Une de ces 14 classes n'avait aucune description, nous l'avons attribué à la classe ayant la proportion du nombre d'étages la plus semblable, qui est la classe 2.
+Ensuite, la variable du nombre d'étages du bâtiment (variable numberOfFloorsInTheInsuredBuilding) arborait un certain nombre de données manquantes pouvant être imputées. Nous avons commencé par reclassifier celle du type d'occupartion du bâtiment (occupancyType) en trois classes plus intuitives selon les descriptions des 14 classes offertes par le publicateur des données. Une de ces 14 classes n'avait aucune description, nous l'avons attribué à la classe ayant la proportion du nombre d'étages la plus semblable, qui est la classe 2.
 
-Niveau 1: Résidences familiales
-Niveau 2: Copropriétés résidentielles
-Niveau 3: Non-résidentiel
+* Niveau 1: Résidences familiales
+* Niveau 2: Copropriétés résidentielles
+* Niveau 3: Non-résidentiel
 
 En effet, nous avons identifié la variable du type d'occupation intuitivement comme une variable intimement corrélée avec le nombre d'étages du bâtiment, car elle donnc des indices sur la nature du bâtiment. Elle servira donc à l'imputation des données du nombre d'étages.
 
@@ -152,7 +159,7 @@ if(RNG[i] > prop.occ1[3] & RNG[i] <= prop.occ1[4])
 data$numberOfFloorsInTheInsuredBuilding[which(is.na(data$numberOfFloorsInTheInsuredBuilding))] <- imp.occ1
 ```
 
-La dernière variable à imputer est l'indicateur du bâtiment étant un condo ou non. On utilise tout simplement notre variable du type d'occupation du bâtiment; si l'observation est dans la catégorie 2, on lui impute une valeur de "1" et une valeur de "0" dans le cas échéant.
+La dernière variable à imputer est l'indicateur du bâtiment étant un condo ou non. On utilise tout simplement notre variable du type d'occupation du bâtiment; si l'observation est dans la catégorie 1, on lui impute une valeur de "1" et une valeur de "0" dans le cas contraire.
 
 ```{r condoz, echo = F}
 #Gestion des donnees manquantes de la variables condoIndicator
@@ -186,7 +193,7 @@ data$condominiumIndicator <- as.factor(data$condominiumIndicator)
 
 ```
 
-Observons maintenant à nouveau notre patron de non réponse. 
+Observons à nouveau notre patron de non réponse. 
 
 ```{r final md pattern, echo = F}
 x <- md.pattern(data, rotate.names = T)
@@ -233,6 +240,8 @@ data <- subset(data, select = -c(yearOfLoss))
 
 # Analyse exploratoire des données
 
+Puisque nous voulons étudier les réclamations causés par un sinistre, nous allons retenir les montants supérieurs à 10$. Ce seuil a été choisi car, logiquement les réclamations en dessous de ce montant devraient être quasi inexistantes. 
+
 ## Variables non pertinentes
 
 ```{r, echo=F}
@@ -259,46 +268,52 @@ data$smallBusinessIndicatorBuilding <- factor(data$smallBusinessIndicatorBuildin
 data$primaryResidence <- factor(data$primaryResidence)
 
 # On est interessé au montant de la réclamation s'il y a 
-data <- subset(data, data$totalAmount > 1 )
+data <- subset(data, data$totalAmount > 10 )
 ```
 
 ```{r, echo = F}
 p1 <- ggplot(data, aes(x = agricultureStructureIndicator, fill = agricultureStructureIndicator))+
   geom_bar()+
   theme_minimal()+
-  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0.25, size = 2)+
-  labs(y = "Quantité", x = "Est une structure agricole")+
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0, size = 2)+
+  labs(y = "Quantité", x = "Est une structure agricole", title = "Répartition des variables jugées non pertinentes")+
   theme(legend.position = "none")   
 
 p2 <- ggplot(data, aes(x = houseWorship, fill = houseWorship))+  
   geom_bar()+
   theme_minimal()+
-  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0.25, size = 2)+
-  labs(y = "Quantité", x = "Est une structure religieuse")+
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0, size = 2)+
+  labs(y = "Quantité", x = "Est une structure religieuse", title = " ")+
   theme(legend.position = "none")
 
 p3 <- ggplot(data, aes(x = smallBusinessIndicatorBuilding, fill = smallBusinessIndicatorBuilding))+
   geom_bar()+
   theme_minimal()+
-  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0.25,size = 2)+
-  labs(y = "Quantité", x = "Est une petite entreprise")+
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0,size = 2)+
+  labs(y = "Quantité", x = "Est une petite entreprise",title = " ")+
   theme(legend.position = "none")
 
 p4 <- ggplot(data, aes(x = nonProfitIndicator, fill = nonProfitIndicator))+
   geom_bar()+
   theme_minimal()+
-  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0.25, size = 2)+
-  labs(y = "Quantité", x = "Est un organisme à non-profit")+
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0, size = 2)+
+  labs(y = "Quantité", x = "Est un organisme à but non lucratif",title = " ")+
   theme(legend.position = "none")
 
+p5 <- ggplot(data, aes(x = factor(policyCount), fill = factor(policyCount)))+
+  geom_bar()+
+  theme_minimal()+
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-0, size = 2)+
+  labs(y = "Quantité", x = "Nombre de police",title = " ")+
+  theme(legend.position = "none")
 
-grid.arrange(p1, p2, p3, p4 , ncol = 3)
+grid.arrange(p1, p2, p3, p4, p5 , ncol = 3)
 
 data <- subset(data, select = -c(agricultureStructureIndicator, houseWorship, smallBusinessIndicatorBuilding, nonProfitIndicator, policyCount, state, countyCode,amountPaidOnBuildingClaim))
 ```
 
 
-Tel qu'on peut le voir dans les graphiques précédants, les quatres variables indicatices (smallBusinessIndicatorBuilding, agricultureStructureIndicator, houseWorship et nonProfitIndicator) sont trop peu fréquentes pour être significatives, elles seront donc élminées.
+Tel qu'on peut le voir dans les graphiques précédants, les cinq variables indicatices (smallBusinessIndicatorBuilding, agricultureStructureIndicator, houseWorship, policyCount et nonProfitIndicator) sont trop peu fréquentes pour être significatives, ce qui indique que les données conservées sont quasi homogènes par rapport à ces variables. Nous pouvons donc les retirer.
 
 ## Variable *condominiumIndicator*
 
@@ -306,9 +321,8 @@ Tel qu'on peut le voir dans les graphiques précédants, les quatres variables i
 ggplot(data, aes(x = condominiumIndicator, y = log(totalAmount), col = condominiumIndicator))+
   geom_boxplot()+
   theme_minimal()+
-  labs( x = "Est un condominium",y = "Montant total (échelle log)")+
+  labs( x = "Est un condominium",y = "Montant total (échelle log)", title = "Montant total en fonction de condominiumIndicator")+
   theme(legend.position = "none")
-
 
 ```
 
@@ -329,17 +343,15 @@ df <- data.frame(rbind(
             sd(data$totalAmount[data$condominiumIndicator == 0]))
   ))
   
-
-
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon condominiumIndicator")
 ```
 
 
-Variable indicatrice, 1 si l’habitation est un condominium, 0 sinon.
 
-Pour faciliter la visualisation une transformation log est effectuée sur le montant total, cette échelle sera utilisée pour de futurs graphiques.
+Cette variable est indicatrice, elle prendre une valeur de 1 si l’habitation est un condominium, 0 sinon. Pour faciliter la visualisation, une transformation logarithmique est effectuée sur le montant total, cette échelle sera aussi utilisée pour de futurs graphiques. Comme on peut le voir avec le tableau et le graphique, lorsqu'il y a une réclamation dans un condominium elles tend à être en moyenne plus élevée.
+
 
 
 
@@ -348,7 +360,7 @@ Pour faciliter la visualisation une transformation log est effectuée sur le mon
 ```{r, echo=F}
 p1 <- ggplot(data, aes(x = communityRatingSystemDiscount, y = log(totalAmount), col = communityRatingSystemDiscount ))+
   geom_boxplot()+
-  labs(title = "Avant le regroupement",y = "Montant total (échelle log)", x = "Type de rabais", col = "")+
+  labs( title = "Montant total en fonction de communityRatingSystemDiscount", subtitle = "Avant le regroupement",y = "Montant total (échelle log)", x = "Type de rabais", col = "")+
   theme_minimal()+
   coord_flip()+
   theme(legend.position = "none")
@@ -358,7 +370,7 @@ levels(data$communityRatingSystemDiscount) <- c("4","4","3","3","2","2","2","2",
 
 p2 <- ggplot(data, aes(x = communityRatingSystemDiscount, y = log(totalAmount), col = communityRatingSystemDiscount ))+
   geom_boxplot()+
-  labs(title = "Après le regroupement",y = "Montant total (échelle log)", x = "Type de rabais", col = "")+
+  labs(subtitle = "Après le regroupement",y = "Montant total (échelle log)", x = "Type de rabais", col = "")+
   theme_minimal()+
   coord_flip()+
   theme(legend.position = "none")
@@ -388,7 +400,7 @@ df <- data.frame(rbind(
             mean(data$totalAmount[data$communityRatingSystemDiscount == 3]),
             sd(data$totalAmount[data$communityRatingSystemDiscount == 3])),
     
-   "Plus de 40%" = c(min(data$totalAmount[data$communityRatingSystemDiscount == 4]),
+   "40% et plus" = c(min(data$totalAmount[data$communityRatingSystemDiscount == 4]),
             max(data$totalAmount[data$communityRatingSystemDiscount == 4]),
             median(data$totalAmount[data$communityRatingSystemDiscount == 4]),
             mean(data$totalAmount[data$communityRatingSystemDiscount == 4]),
@@ -399,29 +411,33 @@ df <- data.frame(rbind(
 
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon communityRatingSystemDiscount")
 ```
 
-Cette variable représente le pourcentage de rabais accordé lors de la tarrification. 
+Cette variable représente le remboursement par le gouvernement pour les individus éligibles, donc à faible revenu et situés dans une zone à risque. Par conséquent un grand remboursement indique un plus grand risque d'inondation.
 
-On remarque qu'il y a un trop grand nombre de catégories. Pour cette raison, elles sont réunies en quatres catégories de crédit:
+On remarque qu'il y a un trop grand nombre de catégories. Pour cette raison, elles sont réunies en quatres niveaux:
 
 * Niveau 1 : Aucun
 * Niveau 2 : 5% - 20%
 * Niveau 3 : 25% - 35%
-* Niveau 4 : Plus de 40%
+* Niveau 4 : 40% et plus
+
+Comme le  montre le graphique et le tableau plus le remboursement est élevé, plus les réclamations augmentent.
 
 
 ## Variable *dateOfLoss*
 
-Cette variable temporelle, au jours près, indique la date où s’est produit l’infiltration d’eau dans le bâtiment.
 
-```{r}
+
+```{r, echo=F}
 ggplot(data, aes(x = dateOfLoss, y = totalAmount))+
   geom_point(alpha = 0.4)+
   theme_minimal()+
-  labs(x = "La date de l'infiltration d'eau", y = "Montant total" )
+  labs(x = "Date d'infiltration d'eau", y = "Montant total", title = "Montant de la réclamation en fonction de la date" )
 ```
+
+Cette variable temporelle, au jours près, indique la date où s’est produit l’infiltration d’eau dans le bâtiment. La période commence en 1968 et se termine en 2021.
 
 ## Variable *elevatedBuildingIndicator*
 
@@ -429,7 +445,7 @@ ggplot(data, aes(x = dateOfLoss, y = totalAmount))+
 ggplot(data, aes(x = elevatedBuildingIndicator, y = log(totalAmount), col = elevatedBuildingIndicator))+
   geom_boxplot()+
   theme_minimal()+
-  labs( x = "Le bâtiment est élevé",y = "Montant total (échelle log)")+
+  labs( x = "Le bâtiment est élevé",y = "Montant total (échelle log)", title = "Montant de la réclamation selon l'élévation")+
   theme(legend.position = "none")
 ```
 
@@ -454,27 +470,30 @@ df <- data.frame(rbind(
 
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon elevatedBuildingIndicator")
 ```
 
-Variable indicatrice, 1 si le bâtiment est élevé, c’est-à-dire, au dessusdu nieveau du sol, 0 sinon.
-Un bâtiment est considéré élevé s'il le plancher le plus bas est au dessus du niveau du sol.
+Cette variable est indicatrice, elle prend une valeur de 1 si le bâtiment est élevé, 0 sinon. Un bâtiment est considéré élevé si le plancher le plus bas est au dessus du niveau du sol.
 
-## Variables *latitude* et *longitudes*
+Selon le tableau et le graphique, nous observons des montants plus grands de réclamation pour les bâtiments élevés. En effet, si le le bâtiment est élevé et qu'il y a une réclamation, nous en déduisons que l'inondation était plus catastrophique, donc des dégâts plus importants.
 
-```{r , echo = T}
+## Variables *latitude* et *longitude*
+
+```{r , echo = F}
 
 mapCalifornia <- borders(database = "county", region = "california",
-                  colour="gray50", fill="white")
+                  colour="gray50", fill="#D1D0CE")
 ggplot(data = data, aes(x = longitude, y = latitude, col= log(totalAmount))) +
-    mapCalifornia + geom_point(alpha = .6) + scale_color_gradientn(colors = c("#FC4E07", "#E7B800","darkolivegreen2", "#00AFBB"))+
+    mapCalifornia + geom_point(alpha = .6) + scale_color_gradientn(colors = c("#00FFFF", "#FFFDD0", "#FF0000"))+
   theme_minimal()+
-  labs(x= "Longitude", y="Latitude", title = "Réclamation en forction de la localisation", col ="Montant total (échelle log)")
+  labs(x= "Longitude", y="Latitude", title = "Réclamation en fonction de la localisation", col ="Montant total (échelle log)")
   
 
 
 
 ```
+
+Grâce au graphique précédent, nous observons que la majorité des réclamations sont situés aux alentours des grands centres urbains. Pour en nommer quelques uns: Sacramento, Los Angeles, San Fransisco.
 
 ## Variable *locationOfContents*
 
@@ -484,12 +503,12 @@ p1 <- ggplot(data, aes(x = locationOfContents))+
   geom_bar()+
   geom_text(stat='count', aes(label=after_stat(count)), nudge_y =250, size = 4)+
   theme_minimal()+
-  labs(title = "Avant le regroupement",y = "Quantité", x = "Location du contenu")+ coord_flip()
+  labs(title = "Répartition de la variable locationOfContents", subtitle = "Avant le regroupement",y = "Quantité", x = "Localisation du contenu")+ coord_flip()
   
 p2 <- ggplot(data, aes(x = locationOfContents, y = log(totalAmount), col = locationOfContents))+
   geom_boxplot()+
   theme_minimal()+
-  labs(y = "Montant total (échelle log)", x = "Location du contenu")+
+  labs(title = "Montant de la réclamation selon locationOfContents", subtitle = "Avant le regroupement",y = "Montant total (échelle log)", x = "Localisation du contenu")+
   coord_flip()+
   theme(legend.position = "none")
 
@@ -506,14 +525,14 @@ p3 <- ggplot(data, aes(x = locationOfContents))+
   geom_bar()+
   geom_text(stat='count', aes(label=after_stat(count)),nudge_y = 250, size = 4)+
   theme_minimal()+
-  labs(title = "Après le regroupement",y = "Quantité", x = "Location du contenu")+
+  labs(title = "Répartition de la variable locationOfContents", subtitle = "Après le regroupement",y = "Quantité", x = "Localisation du contenu")+
   theme(legend.position = "none")+ 
   coord_flip()
   
 p4 <- ggplot(data, aes(x = locationOfContents, y = log(totalAmount), col = locationOfContents))+
   geom_boxplot()+
   theme_minimal()+
-  labs(y = "Montant total (échelle log)", x = "Location du contenu")+
+  labs(title = "Montant de la réclamation selon locationOfContents", subtitle = "Après le regroupement",y = "Montant total (échelle log)", x = "Localisation du contenu")+
   coord_flip()+
   theme(legend.position = "none")
 
@@ -548,16 +567,18 @@ df <- data.frame(rbind(
 
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon locationOfContents")
 ```
 
-Variable catégoritielle indiquant où se trouve le contenu du bâtiment assuré qui a été endomagé.
+Cette variable catégoritielle indique où se trouve le contenu endomagé dans le bâtiment assuré.
 
-On remarque pour la variable locationOfContents, qu'il y a plusieurs catégories ne comportant qu'un faible nombre d'observations. Certaines seront donc combinées pour former les nouvelles catégories suivantes:
+On remarque pour la variable locationOfContents, qu'il y a plusieurs catégories ne comportant qu'un faible nombre d'observations. Certaines seront donc combinées selon leur nombre d'étage pour former les nouvelles catégories suivantes:
 
 * Niveau 1 : Sous-sol
 * Niveau 2 : Premier étage seulement
 * Niveau 3 : Premier étage et plus
+
+Comme nous pouvons l'observer dans le graphique à boîtes à moustache après le regroupement, plus le niveau d'eau monte dans la maison plus les réclamations sont importantes, puisque plus d'objets sont affectés.
 
 
 
@@ -570,7 +591,7 @@ data.x <- subset(data.x,data$totalAmount < 400000)
 ggplot(data.x, aes(x = lowestFloorElevation, y = totalAmount))+
   geom_point(alpha = 0.4)+
   theme_minimal()+
-  labs(x = "La hauteur du plus bas étage (Pieds)", y = "Montant total", title = "Montant des réclamations en fonction de l'élévation de plus bas étage" )
+  labs(x = "Hauteur du plus bas étage (Pieds)", y = "Montant total", title = "Montant des réclamations en fonction de l'élévation de plus bas étage" )
   
 ```
 
@@ -579,17 +600,20 @@ ggplot(data.x, aes(x = lowestFloorElevation, y = totalAmount))+
 
 df <- data.frame(rbind(
   "Hauteur (en pieds)" = c(min(data$lowestFloorElevation),
-                  max(data$lowestFloorElevation))
+            max(data$lowestFloorElevation),
+            median(data$lowestFloorElevation),
+            mean(data$lowestFloorElevation),
+            sd(data$lowestFloorElevation))
   ))
   
 
 
-colnames(df) <- c("Min", "Max")
+colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques de lowestFloorElevation")
 ```
 
-Cette variable représente la hauteur du plus bas étage de l'habitation, en pieds.
+Cette variable représente la hauteur du plus bas étage de l'habitation, en pieds, où il y a eu réclamation. Tel qu'observer sur le graphique les réclamation sont généralements plus élevés lorsque la hauteur du plus bas étage est petite. De plus, dans le tableau, on remarque que la moyenne est de 8.29717 pieds. Alors, les habitations sont habituellement près du niveau du sol.
 
 
 ## Variable *numberOfFloorsInTheInsuredBuilding*
@@ -600,12 +624,12 @@ p1 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding))+
   geom_bar()+
   geom_text(stat='count', aes(label=after_stat(count)), nudge_y =250, size = 4)+
   theme_minimal()+
-  labs(title = "Avant le regroupement",y = "Quantité", x = "Nombre d'étages")+ coord_flip()
+  labs(title = "Répartition de la variable numberOfFloorsInTheInsuredBuilding", subtitle = "Avant le regroupement",y = "Quantité", x = "Nombre d'étages")+ coord_flip()
   
 p2 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding, y = log(totalAmount), col = numberOfFloorsInTheInsuredBuilding))+
   geom_boxplot()+
   theme_minimal()+
-  labs(y = "Montant total (échelle log)", x = "Nombre d'étages")+
+  labs(title = "Montant de la réclamation selon numberOfFloorsInTheInsuredBuilding", subtitle = "Avant le regroupement",y = "Montant total (échelle log)", x = "Nombre d'étages")+
   coord_flip()+
   theme(legend.position = "none")
 
@@ -620,14 +644,14 @@ p3 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding))+
   geom_bar()+
   geom_text(stat='count', aes(label=after_stat(count)),nudge_y = 250, size = 4)+
   theme_minimal()+
-  labs(title = "Après le regroupement",y = "Quantité", x = "Nombre d'étages")+
+  labs(title = "Répartition de la variable numberOfFloorsInTheInsuredBuilding", subtitle = "Après le regroupement",y = "Quantité", x = "Nombre d'étages")+
   theme(legend.position = "none")+ 
   coord_flip()
   
 p4 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding, y = log(totalAmount), col = numberOfFloorsInTheInsuredBuilding))+
   geom_boxplot()+
   theme_minimal()+
-  labs(y = "Montant total (échelle log)", x = "Nombre d'étages")+
+  labs(title = "Montant de la réclamation selon numberOfFloorsInTheInsuredBuilding", subtitle = "Après le regroupement",y = "Montant total (échelle log)", x = "Nombre d'étages")+
   coord_flip()+
   theme(legend.position = "none")
 
@@ -662,16 +686,20 @@ df <- data.frame(rbind(
 
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon numberOfFloorsInTheInsuredBuilding")
 ```
 
 
 
-Cette variabe comportait 6 catégories d'habitation, nous avons conservé les trois premiers niveaux, et nous avons combinés les trois dernières selon leur nombre d'étages. Nous avons ainsi obtenu les niveaux suivants :
+Cette variabe indique le nombre d'étage de l'habitation assuré. Elle comportait 6 catégories d'habitation, nous avons conservé les trois premiers niveaux, et nous avons combinés les trois dernières selon leur nombre d'étages. Nous avons ainsi obtenu les niveaux suivants :
 
 * Niveau 1 : 1 étage
 * Niveau 2 : 2 étages
 * Niveau 3 : 3 étages et plus
+
+Nous observons que la majorité des dommages sont concentés sur les maisons à 1 ou 2 étages.
+
+
 
 
 
@@ -719,7 +747,7 @@ df <- data.frame(rbind(
 
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon occupancyType")
 ```
 
 Cette variable catégorielle indique le type de résidence du bâtiment.
@@ -728,10 +756,12 @@ Cette variable catégorielle indique le type de résidence du bâtiment.
 * Niveau 2: Copropriétés résidentielles
 * Niveau 3: Non-résidentiel
 
+Tel qu'observé dans le graphique et la table de statistiques, les résidences familliales ont en général des dommages moins importants que les copropriétés et il évident que les édifices non résidentiels ont des réclamations plus élevées en cas de sinistres.
+
 
 ## Variable *totalCoverage*
 
-```{r}
+```{r, echo = F}
 data$totalCoverage <- data$totalBuildingInsuranceCoverage + data$totalContentsInsuranceCoverage
 
 
@@ -745,22 +775,9 @@ data <- subset(data , select = -c(totalBuildingInsuranceCoverage, totalContentsI
 ```
 
 
-```{r, echo = F}
-## Moyenne, ecartype, mediane, min , max
+Dans le jeu de données, les montants de couverture (totalBuildingInsuranceCoverage)  pour le bâtiment et pour les biens personnels (totalContentsInsuranceCoverage) étaient séparés, nous avons jugés plus logique de combiner les deux variables en une seule (totalCoverage), puisque nous avions déjà réunis les montants des réclamations.
 
-df <- data.frame(rbind(
-  "Couverture d'assurance" = c(min(data$totalCoverage),
-                  max(data$totalCoverage))
-  ))
-  
-
-
-colnames(df) <- c("Min", "Max")
-
-df
-```
-
-Dans le jeu de données, les montants de couverture (totalBuildingInsuranceCoverage & totalContentsInsuranceCoverage) pour le bâtiment et pour les biens personnels étaient séparés, nous avons jugés plus logique de combiner les deux variables en une (totalCoverage), puisque nous avions déjà réunis les montants des réclamations.
+Nous remarquons que le graphique forme un triangle inférieur. Cette formation est logique puisque nous ne pouvons pas être dédommagé plus que notre couverture d'assurance.
 
 
 ## Variable *primaryResidence*
@@ -769,7 +786,7 @@ Dans le jeu de données, les montants de couverture (totalBuildingInsuranceCover
 ggplot(data, aes(x = primaryResidence, y = log(totalAmount), col = primaryResidence))+
   geom_boxplot()+
   theme_minimal()+
-  labs( x = "Le bâtiment est une résidence primaire",y = "Montant total (échelle log)")+
+  labs( title = "Montant de la réclamation en fonction de primaryResidence" ,x = "Le bâtiment est une résidence primaire",y = "Montant total (échelle log)")+
   theme(legend.position = "none")
 ```
 
@@ -795,20 +812,26 @@ df <- data.frame(rbind(
 
 colnames(df) <- c("Min", "Max", "Médiane", "Moyenne", "Écart-type")
 
-df
+knitr::kable(df,caption = "Statistiques sur totalAmount selon primaryResidence")
 ```
 
-Variable indicatrice indiquant si le bâtiment assuré est la résidence primaire, 1 si oui, 0 sinon.
+Cette variable indique si le bâtiment assuré est la résidence primaire du client en prenant la valeur 1, dans le cas contraire 0.
+
+En regardant le graphique et le table, il est évident que les réclamation sont plus importantes pour les résidences primaires.
 
 
 \newpage
 # Conclusion
 
+En conclusion, on s’intéresse au montant des réclamations à la suite d’inondations dans l’état de la Californie, aux États-Unis. Cette première partie du rapport a consisté à sélectionner et à traiter les variables significatives pour notre problème : en retirant les variables non significatives, en traitant les données manquantes et en regroupant des variables & obervations. Au départ, on avait 41 variables avec environ 50 000 observations, à la suite de l’analyse et du traitement des données on a maintenant 13 variables avec environ 10 000 observations qui vont nous permettre de résoudre le problème. Pour ce faire, un modèle linéaire généralisé Gamma ou une régression linéaire multiple pourraient être utilisés.
 
 \newpage
 # Bibliographie
 
-<!-- https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v1 -->
+The Federal Emergency Management Agency (2023). FIMA NFIP Redacted Claims - v1.
+
+Récupéré de https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v1
+
 
 \newpage
 # Annexe
