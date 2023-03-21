@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  12 MAR 2023 16:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  13 MAR 2023 15:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -824,11 +824,11 @@ hunk-22-1.pdf  used on input line 680.
 0 <./ACT4114_TP_Part1_Equipe09_files/figure-latex/unnamed-chunk-22-1.pdf>] [21]
 [22] [23] (./ACT4114_TP_Part1_Equipe09.aux) ) 
 Here is how much of TeX's memory you used:
- 15893 strings out of 476024
- 263425 string characters out of 5794010
+ 15901 strings out of 476024
+ 263519 string characters out of 5794010
  1862382 words of memory out of 5000000
  35871 multiletter control sequences out of 15000+600000
- 582047 words of font info for 131 fonts, out of 8000000 for 9000
+ 582520 words of font info for 135 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  77i,12n,81p,1022b,569s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/
@@ -839,7 +839,7 @@ type1/public/lm/lmbxi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/l
 mcsc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texl
 ive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2022/texmf-dis
 t/fonts/type1/public/lm/lmro10.pfb>
-Output written on ACT4114_TP_Part1_Equipe09.pdf (24 pages, 4064164 bytes).
+Output written on ACT4114_TP_Part1_Equipe09.pdf (24 pages, 4064436 bytes).
 PDF statistics:
  442 PDF objects out of 1000 (max. 8388607)
  358 compressed objects within 4 object streams

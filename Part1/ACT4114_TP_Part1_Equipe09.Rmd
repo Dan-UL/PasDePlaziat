@@ -499,6 +499,9 @@ Grâce au graphique précédent, nous observons que la majorité des réclamatio
 
 
 ```{r, echo=F}
+
+
+
 p1 <- ggplot(data, aes(x = locationOfContents))+
   geom_bar()+
   geom_text(stat='count', aes(label=after_stat(count)), nudge_y =250, size = 4)+
@@ -519,7 +522,12 @@ grid.arrange(p1, p2, ncol = 1)
 
 
 ```{r, echo = F}
+
 levels(data$locationOfContents) <- c("1","1","1","2","3","3","2","1")
+
+#levels(data$locationOfContents) <- c("3","2","1")
+#data$locationOfContents <- factor(data$locationOfContents, levels = c( "1", "2", "3"))
+
 
 p3 <- ggplot(data, aes(x = locationOfContents))+
   geom_bar()+
@@ -574,9 +582,9 @@ Cette variable catégoritielle indique où se trouve le contenu endomagé dans l
 
 On remarque pour la variable locationOfContents, qu'il y a plusieurs catégories ne comportant qu'un faible nombre d'observations. Certaines seront donc combinées selon leur nombre d'étage pour former les nouvelles catégories suivantes:
 
-* Niveau 1 : Sous-sol
+* Niveau 1 : Premier étage et plus
 * Niveau 2 : Premier étage seulement
-* Niveau 3 : Premier étage et plus
+* Niveau 3 : Sous-sol
 
 Comme nous pouvons l'observer dans le graphique à boîtes à moustache après le regroupement, plus le niveau d'eau monte dans la maison plus les réclamations sont importantes, puisque plus d'objets sont affectés.
 
@@ -640,6 +648,9 @@ grid.arrange(p1, p2, ncol = 1)
 ```{r, echo = F}
 levels(data$numberOfFloorsInTheInsuredBuilding) <- c("1","2","3","2","1","3")
 
+levels(data$numberOfFloorsInTheInsuredBuilding) <- c("2","3","1")
+data$numberOfFloorsInTheInsuredBuilding <- factor(data$numberOfFloorsInTheInsuredBuilding, levels = c( "1", "2", "3"))
+
 p3 <- ggplot(data, aes(x = numberOfFloorsInTheInsuredBuilding))+
   geom_bar()+
   geom_text(stat='count', aes(label=after_stat(count)),nudge_y = 250, size = 4)+
@@ -693,9 +704,9 @@ knitr::kable(df,caption = "Statistiques sur totalAmount selon numberOfFloorsInTh
 
 Cette variabe indique le nombre d'étage de l'habitation assuré. Elle comportait 6 catégories d'habitation, nous avons conservé les trois premiers niveaux, et nous avons combinés les trois dernières selon leur nombre d'étages. Nous avons ainsi obtenu les niveaux suivants :
 
-* Niveau 1 : 1 étage
-* Niveau 2 : 2 étages
-* Niveau 3 : 3 étages et plus
+* Niveau 1 : 3 étages et plus
+* Niveau 2 : 1 étage
+* Niveau 3 : 2 étages
 
 Nous observons que la majorité des dommages sont concentés sur les maisons à 1 ou 2 étages.
 
@@ -849,11 +860,11 @@ Variable réponse : Le montant total payé par réclamation en dollar USD. Pour 
 Exposition: _policyCount_ le nombre de polices au contrat
 
 Variables explicatives :
- 1. _primaryResidence_ : Boolean, Y si résidence principale, N sinon
- 2. _dateOfLoss_ : Date, date à laquelle il y a eu l'infiltration d'eau
- 3. _occupancyType_ : Catégorielle, indique l'utilisation et le type du bâtiment
- 4. _totalBuildingInsuranceCoverage_ et _totalContentsInsuranceCoverage_ : Numérique, le montant de la couverture au contrat
- 5. _longitude_ et _latitude_ : Spatiale, longitude et latitude du bâtiment assuré
+ * 1. _primaryResidence_ : Boolean, Y si résidence principale, N sinon
+ * 2. _dateOfLoss_ : Date, date à laquelle il y a eu l'infiltration d'eau
+ * 3. _occupancyType_ : Catégorielle, indique l'utilisation et le type du bâtiment
+ * 4. _totalBuildingInsuranceCoverage_ et _totalContentsInsuranceCoverage_ : Numérique, le montant de la couverture au contrat
+ * 5. _longitude_ et _latitude_ : Spatiale, longitude et latitude du bâtiment assuré
  
 
 
