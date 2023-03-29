@@ -1,0 +1,109 @@
+---
+output:
+  pdf_document:
+    df_print: kable
+    includes:
+      before_body: "TP-title.tex"
+      in_header: "preamble-latex.tex"
+---  
+\centering  
+
+\clearpage  
+  
+\tableofcontents   
+
+\justify  
+\clearpage  
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ 
+ 
+```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
+### Liste des paquetages
+liste.paquetage <- c("ggplot2", "maps", "mice", "graphics", "gridExtra", "caret", "gbm", "xgboost", "iml", "tidyverse", "adabag")
+
+### On installe les paquetages de la liste qu'on a pas déjà
+inst <- liste.paquetage %in% installed.packages()
+if(length(liste.paquetage[!inst]) > 0) install.packages(liste.paquetage[!inst])
+
+lapply(liste.paquetage, require, character.only = TRUE)
+library(ggplot2)
+library(maps)
+library(mice)
+library(graphics)
+library(gridExtra)
+library(caret)
+library(gbm)
+library(xgboost)
+library(iml)
+library(tidyverse)
+library(adabag)
+```
+
+```{r data import, echo = F}
+data <- read.csv("DonnéesTraitées.csv")
+```
+
+
+\newpage
+# Introduction
+<!-- Danny -->
+
+
+\newpage
+# Modèle de base
+<!-- Félix & Henri -->
+
+\newpage
+# Ajustement des modèles
+<!-- Collectif -->
+
+## Modèle linéaire (À spécifier)
+<!-- Félix & Henri -->
+
+## Modèle des k plus proches voisins
+<!-- Félix & Henri -->
+
+## Arbre de décision
+<!-- Félix & Henri -->
+
+## Bagging
+<!-- Isabelle -->
+
+## Forêt aléatoire
+<!-- Danny -->
+
+## Boosting
+<!-- Danny -->
+
+### Gradient Boosting
+
+
+\newpage
+# Comparaison des modèles
+<!-- Collectif -->
+
+\newpage
+# Interprétation des meilleurs modèles
+<!-- Maryjane -->
+
+
+\newpage
+# Conclusion
+<!-- Isabelle -->
+
+
+\newpage
+# Bibliographie
+
+The Federal Emergency Management Agency (2023). FIMA NFIP Redacted Claims - v1.
+
+Récupéré de https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v1
+
+
+
+
+
