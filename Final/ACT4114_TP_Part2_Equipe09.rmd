@@ -2,6 +2,7 @@
 output:
   pdf_document:
     df_print: kable
+    fig_caption: true
     includes:
       before_body: "TP-title.tex"
       in_header: "preamble-latex.tex"
@@ -23,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
  
 ```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
 ### Liste des paquetages
-liste.paquetage <- c("ggplot2", "maps", "mice", "graphics", "gridExtra", "caret", "gbm", "xgboost", "iml", "tidyverse", "adabag")
+liste.paquetage <- c("ggplot2", "maps", "mice", "graphics", "gridExtra", "caret", "gbm", "xgboost", "iml", "tidyverse", "adabag","randomForest", "rpart", "rpart.plot", "pROC")
 
 ### On installe les paquetages de la liste qu'on a pas déjà
 inst <- liste.paquetage %in% installed.packages()
@@ -41,10 +42,20 @@ library(xgboost)
 library(iml)
 library(tidyverse)
 library(adabag)
+library(randomForest)
+library(rpart)
+library(rpart.plot)
+library(pROC)
 ```
 
 ```{r data import, echo = F}
 data <- read.csv("DonnéesTraitées.csv")
+
+## 80/20 pour le trainning et test
+set.seed(1123581321)
+ind.train <- sample(1:nrow(data), 0.8*nrow(data), FALSE)
+dat.train <- data[ind.train,]
+dat.test <- data[-ind.train,]
 ```
 
 
@@ -76,10 +87,72 @@ data <- read.csv("DonnéesTraitées.csv")
 ## Forêt aléatoire
 <!-- Danny -->
 
+
+```{r, cache=TRUE, echo = F}
+
+set.seed(36738)
+foret <- randomForest(totalAmount~.,
+                      data = dat.train,
+                      nodesize = 10,
+                      mtry = 4,
+                      importance = T,
+                      cp = 0,
+                      sampsize = floor(0.5*nrow(data)),
+                      ntree = 400,
+                      keep.forest = T)
+
+```
+
+Pour la forêt aléatoire, on commence avec quatres prédicteurs possibles pour chaque séparation, $i.e. \ m=4$, car $\lfloor 13/3 \rfloor \approx 4$. Cette valeur correspond à la "règle du pouce" en régression où l'on utilise la partie entière du nombre de valeurs explicatives divisé par 3. Deplus, en utilisant une proportion de de 50% pour les échantillons bootstrap, on aide a diminuer la corrélation entre les arbres.
+
+
+```{r, cache=TRUE, echo = F, warning=F, fig.cap= c("MSE selon le nombre d'arbre"), fig.dim= 0.5}
+df.oob <- data.frame(Tree = 1:400,
+                     MSE = foret$mse)
+
+ggplot(df.oob, aes(x=Tree, y = MSE ))+
+  theme_minimal()+
+  geom_line()+
+  ylim(200000000, 400000000)+
+  labs(x = "Nombre d'arbre")
+
+```
+On remarque ici que l'erreur quadratique se stabilise aux alentours de 100-150 arbres, on utilisera alors 200 arbres pour l'optimisation des autres hyperparamètres, puisqu'on ne peut pas surajuster en ayant trop d'arbre avec les forêts aléatoires. Maintenant, on regarde plus en profondeur le nombre de prédicteurs possible à chaque séparation d'un arbre. Étant en régression, la racine de l'erreur quadratique moyenne sera utilisée comme mesure de comparaison (RMSE).
+
+
+```{r, cache=TRUE, echo = F}
+
+control <- trainControl(method= "cv", number=5)
+
+grille <- expand.grid(mtry = 1:13)
+
+set.seed(1235711)
+foret_tuning <- caret::train(totalAmount~.,
+                  data = dat.train,
+                  method = "rf",
+                  metric = "RMSE",
+                  tuneGrid = grille,
+                  trControl = control,
+                  sampsize = floor(0.5*nrow(dat.train)),
+                  ntree = 200,
+                  nodesize = 10)
+
+foret_tuning
+
+```
+
+La valeur optimal sera donc de 13
+
+Pour éviter un surajustement dû à des arbres trop profonds, on devra ajuster la valeur de `nodesize`, mais il est impossible de le faire directement avec le package `caret`. Puisque le modèle est entraîné sur `r nrow(dat.train)`` données, les valeurs de 100 et moins seront testées par bonds de 5.
+
+
+
 ## Boosting
 <!-- Danny -->
 
 ### Gradient Boosting
+
+### Extreme gradient boosting
 
 
 \newpage
