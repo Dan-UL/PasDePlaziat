@@ -104,7 +104,7 @@ foret <- randomForest(totalAmount~.,
                       cp = 0,
                       sampsize = floor(0.5*nrow(data)),
                       ntree = 400,
-                      keep.forest = T)
+                      )
 
 ```
 
@@ -112,23 +112,22 @@ Pour la forêt aléatoire, on commence avec quatres prédicteurs possibles pour 
 
 \vspace{8pt}
 
-```{r forest-tree, cache=TRUE,echo = F , fig.cap= "\\label{fig:forest.2}MSE selon le nombre d'arbre", warning=F,  fig.dim= c(7,3)}
+```{r forest-tree, cache=TRUE,echo = F , warning=F,  fig.dim= c(7,3)}
 
 df.oob <- data.frame(Tree = 1:400,
-                     MSE = foret$mse)
+                     RMSE = sqrt(foret$mse))
 
-ggplot(df.oob, aes(x=Tree, y = MSE ))+
+ggplot(df.oob, aes(x=Tree, y = RMSE ))+
   theme_minimal()+
   geom_line()+
-  ylim(200000000, 400000000)+
-  labs(x = "Nombre d'arbre", title = "MSE selon le nombre d'arbre")+
+  labs(x = "Nombre d'arbre", title = "RMSE selon le nombre d'arbre")+
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
 \vspace{8pt}
 
-On remarque ici (Graphique no. #) que l'erreur quadratique se stabilise aux alentours de 100-150 arbres, on utilisera alors 200 arbres pour l'optimisation des autres hyperparamètres, puisqu'on ne peut pas surajuster en ayant trop d'arbre avec les forêts aléatoires. Maintenant, on regarde plus en profondeur le nombre de prédicteurs possible à chaque séparation d'un arbre, la variable `mtry`. Étant en régression, la racine de l'erreur quadratique moyenne, ou RMSE, sera utilisée comme mesure de comparaison.
+Étant en régression, la racine de l'erreur quadratique moyenne, ou RMSE, sera utilisée comme mesure de comparaison. On remarque ici (Graphique no. #) que la RMSE se stabilise aux alentours de 100-150 arbres, on utilisera alors 200 arbres pour l'optimisation des autres hyperparamètres, puisqu'on ne peut pas surajuster en ayant trop d'arbre avec les forêts aléatoires. Maintenant, on regarde plus en profondeur le nombre de prédicteurs possible à chaque séparation d'un arbre, la variable `mtry`. 
 
 
 ```{r forest-tunning, cache=TRUE, echo=FALSE}
@@ -138,7 +137,7 @@ control <- trainControl(method= "cv", number=5)
 grille <- expand.grid(mtry = 1:13)
 
 set.seed(1235711)
-foret_tuning <- caret::train(totalAmount~.,
+foret.tuning <- caret::train(totalAmount~.,
                   data = dat.train,
                   method = "rf",
                   metric = "RMSE",
@@ -155,22 +154,99 @@ foret_tuning <- caret::train(totalAmount~.,
 
 ```{r forest-mtry, echo=FALSE, cache=TRUE}
 df.forest.mtry <- t(data.frame(mtry = round(1:13),
-                          RMSE = round(foret_tuning$results[,2])))
+                          RMSE = round(foret.tuning$results[,2])))
 
 knitr::kable(df.forest.mtry,caption = "RMSE par rapport au mtry")
+
+best.mtry <- foret.tuning$bestTune[[1]]
 ```
 
 \vspace{8pt}
  
-Les résultats de la table no. # ont été obtenus par validation croisée à 5 plis, pour ainsi réduire le biais d'échantillonage. L'utilisation des `r foret_tuning$bestTune[[1]]` choix de variables explicatives à chaque noeud minimise la RMSE.
+Les résultats de la table no. # ont été obtenus par validation croisée à 5 plis, pour ainsi réduire le biais d'échantillonage. L'utilisation des `r best.mtry` choix de variables explicatives à chaque noeud minimise la RMSE.
 
-Pour éviter un surajustement dû à des arbres trop profonds, on devra ajuster la valeur de `nodesize`, mais il est impossible de le faire directement avec le package `caret`. Puisque le modèle est entraîné sur `r nrow(dat.train)` observations, les valeurs de 100 et moins seront testées par bonds de 5.
+Pour éviter un surajustement dû à des arbres inutillemnet trop profonds, on devra ajuster la valeur de `nodesize`, mais il est impossible de le faire directement avec le package `caret`. Puisque le modèle est entraîné sur `r nrow(dat.train)` observations, les valeurs de 25 et moins seront testées et comparées.
 
-```{r forest-nodesize, echo = FALSE, cache=TRUE}
+```{r forest-nodesize, echo = FALSE, cache=TRUE, message=FALSE}
+# Création de l'échantillon de validation, 20% des observations d'entraînement 
+set.seed(95751)
+ind.val <- sample(1:nrow(dat.train), 0.20*nrow(dat.train), FALSE)
+dat.valid <- dat.train[ind.val,]
+dat.non.valid <- dat.train[-ind.val,]
+
+# Optimiser nodesize sur l'échantillon de validation de 1 à 25
+prev.nodesize.rmse <- rep(0, 25)
+for(i in 1:25){
+  
+  set.seed(31)
+  foret.node <- randomForest(totalAmount~.,
+                      data = dat.train,
+                      nodesize = i,
+                      mtry = 13,
+                      importance = T,
+                      cp = 0,
+                      sampsize = floor(0.5*nrow(dat.train)),
+                      ntree = 200)
+  
+  foret.node.prev <- predict(foret.node, newdata=dat.valid, type="response")
+  prev.nodesize.rmse[i] <- RMSE(foret.node.prev,dat.valid$totalAmount)
+  
+}
+
+
+min.node <- which.min(prev.nodesize.rmse)
+
+
+df.node <- data.frame("Nodesize" = 1:25,
+                     "RMSE" = prev.nodesize.rmse)
+
+```
+
+\vspace{8pt}
+
+```{r forest-nodesize-rmse, fig.dim= c(7,3), echo=FALSE}
+
+ggplot(df.node, aes(x=Nodesize, y = RMSE ))+
+  theme_minimal()+
+  geom_line()+
+  labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize")+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
+  geom_line(aes(x = min.node, color = "red"), linetype = "dashed")+
+  annotate(geom = "text", label = paste("nodesize =",as.character(min.node)),x = min.node, y = 16000, vjust = 1.5, angle = 90)
+
+```
+
+\vspace{8pt}
+
+Tel qu'on peut le voir dans le graphique no. #, la valeur de 1 pour l'hyperparamètre nodesize minimise la RMSE. Par conséquent, les hyperparamètres finaux pour le modèle "Forêt aléatoire" sont ceux décrits dans la table suivante.
+
+\vspace{8pt}
+
+```{r forest-parametre-final, cache=TRUE, echo=FALSE}
+
+df.forest.final <- data.frame(
+  "Hyperparamètre" = c("Nombre d'arbres", "Nombre de choix de variables à chaque noeud", "Nombre d'observation dans les noeuds terminaux"),
+  "Valeur" = c(200, 13, 1)
+)
+
+knitr::kable(df.forest.final,caption = "Valeurs des hyperparamètres du modèle final")
 
 ```
 
 
+```{r forest-model-final, cache=TRUE, echo=FALSE}
+
+set.seed(963852)
+foret.final <- randomForest(totalAmount~.,
+                      data = dat.train,
+                      nodesize = 1,
+                      mtry = 13,
+                      importance = T,
+                      cp = 0,
+                      sampsize = floor(0.5*nrow(data)),
+                      ntree = 200,
+                      )
+```
 
 
 \newpage
