@@ -227,15 +227,15 @@ ggplot(df.node, aes(x=Nodesize, y = RMSE ))+
 
 \vspace{8pt}
 
-Dans le graphique no. #, la valeur minimale de nodesize est de `r min.node`. Puisque l'analyse précédente à été effectuée par bonds de 20, on la fera à nouveau pour toutes les valeurs entre 450 et 550.
+Dans le graphique no. #, la valeur minimale de nodesize est de `r min.node`. Puisque l'analyse précédente à été effectuée par bonds de 20, on la fera à nouveau de manière plus précise entre 475 et 525. On remarque aussi qu'il y ait un minimum local près de 250, par prudence on vérifiera aussi les valeurs entre 225 et 275.
 
 \vspace{8pt}
 
 ```{r forest-nodesize-tune, echo = FALSE, cache=TRUE, message=FALSE}
 
-# Optimiser nodesize sur l'échantillon de validation de 450 a 550
-prev.nodesize.rmse.tune <- rep(NA, 101)
-for(i in 450:550 ){
+# Optimiser nodesize sur l'échantillon de validation de 475 a 525
+prev.nodesize.rmse.tune <- rep(NA, 51)
+for(i in 475:525 ){
   
   set.seed(897941)
   foret.node.tune <- randomForest(totalAmount~.,
@@ -248,15 +248,15 @@ for(i in 450:550 ){
                       ntree = 200)
   
   foret.node.prev.tune <- predict(foret.node.tune, newdata=dat.valid, type="response")
-  prev.nodesize.rmse.tune[i-449] <- RMSE(foret.node.prev.tune,dat.valid$totalAmount)
+  prev.nodesize.rmse.tune[i-474] <- RMSE(foret.node.prev.tune,dat.valid$totalAmount)
   
 }
 
 
-min.node.tune <- which.min(prev.nodesize.rmse.tune)+449
+min.node.tune <- which.min(prev.nodesize.rmse.tune)+474
 
 
-df.node.tune <- data.frame("Nodesize" = 450:550 ,
+df.node.tune <- data.frame("Nodesize" = 475:525 ,
                      "RMSE" = prev.nodesize.rmse.tune 
                      )
 
@@ -271,19 +271,97 @@ ggplot(df.node.tune, aes(x=Nodesize, y = RMSE ))+
   geom_line()+
   labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize")+
   theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
-  geom_line(aes(x = min.node, color = "red"), linetype = "dashed")+
+  geom_line(aes(x = min.node.tune, color = "red"), linetype = "dashed")+
   annotate(geom = "text",
            label = paste("nodesize =",as.character(min.node.tune)),
            x = min.node.tune,
-           y = prev.nodesize.rmse.tune[min.node.tune-449]+100,
-           vjust = 2.5,
+           y = prev.nodesize.rmse.tune[min.node.tune-474]+80,
+           vjust = 1.5,
            angle = 90)
 
 ```
 
 \vspace{8pt}
 
-Tel qu'on peut le voir dans le graphique no. #, la valeur de `r min.node.tune` pour l'hyperparamètre nodesize minimise la RMSE. Par conséquent, les hyperparamètres finaux pour le modèle "Forêt aléatoire" seront ceux décrits dans la table suivante.
+Dans le graphique no. #, la valeur minimale de nodesize est de `r min.node`. Puisque l'analyse précédente à été effectuée par bonds de 20, on la fera à nouveau de manière plus précise entre 475 et 525. 
+
+\vspace{8pt}
+
+
+```{r forest-nodesize-check, echo = FALSE, cache=TRUE, message=FALSE}
+
+# Optimiser nodesize sur l'échantillon de validation de 450 a 550
+prev.nodesize.rmse.check <- rep(NA, 51)
+for(i in 225:275 ){
+  
+  set.seed(897941)
+  foret.node.check <- randomForest(totalAmount~.,
+                      data = dat.non.valid,
+                      nodesize = i,
+                      mtry = best.mtry,
+                      importance = T,
+                      cp = 0,
+                      sampsize = floor(0.5*nrow(dat.non.valid)),
+                      ntree = 200)
+  
+  foret.node.prev.check <- predict(foret.node.check, newdata=dat.valid, type="response")
+  prev.nodesize.rmse.check[i-224] <- RMSE(foret.node.prev.check,dat.valid$totalAmount)
+  
+}
+
+
+min.node.check <- which.min(prev.nodesize.rmse.check)+224
+
+
+df.node.check <- data.frame("Nodesize" = 225:275 ,
+                     "RMSE" = prev.nodesize.rmse.check 
+                     )
+
+```
+
+On remarque aussi qu'il y ait un minimum local près de 250, par prudence on vérifiera aussi les valeurs entre 225 et 275.
+
+```{r forest-nodesize-rmse-check, fig.dim= c(7,3), echo=FALSE, warning=FALSE}
+
+ggplot(df.node.check, aes(x=Nodesize, y = RMSE ))+
+  theme_minimal()+
+  geom_line()+
+  labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize")+
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
+  geom_line(aes(x = min.node.check, color = "red"), linetype = "dashed")+
+  annotate(geom = "text",
+           label = paste("nodesize =",as.character(min.node.check)),
+           x = min.node.check,
+           y = prev.nodesize.rmse.check[min.node.check-224]+200,
+           vjust = 1.5,
+           angle = 90)
+
+min.rmse <- min( prev.nodesize.rmse.check[min.node.check-224],prev.nodesize.rmse.tune[min.node.check-474])
+min.node.fin <- ifelse(min.rmse == prev.nodesize.rmse.check[min.node.check-224],
+                       min.node.check,min.node.tune )
+
+```
+
+\vspace{8pt}
+
+Tel qu'on peut le voir dans les graphiques no. # et no. #, les valeurs des minimums locaux sont de `r min.node.tune` et de `r min.node.check` pour l'hyperparamètre nodesize. Le nodesize qui minimise la RMSE est de `r min.node.fin`, tel que l'on peut dans la table no. #. 
+
+\vspace{8pt}
+
+```{r forest-rmse-final, cache=TRUE, echo=FALSE}
+
+df.forest.min.node <- data.frame(
+  "Nodesize" = c(min.node.tune,min.node.check),
+  "RMSE" = c(prev.nodesize.rmse.tune[min.node.tune-474],prev.nodesize.rmse.check[min.node.check-224]))
+
+
+knitr::kable(df.forest.min.node ,caption = "RMSE aux minimums locaux")
+
+```
+
+\vspace{8pt}
+
+Par conséquent, les hyperparamètres finaux pour le modèle "Forêt aléatoire" sont ceux décrits dans la table suivante.
 
 \vspace{8pt}
 
@@ -291,7 +369,7 @@ Tel qu'on peut le voir dans le graphique no. #, la valeur de `r min.node.tune` p
 
 df.forest.final <- data.frame(
   "Hyperparamètre" = c("Nombre d'arbres", "Nombre de choix de variables à chaque noeud", "Nombre d'observation dans les noeuds terminaux"),
-  "Valeur" = c(200, best.mtry, min.node.tune)
+  "Valeur" = c(200, best.mtry, min.node.fin)
 )
 
 knitr::kable(df.forest.final,caption = "Valeurs des hyperparamètres du modèle final")
