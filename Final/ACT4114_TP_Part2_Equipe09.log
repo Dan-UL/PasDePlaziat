@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  1 APR 2023 20:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.26)  2 APR 2023 14:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -657,78 +657,8 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
 (c:/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Overfull \hbox (1.82378pt too wide) in paragraph at lines 262--262
-[]|\T1/lmr/m/n/10 (-20) mtry|  
- []
-
-
-Overfull \hbox (9.42444pt too wide) in paragraph at lines 263--263
+Overfull \hbox (7.17113pt too wide) in paragraph at lines 262--262
 []|\T1/lmr/m/n/10 (-20) RMSE|  
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 19064|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 19034|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 18942|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 18808|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 18645|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 18480|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 18321|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 263--263
- []|\T1/lmr/m/n/10 (-20) 18256|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 264--264
- []|\T1/lmr/m/n/10 (-20) 18183|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 264--264
- []|\T1/lmr/m/n/10 (-20) 18073|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 264--264
- []|\T1/lmr/m/n/10 (-20) 18037|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 264--264
- []|\T1/lmr/m/n/10 (-20) 18011|
- []
-
-
-Overfull \hbox (1.8167pt too wide) in paragraph at lines 264--265
- []|\T1/lmr/m/n/10 (-20) 17905|
  []
 
 <ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-1.pdf, id=89
@@ -739,32 +669,42 @@ raphic file (type pdf)
 Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-no
 desize-rmse-1.pdf  used on input line 282.
 (pdftex.def)             Requested size: 469.76265pt x 201.32684pt.
-[9 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-tree-1.pdf>] [10 <./A
-CT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-1.pdf>] [11] [
-12] [13] [14] [15] (./ACT4114_TP_Part2_Equipe09.aux) ) 
+[9 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-tree-1.pdf>]
+<ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-tune-1.pdf, 
+id=105, 505.89pt x 216.81pt>
+File: ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-tune-1.
+pdf Graphic file (type pdf)
+<use ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-tune-1.p
+df>
+Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-no
+desize-rmse-tune-1.pdf  used on input line 292.
+(pdftex.def)             Requested size: 469.76265pt x 201.32684pt.
+[10 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-1.pdf>
+ <./ACT4114_TP_Part2_Equipe09_files/figure-latex/forest-nodesize-rmse-tune-1.pd
+f>] [11] [12] [13] [14] [15] (./ACT4114_TP_Part2_Equipe09.aux) ) 
 Here is how much of TeX's memory you used:
- 15701 strings out of 476024
- 254416 string characters out of 5794010
+ 15706 strings out of 476024
+ 254938 string characters out of 5794010
  1862382 words of memory out of 5000000
- 35767 multiletter control sequences out of 15000+600000
- 575686 words of font info for 107 fonts, out of 8000000 for 9000
+ 35773 multiletter control sequences out of 15000+600000
+ 575603 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  77i,11n,81p,1022b,529s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{c:/texlive/2022/texmf-di
-st/fonts/enc/dvips/lm/lm-ec.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/
-lm-mathsy.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texl
-ive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}<c:/texlive/2022/texmf-dis
-t/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publ
-ic/lm/lmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb>
-<c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texlive/2022/t
-exmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2022/texmf-dist/fonts/typ
-e1/public/lm/lmri10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro1
-0.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/
-2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on ACT4114_TP_Part2_Equipe09.pdf (16 pages, 449040 bytes).
+{c:/texlive/202
+2/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/texlive/2022/texmf-dist/fonts/enc
+/dvips/lm/lm-mathsy.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
+c}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}<c:/texlive/2022
+/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2022/texmf-dist/fonts/
+type1/public/lm/lmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lm
+csc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texl
+ive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2022/texmf-dist
+/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publi
+c/lm/lmro10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c
+:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on ACT4114_TP_Part2_Equipe09.pdf (16 pages, 453922 bytes).
 PDF statistics:
- 250 PDF objects out of 1000 (max. 8388607)
- 204 compressed objects within 3 object streams
+ 256 PDF objects out of 1000 (max. 8388607)
+ 208 compressed objects within 3 object streams
  49 named destinations out of 1000 (max. 500000)
- 37000 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 37005 words of extra memory for PDF output out of 42996 (max. 10000000)
 
