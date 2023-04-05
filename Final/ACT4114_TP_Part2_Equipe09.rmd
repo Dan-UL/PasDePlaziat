@@ -60,6 +60,9 @@ data$locationOfContents <- as.factor(data$locationOfContents)
 data$numberOfFloorsInTheInsuredBuilding <- as.factor(data$numberOfFloorsInTheInsuredBuilding)
 data$occupancyType <- as.factor(data$occupancyType)
 data$primaryResidence <- as.factor(data$primaryResidence)
+data$totalCoverage <- data$totalBuildingInsuranceCoverage + data$totalContentsInsuranceCoverage
+
+data <- subset(data, select = -c(totalBuildingInsuranceCoverage, totalContentsInsuranceCoverage))
 
 
 ## 80/20 pour le trainning et test
