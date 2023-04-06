@@ -327,7 +327,7 @@ bag.final <- randomForest(totalAmount~.,
                     sampsize = nrow(dat.train),
                     mtry = 12,
                     ntree = 200,
-                    nodesize = min.node.bag,
+                    nodesize = min.node.tune.bag,
                     importance = TRUE,
                     cp = 0)
 ```
