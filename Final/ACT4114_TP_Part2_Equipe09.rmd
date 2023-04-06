@@ -89,7 +89,7 @@ dat.test <- data[-ind.train,]
 # Modèle de base
 <!-- Félix & Henri -->
 
-Le choix d'un modèle linéaire généralisé Tweedie est justifié dans notre étude pour plusieurs raisons. Tout d'abord, cette distribution est particulièrement adaptée pour modéliser la fréquence et la sévérité combinées des données de sinistres d'inondation, tout en prenant en compte leur nature asymétrique. De plus, cette distribution est paramétrée, ce qui permet de modéliser des relations complexes entre les variables explicatives et les montants de sinistres. Le modèle Tweedie retenu peut facilement intégrer des variables continues et catégorielles, ce qui est pertinent pour caractériser le jeu de données considéré. Enfin, l'interprétation des résultats est facilitée par la structure du modèle linéaire généralisé Tweedie, permettant de mieux comprendre les effets des variables explicatives sur les montants de sinistres. Aisni, ce modèle servira de base efficace pour établir la prime de référence, dans le but d'évaluar la performance des autres modèles.
+Le choix d'un modèle linéaire généralisé Tweedie est justifié dans notre étude pour plusieurs raisons. Tout d'abord, cette distribution est particulièrement adaptée pour modéliser la fréquence et la sévérité combinées des données de sinistres d'inondation, tout en prenant en compte leur nature asymétrique. De plus, cette distribution est paramétrée, ce qui permet de modéliser des relations complexes entre les variables explicatives et les montants de sinistres. Le modèle Tweedie retenu peut facilement intégrer des variables continues et catégorielles, ce qui est pertinent pour caractériser le jeu de données considéré. Enfin, l'interprétation des résultats est facilitée par la structure du modèle linéaire généralisé Tweedie, permettant de mieux comprendre les effets des variables explicatives sur les montants de sinistres. Ainsi, ce modèle servira de base efficace pour établir la prime de référence, dans le but d'évaluer la performance des autres modèles.
 
 ```{r GLM, echo = F}
 tweed.p <- 1.5
@@ -109,29 +109,22 @@ glm.tweed <- glm(
 
 summary(glm.tweed)
 ```
-Le modèle 
 
 ```{r GLM pred, echo = F}
 glm.pred <- predict(glm.tweed, newdata = dat.test)
 plot(glm.pred)
 ```
 
-
-
 \newpage
 # Ajustement des modèles
 <!-- Collectif -->
-
-\newpage
-## Modèle linéaire (À spécifier)
-<!-- Félix & Henri -->
 
 \newpage
 ## Modèle des k plus proches voisins
 <!-- Félix & Henri -->
 ```{r knn, echo = F}
 
-### Création de data 2 pour pas fuck avec les data original
+### Création de data 2 pour éviter de #cancel le data original
 data2 <- data
 
 ### Transformation de toutes les variables factoriel en valeur numérique
@@ -179,9 +172,22 @@ pred.knn <- pred_knn$pred
 summary(pred.knn)
 summary(res_test)
 ```
+
 \newpage
 ## Arbre de décision
 <!-- Félix & Henri -->
+
+
+```{r arbrito, echo = F} 
+arbre <- rpart(totalAmount~., data = dat.train, control = rpart.control(minbucket = 5, cp = 0))
+rpart.plot(arbre)
+
+ceepeez <- arbre$cptable[which.min(arbre$cptable[,4])]
+
+arbre.prune <- prune(arbre, cp = ceepeez)
+rpart.plot(arbre.prune)
+```
+
 
 \newpage
 ## Bagging
