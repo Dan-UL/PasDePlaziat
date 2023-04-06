@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
  
 ```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
 ### Liste des paquetages
-liste.paquetage <- c("ggplot2", "maps", "mice", "graphics", "gridExtra", "caret", "gbm", "xgboost", "iml", "tidyverse", "adabag","randomForest", "rpart", "rpart.plot", "pROC")
+liste.paquetage <- c("ggplot2", "maps", "mice", "graphics", "gridExtra", "caret", "gbm", "xgboost", "iml", "tidyverse", "adabag","randomForest", "rpart", "rpart.plot", "pROC", "cluster", "FactoMineR", "tweedie", "statmod", "FNN")
 
 ### On installe les paquetages de la liste qu'on a pas déjà
 inst <- liste.paquetage %in% installed.packages()
@@ -50,6 +50,9 @@ library(statmod)
 library(tweedie)
 library(cluster)
 library(FactoMineR)
+library(tweedie)
+library(statmod)
+library(FNN)
 ```
 
 ```{r data import, echo = F}
@@ -85,6 +88,35 @@ dat.test <- data[-ind.train,]
 \newpage
 # Modèle de base
 <!-- Félix & Henri -->
+
+Le choix d'un modèle linéaire généralisé Tweedie est justifié dans notre étude pour plusieurs raisons. Tout d'abord, cette distribution est particulièrement adaptée pour modéliser la fréquence et la sévérité combinées des données de sinistres d'inondation, tout en prenant en compte leur nature asymétrique. De plus, cette distribution est paramétrée, ce qui permet de modéliser des relations complexes entre les variables explicatives et les montants de sinistres. Le modèle Tweedie retenu peut facilement intégrer des variables continues et catégorielles, ce qui est pertinent pour caractériser le jeu de données considéré. Enfin, l'interprétation des résultats est facilitée par la structure du modèle linéaire généralisé Tweedie, permettant de mieux comprendre les effets des variables explicatives sur les montants de sinistres. Aisni, ce modèle servira de base efficace pour établir la prime de référence, dans le but d'évaluar la performance des autres modèles.
+
+```{r GLM, echo = F}
+tweed.p <- 1.5
+tweed.p <- tweedie.profile(
+  totalAmount ~ .,
+  data = dat.train,
+  p.vec = seq(1.4, 1.8, 0.1),
+  method = "series",
+  do.plot = TRUE)$p.max
+
+glm.tweed <- glm(
+  totalAmount ~ .,
+  data = dat.train,
+  family = tweedie(var.power = tweed.p, link.power = 0),
+  maxit = 300
+)
+
+summary(glm.tweed)
+```
+Le modèle 
+
+```{r GLM pred, echo = F}
+glm.pred <- predict(glm.tweed, newdata = dat.test)
+plot(glm.pred)
+```
+
+
 
 \newpage
 # Ajustement des modèles
