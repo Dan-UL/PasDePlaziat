@@ -305,7 +305,7 @@ ggplot(df.node.tune.bag, aes(x=Nodesize, y = RMSE ))+
            angle = 90)
 ```
 
-Dans la figure xx, on peut voir que la valeur de `nodesize` optimale est 62.
+Dans la figure xx, on peut voir que la valeur de `nodesize` optimale est 49.
 
 Les hyperparamètres optimaux pour le bagging sont donc les suivants : 
 
