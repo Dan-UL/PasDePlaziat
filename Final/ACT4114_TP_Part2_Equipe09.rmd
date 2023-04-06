@@ -46,6 +46,10 @@ library(randomForest)
 library(rpart)
 library(rpart.plot)
 library(pROC)
+library(statmod)
+library(tweedie)
+library(cluster)
+library(FactoMineR)
 ```
 
 ```{r data import, echo = F}
@@ -65,9 +69,9 @@ data$totalCoverage <- data$totalBuildingInsuranceCoverage + data$totalContentsIn
 data <- subset(data, select = -c(totalBuildingInsuranceCoverage, totalContentsInsuranceCoverage))
 
 
-## 80/20 pour le trainning et test
+## 85/15 pour le trainning et test
 set.seed(1123581321)
-ind.train <- sample(1:nrow(data), 0.8*nrow(data), FALSE)
+ind.train <- sample(1:nrow(data), 0.85*nrow(data), FALSE)
 dat.train <- data[ind.train,]
 dat.test <- data[-ind.train,]
 ```
@@ -93,7 +97,56 @@ dat.test <- data[-ind.train,]
 \newpage
 ## Modèle des k plus proches voisins
 <!-- Félix & Henri -->
+```{r knn, echo = F}
 
+### Création de data 2 pour pas fuck avec les data original
+data2 <- data
+
+### Transformation de toutes les variables factoriel en valeur numérique
+data2$condominiumIndicator <- as.numeric(data$condominiumIndicator)
+data2$communityRatingSystemDiscount <- as.numeric(data$communityRatingSystemDiscount)
+data2$elevatedBuildingIndicator <- as.numeric(data$elevatedBuildingIndicator)
+data2$locationOfContents <- as.numeric(data$locationOfContents)
+data2$numberOfFloorsInTheInsuredBuilding <- as.numeric(data$numberOfFloorsInTheInsuredBuilding)
+data2$occupancyType <- as.numeric(data$occupancyType)
+data2$primaryResidence <- as.numeric(data$primaryResidence)
+
+### Utilisation de seulement les data avec un totalAmount plus grand que 0
+data_no_0 <- data2[which(data2$totalAmount > 0), ]
+
+### scaling xdf
+data_no_0_sc <- cbind(sapply(data_no_0[, -12], scale), data_no_0[, 12])
+
+### Creating training and testing set
+data_no_0_training <- sample(1:nrow(data_no_0), 0.85 * nrow(data_no_0), FALSE)
+data_no_0_train <- data_no_0_sc[data_no_0_training, ]
+data_no_0_test <- data_no_0_sc[-data_no_0_training, ]
+
+### setting things up for knn.reg
+obs_train <- data_no_0_train[, -13]
+obs_test <- data_no_0_test[, -13]
+res_train <- data_no_0_train[, 13]
+res_test <- data_no_0_test[, 13]
+
+### Finding optimal K
+n <- length(res_test)
+knnpred_mat <- matrix(data = rep(0, 100 * length(res_test)), nrow = 100, ncol = length(res_test))
+for(i in 1:100) {
+    knnpred_mat[i, ] <- knn.reg(obs_train, obs_test, res_train, k = i)$pred
+}
+EQM <- numeric(100)
+for(i in 1:100){
+    EQM[i] <- 1 / n * sum((res_test - knnpred_mat[i, ]) ^ 2)
+}
+plot(EQM)
+which.min(EQM) ## donc k optimal est 15
+### optimal knn model with the no 0 dataset
+
+pred_knn <- knn.reg(obs_train, obs_test, res_train, k = 15)
+pred.knn <- pred_knn$pred
+summary(pred.knn)
+summary(res_test)
+```
 \newpage
 ## Arbre de décision
 <!-- Félix & Henri -->
