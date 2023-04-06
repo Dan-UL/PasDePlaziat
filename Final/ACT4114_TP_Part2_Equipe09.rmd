@@ -172,7 +172,9 @@ pred.knn <- pred_knn$pred
 summary(pred.knn)
 summary(res_test)
 ```
+Pour construire un modèle de régression k-plus proche voisin, nous avons dû tout d'abord transformer nos variables catégorielles en valeurs numériques. Cette étape était nécessaire car nous voulions obtenir des chiffres plutôt que des classes. Après cette transformation, nous avons cherché à déterminer le facteur "k" optimal pour obtenir le meilleur modèle possible. Nous avons utilisé la méthode de l'erreur quadratique moyenne (EQM) pour évaluer la performance de notre modèle. Cette mesure est estimée à l'aide de la formule suivante: $$\frac{1}{n}\sum^{n}_{i = 1}[y_i-\hat{f}(x_i)]^2$$. 
 
+Nous avons testé différents valeurs de k allant de 1 à 100 et avons observé que l'EQM augmente après un certain point. Après avoir analysé le graphique, nous avons constaté que le k optimal pour notre modèle était de 15, car c'est à ce point que l'EQM atteint son minimum.
 \newpage
 ## Arbre de décision
 <!-- Félix & Henri -->
