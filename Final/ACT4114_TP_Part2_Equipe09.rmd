@@ -195,119 +195,117 @@ rpart.plot(arbre.prune)
 ## Bagging
 <!-- Isabelle -->
 ```{r echo=FALSE}
-set.seed(12323)
-bag <- randomForest(totalAmount~.,
-                    data = dat.train,
-                    sampsize = nrow(dat.train),
-                    mtry = 12,
-                    ntree = 400,
-                    nodesize = 10,
-                    importance = TRUE,
-                    cp = 0)
+# set.seed(12323)
+# bag <- randomForest(totalAmount~.,
+#                     data = dat.train,
+#                     sampsize = nrow(dat.train),
+#                     mtry = 12,
+#                     ntree = 400,
+#                     nodesize = 10,
+#                     importance = TRUE,
+#                     cp = 0)
 ```
 
 Pour le bagging, on utilise le nombre de variables explicatives pour déterminer le nombre de variables prises en compte à chaque division de l'arbre de décision, soit 12. L'algorithme utilise également un échantillon avec remplacement de la même taille que l'échantillon des données d'entraînement.
 
 ```{r echo=FALSE}
-df.oob.bag <- data.frame(Tree = 1:400,
-                     RMSE = sqrt(bag$mse))
-
-ggplot(df.oob.bag, aes(x=Tree, y = RMSE ))+
-  theme_minimal()+
-  geom_line()+
-  labs(x = "Nombre d'arbre", title = "RMSE selon le nombre d'arbre pour le Bagging")+
-  theme(plot.title = element_text(hjust = 0.5))
+# df.oob.bag <- data.frame(Tree = 1:400,
+#                     RMSE = sqrt(bag$mse))
+#
+# ggplot(df.oob.bag, aes(x=Tree, y = RMSE ))+
+#  theme_minimal()+
+#  geom_line()+
+#  labs(x = "Nombre d'arbre", title = "RMSE selon le nombre d'arbre pour le bagging")+
+#  theme(plot.title = element_text(hjust = 0.5))
 ```
+![](bag_nb_arbre.jpg)
 
-Le nombre d'arbres pour le bagging est déterminé à l'aide de la racine de l'erreur quadratique moyenne (RMSE), car le problème est de régression. En observant la figure xx, on constate que le nombre d'arbres se stabilise vers 200 arbres. Pour diminuer le temps de calcul, on prends 200 arbres même si un grand nombre d'arbres ne conduit pas à du surajustement.
+Le nombre d'arbres pour le bagging est déterminé à l'aide de la racine de l'erreur quadratique moyenne (RMSE), car le problème est de régression. En observant la figure ci-dessus, on constate que le nombre d'arbres se stabilise vers 200 arbres. Pour diminuer le temps de calcul, on prends 200 arbres même si un grand nombre d'arbres ne conduit pas à du surajustement.
 
 Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustement causé par des arbres trop profonds. Pour éviter un temps de calcul excessif, les valeurs manuellement testées pour nodesize vont de 500 et moins, en augmentant par bonds de 20.
 
 ```{r echo=FALSE}
-set.seed(131)
-ind.val.bag <- sample(1:nrow(dat.train), 0.2*nrow(dat.train), FALSE)
-dat.valid.bag <- dat.train[ind.val.bag,]
-dat.non.valid.bag <- dat.train[-ind.val.bag,]
-
-prev.nodesize.bag <- rep(NA, 25)
-for(i in (1:25)*20){
-  set.seed(4757)
-  bag.node <- randomForest(totalAmount~.,
-                             data = dat.non.valid.bag,
-                             ntree = 200,
-                             sampsize = nrow(dat.non.valid.bag),
-                             importance = TRUE,
-                             nodesize = i)
-  
-  bag.node.prev <- predict(bag.node, newdata=dat.valid.bag, type="response")
-  prev.nodesize.bag[i/20] <- RMSE(bag.node.prev,dat.valid.bag$totalAmount)
-}
-
-min.node.bag <- which.min(prev.nodesize.bag)*20
-
-df.node.bag <- data.frame("Nodesize" = (1:25)*20 ,
-                     "RMSE" = prev.nodesize.bag 
-                     )
-
+# set.seed(131)
+# ind.val.bag <- sample(1:nrow(dat.train), 0.2*nrow(dat.train), FALSE)
+# dat.valid.bag <- dat.train[ind.val.bag,]
+# dat.non.valid.bag <- dat.train[-ind.val.bag,]
+#
+# prev.nodesize.bag <- rep(NA, 25)
+# for(i in (1:25)*20){
+#   set.seed(4757)
+#   bag.node <- randomForest(totalAmount~.,
+#                             data = dat.non.valid.bag,
+#                             ntree = 200,
+#                             mtry = 12,
+#                             sampsize = nrow(dat.non.valid.bag),
+#                             importance = TRUE,
+#                             nodesize = i)
+#  
+#  bag.node.prev <- predict(bag.node, newdata=dat.valid.bag, type="response")
+#  prev.nodesize.bag[i/20] <- RMSE(bag.node.prev,dat.valid.bag$totalAmount)
+# }
+#
+# min.node.bag <- which.min(prev.nodesize.bag)*20
+#
+# df.node.bag <- data.frame("Nodesize" = (1:25)*20 ,
+#                     "RMSE" = prev.nodesize.bag 
+#                      )
+#
 ```
 
 ```{r echo=FALSE, warning=FALSE}
-ggplot(df.node.bag, aes(x=Nodesize, y = RMSE ))+
-  theme_minimal()+
-  geom_line()+
-  labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize")+
-  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
-  geom_line(aes(x = min.node.bag, color = "red"), linetype = "dashed")+
-  annotate(geom = "text",
-           label = paste("nodesize =",as.character(min.node.bag)),
-           x = min.node.bag,
-           y = prev.nodesize.bag[min.node.bag],
-           vjust = 1.5,
-           angle = 90)
+# ggplot(df.node.bag, aes(x=Nodesize, y = RMSE ))+
+#   theme_minimal() +
+#   geom_line() +
+#   labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize 
+# pour le bagging") +
+#  theme(plot.title = element_text(hjust = 0.5),
+#        legend.position = "none") +
+#  geom_line(aes(x = min.node.bag, color = "red"), linetype = "dashed") +
+#    geom_text(aes(x = min.node.bag, y = 8200,
+#    label = "nodesize = 80", vjust = 1.5, angle = 90))
 ```
+![](bag_node.jpg)
 
-La figure xx montre que le `nodesize` qui minimise l'RMSE se trouve autour de 60. On va donc tester toutes les valeurs entre 45 et 75 pour trouver la valeur optimale de l'hyperparamètre.
+La figure ci-dessus montre que le `nodesize` qui minimise l'RMSE se trouve autour de 80. On va donc tester toutes les valeurs entre 60 et 100 pour trouver la valeur optimale de l'hyperparamètre.
 
 ```{r echo=FALSE}
-
-prev.nodesize.tune.bag <- rep(NA, 31)
-for(i in (45:75)){
-  set.seed(4757)
-  bag.node.tune <- randomForest(totalAmount~.,
-                             data = dat.non.valid.bag,
-                             ntree = 200,
-                             sampsize = nrow(dat.non.valid.bag),
-                             importance = TRUE,
-                             nodesize = i)
-  
-  bag.node.prev.tune <- predict(bag.node.tune, newdata=dat.valid.bag, type="response")
-  prev.nodesize.tune.bag[i-44] <- RMSE(bag.node.prev.tune,dat.valid.bag$totalAmount)
-}
-
-min.node.tune.bag <- which.min(prev.nodesize.tune.bag)+44
-
-df.node.tune.bag <- data.frame("Nodesize" = 45:75,
-                     "RMSE" = prev.nodesize.tune.bag 
-                     )
-
+# prev.nodesize.tune.bag <- rep(NA, 41)
+# for(i in (60:100)){
+#   set.seed(4757)
+#   bag.node.tune <- randomForest(totalAmount~.,
+#                             data = dat.non.valid.bag,
+#                             ntree = 200,
+#                             mtry = 12,
+#                             sampsize = nrow(dat.non.valid.bag),
+#                             importance = TRUE,
+#                             nodesize = i)
+#  
+#  bag.node.prev.tune <- predict(bag.node.tune, newdata=dat.valid.bag, type="response")
+#  prev.nodesize.tune.bag[i-59] <- RMSE(bag.node.prev.tune,dat.valid.bag$totalAmount)
+# }
+#
+# min.node.tune.bag <- which.min(prev.nodesize.tune.bag)+59
+#
+# df.node.tune.bag <- data.frame("Nodesize" = 60:100,
+#                     "RMSE" = prev.nodesize.tune.bag 
+#                     )
 ```
 
 ```{r echo=FALSE, warning=FALSE}
-ggplot(df.node.tune.bag, aes(x=Nodesize, y = RMSE ))+
-  theme_minimal()+
-  geom_line()+
-  labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize")+
-  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
-  geom_line(aes(x = min.node.tune.bag, color = "red"), linetype = "dashed")+
-  annotate(geom = "text",
-           label = paste("nodesize =",as.character(min.node.tune.bag)),
-           x = min.node.tune.bag,
-           y = prev.nodesize.tune.bag[min.node.tune.bag],
-           vjust = 1.5,
-           angle = 90)
+# ggplot(df.node.tune.bag, aes(x=Nodesize, y = RMSE ))+
+#   theme_minimal()+
+#   geom_line()+
+#   labs(x = "Nombre d'observations par noeud terminal", title = "RMSE selon le nodesize 
+# pour le bagging")+
+#  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")+
+#  geom_line(aes(x = min.node.tune.bag, color = "red"), linetype = "dashed")+
+#  geom_text(aes(x = min.node.tune.bag, y = 8170,
+#    label = "nodesize = 97"), vjust = 1.5, angle = 90)
 ```
+![](bag_node_tune.jpg)
 
-Dans la figure xx, on peut voir que la valeur de `nodesize` optimale est 49.
+Dans la figure ci-dessus, on peut voir que la valeur de `nodesize` optimale est 97.
 
 Les hyperparamètres optimaux pour le bagging sont donc les suivants : 
 
@@ -315,7 +313,7 @@ Les hyperparamètres optimaux pour le bagging sont donc les suivants :
 
 df.bag.final <- data.frame(
   "Hyperparamètre" = c("Nombre d'arbres", "Nombre d'observation dans les noeuds terminaux"),
-  "Valeur" = c(200, min.node.tune.bag)
+  "Valeur" = c(200, 97)
 )
 
 knitr::kable(df.bag.final,caption = "Valeurs des hyperparamètres du modèle de bagging final")
@@ -327,14 +325,12 @@ set.seed(12323)
 bag.final <- randomForest(totalAmount~.,
                     data = dat.train,
                     sampsize = nrow(dat.train),
-                    mtry = 1,
+                    mtry = 12,
                     ntree = 200,
-                    nodesize = min.node.tune.bag,
+                    nodesize = 97,
                     importance = TRUE,
                     cp = 0)
 ```
-
-
 
 
 \newpage
