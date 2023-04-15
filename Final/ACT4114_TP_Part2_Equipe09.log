@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.25)  15 APR 2023 01:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.25)  15 APR 2023 19:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -804,197 +804,154 @@ l.175 \clearpage
 ] [2
 
 ]
-<tweed_p.jpg, id=53, 392.21532pt x 236.38312pt>
+<tweed_p.jpg, id=57, 392.21532pt x 236.38312pt>
 File: tweed_p.jpg Graphic file (type jpg)
 <use tweed_p.jpg>
-Package pdftex.def Info: tweed_p.jpg  used on input line 207.
+Package pdftex.def Info: tweed_p.jpg  used on input line 205.
 (pdftex.def)             Requested size: 392.22632pt x 236.38974pt.
-<glm_pred.jpg, id=54, 511.41063pt x 270.51062pt>
+<glm_pred.jpg, id=58, 511.41063pt x 270.51062pt>
 File: glm_pred.jpg Graphic file (type jpg)
 <use glm_pred.jpg>
-Package pdftex.def Info: glm_pred.jpg  used on input line 215.
+Package pdftex.def Info: glm_pred.jpg  used on input line 211.
 (pdftex.def)             Requested size: 469.75435pt x 248.47652pt.
 [3 <./tweed_p.jpg>] [4 <./glm_pred.jpg>]
-<eqm_knn.jpg, id=66, 529.47812pt x 304.63812pt>
+<eqm_knn.jpg, id=70, 529.47812pt x 304.63812pt>
 File: eqm_knn.jpg Graphic file (type jpg)
 <use eqm_knn.jpg>
-Package pdftex.def Info: eqm_knn.jpg  used on input line 230.
+Package pdftex.def Info: eqm_knn.jpg  used on input line 226.
 (pdftex.def)             Requested size: 469.75555pt x 270.2764pt.
 [5
 
  <./eqm_knn.jpg>]
-<arbre.jpg, id=80, 420.06938pt x 251.43938pt>
+<arbre.jpg, id=84, 420.06938pt x 251.43938pt>
 File: arbre.jpg Graphic file (type jpg)
 <use arbre.jpg>
-Package pdftex.def Info: arbre.jpg  used on input line 275.
+Package pdftex.def Info: arbre.jpg  used on input line 267.
 (pdftex.def)             Requested size: 420.06836pt x 251.43875pt.
 [6 <./arbre.jpg>]
-<bag_nb_arbre.jpg, id=88, 1288.815pt x 795.97375pt>
+<bag_nb_arbre.jpg, id=92, 1288.815pt x 795.97375pt>
 File: bag_nb_arbre.jpg Graphic file (type jpg)
 <use bag_nb_arbre.jpg>
-Package pdftex.def Info: bag_nb_arbre.jpg  used on input line 294.
+Package pdftex.def Info: bag_nb_arbre.jpg  used on input line 284.
 (pdftex.def)             Requested size: 469.75478pt x 290.12112pt.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 307.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 295.
 
 (c:/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<bag_node.jpg, id=89, 1288.815pt x 795.97375pt>
+<bag_node.jpg, id=93, 1288.815pt x 795.97375pt>
 File: bag_node.jpg Graphic file (type jpg)
 <use bag_node.jpg>
-Package pdftex.def Info: bag_node.jpg  used on input line 316.
+Package pdftex.def Info: bag_node.jpg  used on input line 302.
 (pdftex.def)             Requested size: 469.75478pt x 290.12112pt.
-<bag_node_tune.jpg, id=90, 1288.815pt x 795.97375pt>
+<bag_node_tune.jpg, id=94, 1288.815pt x 795.97375pt>
 File: bag_node_tune.jpg Graphic file (type jpg)
 <use bag_node_tune.jpg>
-Package pdftex.def Info: bag_node_tune.jpg  used on input line 331.
+Package pdftex.def Info: bag_node_tune.jpg  used on input line 312.
 (pdftex.def)             Requested size: 469.75478pt x 290.12112pt.
-[7 <./bag_nb_arbre.jpg>] [8 <./bag_node.jpg> <./bag_node_tune.jpg>] [9]
+[7 <./bag_nb_arbre.jpg>] [8 <./bag_node.jpg> <./bag_node_tune.jpg>]
 <forest_nb_tree.jpg, id=113, 538.4115pt x 367.97475pt>
 File: forest_nb_tree.jpg Graphic file (type jpg)
 <use forest_nb_tree.jpg>
-Package pdftex.def Info: forest_nb_tree.jpg  used on input line 379.
+Package pdftex.def Info: forest_nb_tree.jpg  used on input line 354.
 (pdftex.def)             Requested size: 469.75336pt x 321.05066pt.
 
-Overfull \hbox (3.25925pt too wide) in paragraph at lines 414--414
+Overfull \hbox (3.25925pt too wide) in paragraph at lines 385--385
 []|\T1/lmr/m/n/10 (-20) RMSE|  
  []
 
-[10 <./forest_nb_tree.jpg>]
-<forest_node.jpg, id=121, 574.5465pt x 387.849pt>
+<forest_node.jpg, id=114, 574.5465pt x 387.849pt>
 File: forest_node.jpg Graphic file (type jpg)
 <use forest_node.jpg>
-Package pdftex.def Info: forest_node.jpg  used on input line 436.
+Package pdftex.def Info: forest_node.jpg  used on input line 403.
 (pdftex.def)             Requested size: 469.76355pt x 317.115pt.
-<forest_node_tune.jpg, id=122, 574.5465pt x 387.849pt>
+[9 <./forest_nb_tree.jpg>] [10 <./forest_node.jpg>]
+<forest_node_tune.jpg, id=127, 574.5465pt x 387.849pt>
 File: forest_node_tune.jpg Graphic file (type jpg)
 <use forest_node_tune.jpg>
-Package pdftex.def Info: forest_node_tune.jpg  used on input line 450.
+Package pdftex.def Info: forest_node_tune.jpg  used on input line 413.
 (pdftex.def)             Requested size: 469.76355pt x 317.115pt.
-[11 <./forest_node.jpg>] [12 <./forest_node_tune.jpg>]
-<gbm.jpg, id=135, 573.94424pt x 384.2355pt>
+[11 <./forest_node_tune.jpg>]
+<gbm.jpg, id=134, 573.94424pt x 384.2355pt>
 File: gbm.jpg Graphic file (type jpg)
 <use gbm.jpg>
-Package pdftex.def Info: gbm.jpg  used on input line 496.
+Package pdftex.def Info: gbm.jpg  used on input line 453.
 (pdftex.def)             Requested size: 469.7528pt x 314.48299pt.
-<gbm_tune.jpg, id=136, 579.3645pt x 386.6445pt>
+<gbm_tune.jpg, id=135, 579.3645pt x 386.6445pt>
 File: gbm_tune.jpg Graphic file (type jpg)
 <use gbm_tune.jpg>
-Package pdftex.def Info: gbm_tune.jpg  used on input line 512.
+Package pdftex.def Info: gbm_tune.jpg  used on input line 465.
 (pdftex.def)             Requested size: 469.76889pt x 313.5048pt.
-[13 <./gbm.jpg>] [14 <./gbm_tune.jpg>] [15]
+[12 <./gbm.jpg>] [13 <./gbm_tune.jpg>] [14]
 <importance_fa.jpg, id=156, 527.9725pt x 331.73938pt>
 File: importance_fa.jpg Graphic file (type jpg)
 <use importance_fa.jpg>
-Package pdftex.def Info: importance_fa.jpg  used on input line 617.
+Package pdftex.def Info: importance_fa.jpg  used on input line 561.
 (pdftex.def)             Requested size: 469.7571pt x 295.16106pt.
-
-LaTeX Warning: File `ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-foret ale
-atoire-1.pdf' not found on input line 628.
-
-<ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-foret aleatoire-1.pdf, id=157
-, 469.755pt x 325.215pt>
-File: ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-foret aleatoire-1.pdf Gr
-aphic file (type pdf)
-<use ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-foret aleatoire-1.pdf>
-Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-foret
- aleatoire-1.pdf  used on input line 628.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Overfull \hbox (63.77603pt too wide) in paragraph at lines 628--629
-[]\T1/lmr/m/n/10 (-20) aleatoire-1.pdf [] 
- []
-
-[16 <./importance_fa.jpg>]
-
-LaTeX Warning: File `ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-foret ale
-atoire-1.pdf' not found on input line 630.
-
-<ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-foret aleatoire-1.pdf, id=165
-, 469.755pt x 325.215pt>
-File: ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-foret aleatoire-1.pdf Gr
-aphic file (type pdf)
-<use ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-foret aleatoire-1.pdf>
-Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-foret
- aleatoire-1.pdf  used on input line 630.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Overfull \hbox (63.77603pt too wide) in paragraph at lines 630--631
-[]\T1/lmr/m/n/10 (-20) aleatoire-1.pdf [] 
- []
-
-[17 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-foret aleatoire-1.pdf>]
-
-LaTeX Warning: File `ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-
-foret aleatoire-1.pdf' not found on input line 632.
-
-<ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-foret aleatoire-1.pd
-f, id=175, 469.755pt x 325.215pt>
-File: ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-foret aleatoire
--1.pdf Graphic file (type pdf)
-<use ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-foret aleatoire-
-1.pdf>
-Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/interacti
-ons-foret aleatoire-1.pdf  used on input line 632.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Overfull \hbox (63.77603pt too wide) in paragraph at lines 632--633
-[]\T1/lmr/m/n/10 (-20) aleatoire-1.pdf [] 
- []
-
-<importance_bag.jpg, id=176, 517.935pt x 322.20375pt>
+<pdp_fa.jpg, id=157, 534.49687pt x 322.20375pt>
+File: pdp_fa.jpg Graphic file (type jpg)
+<use pdp_fa.jpg>
+Package pdftex.def Info: pdp_fa.jpg  used on input line 572.
+(pdftex.def)             Requested size: 469.77148pt x 283.18619pt.
+<ice_fa.jpg, id=158, 530.48187pt x 324.21124pt>
+File: ice_fa.jpg Graphic file (type jpg)
+<use ice_fa.jpg>
+Package pdftex.def Info: ice_fa.jpg  used on input line 578.
+(pdftex.def)             Requested size: 469.76378pt x 287.10255pt.
+<inter_fa.jpg, id=159, 463.23062pt x 319.1925pt>
+File: inter_fa.jpg Graphic file (type jpg)
+<use inter_fa.jpg>
+Package pdftex.def Info: inter_fa.jpg  used on input line 599.
+(pdftex.def)             Requested size: 463.22948pt x 319.19171pt.
+<pdp_biv_fa.jpg, id=160, 462.72874pt x 319.1925pt>
+File: pdp_biv_fa.jpg Graphic file (type jpg)
+<use pdp_biv_fa.jpg>
+Package pdftex.def Info: pdp_biv_fa.jpg  used on input line 606.
+(pdftex.def)             Requested size: 462.72762pt x 319.19171pt.
+[15 <./importance_fa.jpg>] [16 <./pdp_fa.jpg> <./ice_fa.jpg>] [17 <./inter_fa.j
+pg>] [18 <./pdp_biv_fa.jpg>]
+<importance_bag.jpg, id=186, 517.935pt x 322.20375pt>
 File: importance_bag.jpg Graphic file (type jpg)
 <use importance_bag.jpg>
 Package pdftex.def Info: importance_bag.jpg  used on input line 636.
 (pdftex.def)             Requested size: 469.77257pt x 292.24225pt.
-[18 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-foret aleatoire-1.pdf>]
-<ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-bagging-1.pdf, id=190, 469.75
-5pt x 325.215pt>
-File: ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-bagging-1.pdf Graphic fi
-le (type pdf)
-<use ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-bagging-1.pdf>
-Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-baggi
-ng-1.pdf  used on input line 640.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[19 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-foret aleatoir
-e-1.pdf>]
-Overfull \vbox (5.02644pt too high) has occurred while \output is active []
-
-[20 <./importance_bag.jpg> <./ACT4114_TP_Part2_Equipe09_files/figure-latex/pdp-
-bagging-1.pdf>]
-<ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-bagging-1.pdf, id=210, 469.75
-5pt x 325.215pt>
-File: ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-bagging-1.pdf Graphic fi
-le (type pdf)
-<use ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-bagging-1.pdf>
-Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-baggi
-ng-1.pdf  used on input line 642.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-bagging-1.pdf, id=21
-1, 469.755pt x 325.215pt>
-File: ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-bagging-1.pdf G
-raphic file (type pdf)
-<use ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-bagging-1.pdf>
-Package pdftex.def Info: ACT4114_TP_Part2_Equipe09_files/figure-latex/interacti
-ons-bagging-1.pdf  used on input line 644.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[21 <./ACT4114_TP_Part2_Equipe09_files/figure-latex/ice-bagging-1.pdf>] [22 <./
-ACT4114_TP_Part2_Equipe09_files/figure-latex/interactions-bagging-1.pdf>] [23]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 662.
+<pdp_bag.jpg, id=187, 520.44438pt x 320.19624pt>
+File: pdp_bag.jpg Graphic file (type jpg)
+<use pdp_bag.jpg>
+Package pdftex.def Info: pdp_bag.jpg  used on input line 648.
+(pdftex.def)             Requested size: 469.75359pt x 289.00941pt.
+<ice_bag.jpg, id=188, 533.995pt x 324.71312pt>
+File: ice_bag.jpg Graphic file (type jpg)
+<use ice_bag.jpg>
+Package pdftex.def Info: ice_bag.jpg  used on input line 654.
+(pdftex.def)             Requested size: 469.77039pt x 285.65924pt.
+<inter_bag.jpg, id=189, 460.21938pt x 313.67188pt>
+File: inter_bag.jpg Graphic file (type jpg)
+<use inter_bag.jpg>
+Package pdftex.def Info: inter_bag.jpg  used on input line 675.
+(pdftex.def)             Requested size: 460.2393pt x 313.68546pt.
+<pdp_biv_bag.jpg, id=190, 461.725pt x 319.69438pt>
+File: pdp_biv_bag.jpg Graphic file (type jpg)
+<use pdp_biv_bag.jpg>
+Package pdftex.def Info: pdp_biv_bag.jpg  used on input line 682.
+(pdftex.def)             Requested size: 461.72388pt x 319.69359pt.
+[19 <./importance_bag.jpg>] [20 <./pdp_bag.jpg> <./ice_bag.jpg>] [21 <./inter_b
+ag.jpg>] [22 <./pdp_biv_bag.jpg>] [23]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 720.
 [24]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 662.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 720.
 (./ACT4114_TP_Part2_Equipe09.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 662.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 662.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 720.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 720.
  ) 
 Here is how much of TeX's memory you used:
- 14920 strings out of 492609
- 221464 string characters out of 6132818
- 337379 words of memory out of 5000000
- 18443 multiletter control sequences out of 15000+600000
- 71645 words of font info for 87 fonts, out of 8000000 for 9000
+ 14957 strings out of 492609
+ 220395 string characters out of 6132818
+ 337467 words of memory out of 5000000
+ 18455 multiletter control sequences out of 15000+600000
+ 72190 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,12n,49p,824b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,11n,49p,824b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/texlive/2019/tex
 mf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/texlive/2019/texmf-dist/fonts/enc/
 dvips/lm/lm-rm.enc}{c:/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
@@ -1011,10 +968,10 @@ blic/lm/lmri10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/lm/lmri12.pfb
 ><c:/texlive/2019/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/texlive/2019/
 texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2019/texmf-dist/fonts/t
 ype1/public/lm/lmtt10.pfb>
-Output written on ACT4114_TP_Part2_Equipe09.pdf (25 pages, 9720814 bytes).
+Output written on ACT4114_TP_Part2_Equipe09.pdf (25 pages, 1810121 bytes).
 PDF statistics:
- 353 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 70 named destinations out of 1000 (max. 500000)
- 16586 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 342 PDF objects out of 1000 (max. 8388607)
+ 270 compressed objects within 3 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 16612 words of extra memory for PDF output out of 17280 (max. 10000000)
 

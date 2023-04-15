@@ -92,8 +92,6 @@ dat.test <- data[-ind.train,]
 
 Le choix d'un modèle linéaire généralisé Tweedie est justifié dans notre étude pour plusieurs raisons. Tout d'abord, cette distribution est particulièrement adaptée pour modéliser la fréquence et la sévérité combinées des données de sinistres d'inondation, tout en prenant en compte leur nature asymétrique. De plus, cette distribution est paramétrée, ce qui permet de modéliser des relations complexes entre les variables explicatives et les montants de sinistres. Le modèle Tweedie retenu peut facilement intégrer des variables continues et catégorielles, ce qui est pertinent pour caractériser le jeu de données considéré. Enfin, l'interprétation des résultats est facilitée par la structure du modèle linéaire généralisé Tweedie, permettant de mieux comprendre les effets des variables explicatives sur les montants de sinistres. Ainsi, ce modèle servira de base efficace pour établir la prime de référence, dans le but d'évaluer la performance d'autres modèles.
 
-\vspace{8pt}
-
 ```{r GLM, echo = F, warning=F, include=FALSE}
 tweed.p <- 1.5
 tweed.p <- tweedie.profile(
@@ -114,8 +112,6 @@ glm.tweed <- glm(
 ```
 
 ![Valeur de p maximal pour Tweedie](tweed_p.jpg)
-
-\vspace{8pt}
 
 ```{r GLM pred, echo = F}
 glm.pred <- predict(glm.tweed, newdata = dat.test)
@@ -186,8 +182,6 @@ pred.knn <- pred_knn$pred
 
 ![Erreur quadratique moyenne selon le k](eqm_knn.jpg)
 
-\vspace{8pt}
-
 Pour construire un modèle de régression k-plus proche voisin, nous avons du tout d'abord transformé nos variables catégorielles en valeurs numériques. Cette étape fut nécessaire, car nous voulions obtenir des chiffres plutôt que des classes. Après cette transformation, nous avons cherché à déterminer le facteur "k" optimal pour obtenir le meilleur modèle possible. Nous avons utilisé la méthode de l'erreur quadratique moyenne (EQM) pour évaluer la performance de notre modèle. Cette mesure est estimée à l'aide de la formule suivante : $$\frac{1}{n}\sum^{n}_{i = 1}[y_i-\hat{f}(x_i)]^2.$$
 
 Nous avons testé différentes valeurs de k allant de 1 à 100 et avons observé que l'EQM augmente après un certain point. Après avoir analysé le graphique, nous avons constaté que le k optimal pour notre modèle était de 15, car c'est à ce point que l'EQM atteint son minimum.
@@ -201,8 +195,6 @@ Nous avons testé différentes valeurs de k allant de 1 à 100 et avons observé
 Dans le contexte de la modélisation de montants de réclamation en assurance inondation, il est important de trouver un modèle prédictif à la fois précis et interprétable. Les arbres de décision sont très utiles dans ce contexte, car ils permettent une interprétation facile des résultats et la visualisation simple des règles de décision. Cependant, les arbres non élagués peuvent être très complexes et sujets à un sur ajustement.
 
 Nous avons donc optimisé le paramètre de complexité pour l'élagage en utilisant une validation croisée LGOCV (*Leave Group Out Cross Validation*) à 10 ensembles, puis en minimisant la racine carrée de l'erreur quadratique moyenne (RMSE). L'optimisation du paramètre de complexité permet de trouver le bon niveau d'élagage pour éviter un surajustement tout en maintenant la précision prédictive du modèle.
-
-\vspace{8pt}
 
 ```{r arbre de regression, echo=FALSE, warning=FALSE}
 set.seed(6969)
@@ -249,8 +241,6 @@ treepred <- predict(cv.fitted.tree, newdata = dat.test)
 
 Pour le *bagging*, nous utilisons le nombre de variables explicatives pour déterminer le nombre de variables prises en compte à chaque division de l'arbre de décision, soit 12. L'algorithme utilise également un échantillon avec remplacement de la même taille que l'échantillon des données d'entraînement.
 
-\vspace{8pt}
-
 ```{r bagging-oob,echo=FALSE}
 # df.oob.bag <- data.frame(Tree = 1:400,
 #                     RMSE = sqrt(bag$mse))
@@ -264,13 +254,9 @@ Pour le *bagging*, nous utilisons le nombre de variables explicatives pour déte
 
 ![REQM selon le nombre d'arbres](bag_nb_arbre.jpg)
 
-\vspace{8pt}
-
 Le nombre d'arbres pour le *bagging* est déterminé à l'aide de la racine de l'erreur quadratique moyenne (RMSE), car il s'agit d'un problème de régression. En observant la figure ci-dessus (figure 5), nous constatons que le nombre d'arbres se stabilise vers 200 arbres. Pour diminuer le temps de calcul, nous prenons 200 arbres même si un grand nombre d'arbres ne conduit pas à du surajustement.
 
 Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustement causé par des arbres trop profonds. Pour éviter un temps de calcul excessif, les valeurs manuellement testées pour `nodesize` vont de 0 à 500, en augmentant par bonds de 20.
-
-\vspace{8pt}
 
 ```{r bagging-nodesize, echo=FALSE}
 # set.seed(131)
@@ -316,11 +302,7 @@ Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustem
 
 ![REQM selon le nombre minimal d’observations par feuille](bag_node.jpg)
 
-\vspace{8pt}
-
-La figure ci-dessus (figure 6) montre que le `nodesize` qui minimise l'RMSE se trouve autour de 80. Nous allons donc tester toutes les valeurs de 60 à 100 pour trouver la valeur optimale de l'hyperparamètre.
-
-\vspace{8pt}
+La figure 6 montre que le `nodesize` qui minimise l'RMSE se trouve autour de 80. Nous allons donc tester toutes les valeurs de 60 à 100 pour trouver la valeur optimale de l'hyperparamètre.
 
 ```{r bagging-nodesize-tune, echo=FALSE}
 # prev.nodesize.tune.bag <- rep(NA, 41)
@@ -359,13 +341,9 @@ La figure ci-dessus (figure 6) montre que le `nodesize` qui minimise l'RMSE se t
 
 ![REQM selon le nombre minimal d’observations par feuille de 60 à 100](bag_node_tune.jpg)
 
-\vspace{8pt}
-
-Dans la figure ci-dessus (figure 7), nous pouvons voir que la valeur de `nodesize` optimale est 97.
+Dans la figure 7, nous pouvons voir que la valeur de `nodesize` optimale est 97.
 
 Les hyperparamètres optimaux pour le *bagging* sont donc les suivants :
-
-\vspace{8pt}
 
 ```{r bagging-parametre-final, echo=FALSE}
 df.bag.final <- data.frame(
@@ -410,8 +388,6 @@ bag.final <- randomForest(totalAmount~.,
 
 Pour la forêt aléatoire, nous commençons par quatre prédicteurs possibles pour chaque séparation, $i.e. \ m=4$, car $\lfloor 12/3 \rfloor = 4$. Cette valeur correspond à la « règle du pouce » en régression où l'on utilise la partie entière du nombre de valeurs explicatives divisé par 3. De plus, en utilisant une proportion de 50% pour les échantillons *bootstrap*, nous aidons à diminuer la corrélation entre les arbres.
 
-\vspace{8pt}
-
 ```{r forest-tree, cache=TRUE,echo = F , warning=F,  fig.dim= c(7,3)}
 # df.oob <- data.frame(Tree = 1:400,
 #                      RMSE = sqrt(foret$mse))
@@ -425,8 +401,6 @@ Pour la forêt aléatoire, nous commençons par quatre prédicteurs possibles po
 ```
 
 ![REQM selon le nombre d'arbres](forest_nb_tree.jpg)
-
-\vspace{8pt}
 
 Étant en régression, la racine de l'erreur quadratique moyenne (REQM) sera utilisée comme mesure de comparaison. Nous remarquons ici (figure 8) que la REQM se stabilise aux alentours de 100-150 arbres, nous utiliserons alors 200 arbres pour l'optimisation des autres hyperparamètres, puisque nous ne pouvons pas surajuster en ayant trop d'arbre avec les forêts aléatoires. Maintenant, nous regardons plus en profondeur le nombre de prédicteurs possible à chaque séparation d'un arbre, la variable `mtry`.
 
@@ -449,8 +423,6 @@ Pour la forêt aléatoire, nous commençons par quatre prédicteurs possibles po
 
 ```
 
-\vspace{8pt}
-
 ```{r forest-mtry, echo=FALSE, cache=TRUE}
 forest.rmse <- c(8848, 8660, 8527, 8457, 8408, 8379, 8366, 8352, 8367, 8356, 8360, 8361)
 
@@ -461,8 +433,6 @@ knitr::kable(df.forest.mtry,caption = "RMSE par rapport au mtry")
 
 best.mtry <- which.min(forest.rmse)
 ```
-
-\vspace{8pt}
 
 Les résultats de la table 2 ont été obtenus par validation croisée à 5 plis, pour ainsi réduire le biais d'échantillonnage. L'utilisation des `r best.mtry` choix de variables explicatives à chaque noeud minimise la REQM.
 
@@ -504,8 +474,6 @@ Pour éviter un surajustement dû à des arbres inutilement trop profonds, nous 
 
 ```
 
-\vspace{8pt}
-
 ```{r forest-nodesize-rmse, fig.dim= c(7,3), echo=FALSE, warning=FALSE}
 # ggplot(df.node, aes(x=Nodesize, y = RMSE ))+
 #   theme_minimal()+
@@ -524,11 +492,7 @@ Pour éviter un surajustement dû à des arbres inutilement trop profonds, nous 
 
 ![REQM selon le nombre minimal d’observations par feuille](forest_node.jpg)
 
-\vspace{8pt}
-
 Dans la figure 9, la valeur minimale de `nodesize` est de 20. Puisque l'analyse précédente a été effectuée par bonds de 20, nous la ferons à nouveau, de manière plus précise, de 1 à 40.
-
-\vspace{8pt}
 
 ```{r forest-nodesize-tune, echo = FALSE, cache=TRUE, message=FALSE}
 # # Optimiser nodesize sur l'échantillon de validation de 1 a 40
@@ -576,13 +540,9 @@ Dans la figure 9, la valeur minimale de `nodesize` est de 20. Puisque l'analyse 
 
 ![REQM selon le nombre minimal d’observations par feuille de 1 à 40](forest_node_tune.jpg)
 
-\vspace{8pt}
-
 Dans la figure 10, la valeur minimale de `nodesize` est de 27.
 
 Par conséquent, les hyperparamètres finaux pour le modèle de forêt aléatoire sont ceux décrits dans la table suivante.
-
-\vspace{8pt}
 
 ```{r forest-parametre-final, cache=TRUE, echo=FALSE}
 df.forest.final <- data.frame(
@@ -614,8 +574,6 @@ foret.final <- randomForest(totalAmount~.,
 
 Nous commençons par entraîner un modèle GBM par validation croisée à 5 plis. Nous testons les valeurs de la taille maximale de chaque arbre $\{5,10,15\}$ et un nombre d'itérations de 1000 à 6000 par bonds de 1000, tout en utilisant un paramètre d'apprentissage, $\lambda = 0.01$.
 
-\vspace{8pt}
-
 ```{r gradient, cache=TRUE, echo=FALSE}
 # controles <- trainControl(method="cv", number= 5)
 # 
@@ -642,11 +600,7 @@ Nous commençons par entraîner un modèle GBM par validation croisée à 5 plis
 
 ![REQM selon la taille maximale de chaque arbre et le nombre d'itérations](gbm.jpg)
 
-\vspace{8pt}
-
 Nous voyons, dans la figure 11, qu'une profondeur de 15 et qu'environ 4000 arbres minimisent la REQM. Une profondeur de 15 semble suffisante pour capter les itérations entre les variables, sans trop faire exploser le temps de calcul. Il est difficile de voir le nombre idéal.
-
-\vspace{8pt}
 
 ```{r gradient-tune, cache=TRUE, echo=FALSE}
 # controles <- trainControl(method="cv", number= 5)
@@ -673,11 +627,7 @@ Nous voyons, dans la figure 11, qu'une profondeur de 15 et qu'environ 4000 arbre
 
 ![REQM selon le nombre d'itérations](gbm_tune.jpg)
 
-\vspace{8pt}
-
 Après avoir fait une analyse plus précise, nous remarquons que 3000 itérations est optimal, et les paramètres finaux seront ceux décrits à la table suivante.
-
-\vspace{8pt}
 
 ```{r gbm-parametre-final, cache=TRUE, echo=FALSE}
 df.gbm.final <- data.frame(
@@ -719,9 +669,7 @@ foret.pred <- predict(foret.final, newdata = dat.test)
 gbm.pred <- predict(gbm.final, newdata = dat.test)
 ```
 
-Nous avons décidé d'utiliser la racine carrée de l'erreur quadratique moyenne(REQM) afin de comparer la performance prédictive des différents modèles discutés dans le rapport. Les deux modèles retenues selon cette métrique sont le *bagging* et la forêt aléatoire puisque ce sont ceux qui ont la plus petite valeur de REQM.
-
-\vspace{8pt}
+Nous avons décidé d'utiliser la racine carrée de l'erreur quadratique moyenne (REQM) afin de comparer la performance prédictive des différents modèles discutés dans le rapport. Les deux modèles retenues selon cette métrique sont le *bagging* et la forêt aléatoire puisque ce sont ceux qui ont la plus petite valeur de REQM.
 
 ```{r comparaison-EQM, echo=FALSE, warning=FALSE}
 REQM <- function(pred) sqrt(mean((dat.test$totalAmount - pred)^2))
@@ -737,11 +685,7 @@ knitr::kable(df.REQM,
              caption = "Valeurs des racines des erreurs quadratiques moyennes des modèles finaux")
 ```
 
-\vspace{8pt}
-
 Afin d'être sûr de nos choix, nous avons aussi mesuré l'erreur absolue moyenne(EAM).
-
-\vspace{8pt}
 
 ```{r comparaison-EAM, echo=FALSE, warning=FALSE}
 EAM <- function(pred) mean(abs(dat.test$totalAmount - pred))
@@ -757,8 +701,6 @@ knitr::kable(df.EAM,
              caption = "Valeurs des erreurs absolues moyennes des modèles finaux")
 ```
 
-\vspace{8pt}
-
 Les modèles ayant les petites valeurs sont le GLM Tweedie et la forêt aléatoire. Cependant, le GLM Tweedie avait la deuxième valeur plus grande pour le REQM. Puisque l'EAM est vraiment sensible aux valeurs aberrantes et que le *bagging* a encore une des plus petites valeurs cette métrique, nous avons décidé de choisir les modèles *bagging* et forêt aléatoire comme la REQM nous l'indiquait.  
 
 \newpage
@@ -772,68 +714,123 @@ mod.iml.fa <- Predictor$new(foret.final)
 mod.iml.bag <- Predictor$new(bag.final)
 ```
 
+## Forêt aléatoire
+
 ```{r importance-foret aleatoire, echo=FALSE, warning=FALSE, cache=TRUE}
-imp.fa <- FeatureImp$new(mod.iml.fa, loss = "mse", compare = "difference")
+#imp.fa <- FeatureImp$new(mod.iml.fa, loss = "mse", compare = "difference")
 
 #plot(imp.fa)
 ```
 
-![Importances des variables pour le bagging](importance_fa.jpg)
+![Importances des variables pour la forêt aléatoire](importance_fa.jpg)
 
-\vspace{8pt}
-
-Selon la figure 12, la variable la plus importantes pour le modèle *bagging* est `totalCoverage`.Pour mieux comprendre son effet marginal sur la prévision, nous visualisons le graphique de dépendance partielle.
+Selon la figure 13, la variable la plus importante pour le modèle forêt aléatoire est `totalCoverage`. Pour mieux comprendre son effet marginal sur la prévision, nous traçons le graphique de dépendance partielle et le graphique d'espérance conditionnelle individuelle.
 
 ```{r pdp-foret aleatoire, echo=FALSE, cache=TRUE}
-pdp.fa.tc <- FeatureEffect$new(mod.iml.fa, "totalCoverage", method = "pdp", grid.size = 30)
+#pdp.fa.tc <- FeatureEffect$new(mod.iml.fa, "totalCoverage", method = "pdp", grid.size = 30)
 
-ggplot(pdp.fa.tc$results, aes(x = totalCoverage, y = .value)) + 
-  geom_line() +
-  theme_minimal()
+#ggplot(pdp.fa.tc$results, aes(x = totalCoverage, y = .value)) + 
+#  geom_line() +
+#  ylab("Prévisions") +
+#  theme_minimal()
 ```
+
+![Graphique de dépendance partielle pour la forêt aléatoire](pdp_fa.jpg)
 
 ```{r ice-foret aleatoire, echo=FALSE, cache=TRUE}
-ice.fa.tc <- FeatureEffect$new(mod.iml.fa, "totalCoverage", method = "ice", grid.size = 30)
+#ice.fa.tc <- FeatureEffect$new(mod.iml.fa, "totalCoverage", method = "ice", grid.size = 30)
 
-plot(ice.fa.tc)
+#plot(ice.fa.tc)
 ```
+
+![Graphique d'espérance conditionnelle individuelle pour la forêt aléatoire](ice_fa.jpg)
+
+Comme nous pouvons le voir à la figure 14, les prévisions augmentent beaucoup pour les valeurs de `totalCoverage` de 0 à 1 000 000 et restent stables par après. Cette observation est logique puisque la variable `totalCoverage` représente le montant auquel l'assuré est couvert par son assurance et qu'un assuré ne peut pas réclamer plus de ce qu'il a de couvert.
+
+Dans la figure 15, nous voyons avec les prévisions ayant une limite supérieure à 60 000 suivent la même logique, c'est-à-dire qu'elles augmentent beaucoup pour les valeurs de `totalCoverage` de 0 à 1 000 000 et restent stables par après. Cependant, il est beaucoup plus difficile de se prononcer pour les prévisions avec une limite inférieure à 60 000 puisqu'il y a beaucoup plus d'observations.
 
 ```{r interactions-foret aleatoire, echo=FALSE, cache=TRUE}
-set.seed(5660)
-int.fa.tc <- Interaction$new(mod.iml.fa, "totalCoverage")
+#set.seed(5660)
+#int.fa.tc <- Interaction$new(mod.iml.fa, "totalCoverage")
 
-plot(int.fa.tc)
+#plot(int.fa.tc)
+
+#pdp.fa.tc.ot <- FeatureEffect$new(mod.iml.fa, c("totalCoverage", "occupancyType"), 
+#                                  method = "pdp", grid.size = 30)
+
+#ggplot(pdp.fa.tc.ot$results, aes(x = totalCoverage, y = .value, color = occupancyType)) + 
+#  geom_line() +
+#  ylab("Prévisions") +
+#  theme_minimal()
 ```
 
+![Interactions des variables avec `totalCoverage` pour la forêt aléatoire](inter_fa.jpg)
+
+![Interaction entre `totalCoverage` et `occupancyType` pour la forêt aléatoire](pdp_biv_fa.jpg)
+
+La figure 16 nous présente les variables qui interagissent avec `totalCoverage` pour expliquer les prévisions. Nous observons que la plus grande interaction se produit avec `occupacyType`. Cette interaction est présentée à la figure 17. Nous observons que les prévisions selon le `totalCoverage` sont plus élevés pour les immeubles non résidentiels (`occupancyType` = 3). Pour les résidences familiales (`occupancyType` = 1) et les copropriétés résidentielles (`occupancyType` = 2), les prévisions sont très similaires.
+
+Le modèle forêt aléatoire est un des meilleurs modèles puisque l'erreur OOB permet de garder un plus grand échantillon de donnée dans l'entrainement. Ainsi, le modèle utilise un échantillon plus représentatif du nombre de données que nous avons sur les inondations en Californie depuis 1974. Cependant, ce modèle est plus difficile à interpréter et il demande beaucoup de mémoire avec un grand nombre d'arbres.
+
+\newpage
+
+## *Bagging*
 
 ```{r importance-bagging, echo=FALSE, warning=FALSE}
-imp.bag <- FeatureImp$new(mod.iml.bag, loss = "mse", compare = "difference")
+#imp.bag <- FeatureImp$new(mod.iml.bag, loss = "mse", compare = "difference")
 
 #plot(imp.bag)
 ```
 
-![Importances des variables pour le bagging](importance_bag.jpg)
+![Importances des variables pour le *bagging*](importance_bag.jpg)
+
+Selon la figure 18, la variable la plus importante pour le modèle *bagging* est aussi `totalCoverage`. Pour mieux comprendre son effet marginal sur la prévision, nous traçons le graphique de dépendance partielle et le graphique d'espérance conditionnelle individuelle.
 
 ```{r pdp-bagging, echo=FALSE, cache=TRUE}
-pdp.bag.tc <- FeatureEffect$new(mod.iml.bag, "totalCoverage", method = "pdp", grid.size = 30)
+#pdp.bag.tc <- FeatureEffect$new(mod.iml.bag, "totalCoverage", method = "pdp", grid.size = 30)
 
-ggplot(pdp.bag.tc$results, aes(x = totalCoverage, y = .value)) + 
-  geom_line() +
-  theme_minimal()
+#ggplot(pdp.bag.tc$results, aes(x = totalCoverage, y = .value)) + 
+#  geom_line() +
+#  ylab("Prévisions") +
+#  theme_minimal()
 ```
+
+![Graphique de dépendance partielle pour le *bagging*](pdp_bag.jpg)
 
 ```{r ice-bagging, echo=FALSE, cache=TRUE}
-ice.bag.tc <- FeatureEffect$new(mod.iml.bag, "totalCoverage", method = "ice", grid.size = 30)
+#ice.bag.tc <- FeatureEffect$new(mod.iml.bag, "totalCoverage", method = "ice", grid.size = 30)
 
-plot(ice.bag.tc)
+#plot(ice.bag.tc)
 ```
+
+![Graphique d'espérance conditionnelle individuelle pour le *bagging*](ice_bag.jpg)
+
+Comme nous pouvons le voir à la figure 19, les résultats sont très semblables au modèle de forêt aléatoire. Les prévisions augmentent beaucoup pour les valeurs de `totalCoverage` de 0 à 1 000 000 et restent stables par après. 
+
+Dans la figure 20, encore ici, nous voyons avec les prévisions ayant une limite supérieure à 60 000 suivent la même logique, c'est-à-dire qu'elles augmentent beaucoup pour les valeurs de `totalCoverage` de 0 à 1 000 000 et restent stables par après. Il est encore difficile de se prononcer pour les prévisions dont la limite est inférieures à 60 000 puisqu'il y a beaucoup plus d'observations. Cependant, il y a beaucoup de prévisions ayant une limite inférieure à 75 000, très peu de 75 000 à 90 000 et un peu plus de 90 000 à 100 000.
 
 ```{r interactions-bagging, echo=FALSE, cache=TRUE}
-set.seed(5660)
-int.bag.tc <- Interaction$new(mod.iml.bag, "totalCoverage")
+#set.seed(5660)
+#int.bag.tc <- Interaction$new(mod.iml.bag, "totalCoverage")
 
-plot(int.bag.tc)
+#plot(int.bag.tc)
+
+#pdp.bag.tc.ot <- FeatureEffect$new(mod.iml.bag, c("totalCoverage", "occupancyType"), 
+#                                  method = "pdp", grid.size = 30)
+
+#ggplot(pdp.bag.tc.ot$results, aes(x = totalCoverage, y = .value, color = occupancyType)) + 
+#  geom_line() +
+#  ylab("Prévisions") +
+#  theme_minimal()
 ```
+
+![Interactions des variables avec `totalCoverage` pour le *bagging*](inter_bag.jpg)
+
+![Interaction entre `totalCoverage` et `occupancyType` pour le *bagging*](pdp_biv_bag.jpg)
+
+La figure 21 nous présente les variables qui interagissent avec `totalCoverage` pour expliquer les prévisions. Nous observons que la plus grande interaction se produit avec `occupancyType`.Cette interaction est présentée à la figure 22. Nous observons encore que les prévisions selon le `totalCoverage` sont plus élevés pour les immeubles non résidentiels (`occupancyType` = 3). Pour les résidences familiales (`occupancyType` = 1) et les copropriétés résidentielles (`occupancyType` = 2), les prévisions sont très similaires.
+
+L'un des avantages du *bagging* est qu'il permet de réduire l'écart dans un algorithme d'apprentissage, ce qui est particulièrement utile avec des données de grande dimension comme c'est le cas pour ce rapport. Cependant, le *bagging* a tendance à être plus lent quand le nombre d'itérations augmente, ce qui le rend peu bien adapté aux applications en temps réel.
 
 \newpage
 
