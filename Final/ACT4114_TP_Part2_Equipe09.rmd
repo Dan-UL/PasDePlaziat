@@ -6,22 +6,21 @@ output:
     includes:
       before_body: "TP-title.tex"
       in_header: "preamble-latex.tex"
----  
-\centering  
+---
 
-\clearpage  
-  
-\tableofcontents   
+\centering
 
-\justify  
-\clearpage  
+\clearpage
+
+\tableofcontents
+
+\justify
+\clearpage
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
- 
- 
 ```{r paquetages, message=FALSE, eval=TRUE, include=FALSE, echo = FALSE}
 ### Liste des paquetages
 liste.paquetage <- c("ggplot2", "maps", "mice", "graphics", "gridExtra", "caret", "gbm", "xgboost", "iml", "tidyverse", "adabag","randomForest", "rpart", "rpart.plot", "pROC", "cluster", "FactoMineR", "tweedie", "statmod", "FNN")
@@ -79,26 +78,30 @@ dat.train <- data[ind.train,]
 dat.test <- data[-ind.train,]
 ```
 
-
 \newpage
+
 # Introduction
+
 <!-- Danny -->
 
-
 \newpage
+
 # Modèle de base
+
 <!-- Félix & Henri -->
 
-Le choix d'un modèle linéaire généralisé Tweedie est justifié dans notre étude pour plusieurs raisons. Tout d'abord, cette distribution est particulièrement adaptée pour modéliser la fréquence et la sévérité combinées des données de sinistres d'inondation, tout en prenant en compte leur nature asymétrique. De plus, cette distribution est paramétrée, ce qui permet de modéliser des relations complexes entre les variables explicatives et les montants de sinistres. Le modèle Tweedie retenu peut facilement intégrer des variables continues et catégorielles, ce qui est pertinent pour caractériser le jeu de données considéré. Enfin, l'interprétation des résultats est facilitée par la structure du modèle linéaire généralisé Tweedie, permettant de mieux comprendre les effets des variables explicatives sur les montants de sinistres. Ainsi, ce modèle servira de base efficace pour établir la prime de référence, dans le but d'évaluer la performance des autres modèles.
+Le choix d'un modèle linéaire généralisé Tweedie est justifié dans notre étude pour plusieurs raisons. Tout d'abord, cette distribution est particulièrement adaptée pour modéliser la fréquence et la sévérité combinées des données de sinistres d'inondation, tout en prenant en compte leur nature asymétrique. De plus, cette distribution est paramétrée, ce qui permet de modéliser des relations complexes entre les variables explicatives et les montants de sinistres. Le modèle Tweedie retenu peut facilement intégrer des variables continues et catégorielles, ce qui est pertinent pour caractériser le jeu de données considéré. Enfin, l'interprétation des résultats est facilitée par la structure du modèle linéaire généralisé Tweedie, permettant de mieux comprendre les effets des variables explicatives sur les montants de sinistres. Ainsi, ce modèle servira de base efficace pour établir la prime de référence, dans le but d'évaluer la performance d'autres modèles.
 
-```{r GLM, echo = F, warning=F}
+\vspace{8pt}
+
+```{r GLM, echo = F, warning=F, include=FALSE}
 tweed.p <- 1.5
 tweed.p <- tweedie.profile(
   totalAmount ~ .,
   data = dat.train,
   p.vec = seq(1.4, 1.8, 0.1),
   method = "series",
-  do.plot = TRUE)$p.max
+  do.plot = FALSE)$p.max
 
 glm.tweed <- glm(
   totalAmount ~ .,
@@ -107,23 +110,31 @@ glm.tweed <- glm(
   maxit = 300
 )
 
-summary(glm.tweed)
+#summary(glm.tweed)
 ```
+
+![Valeur de p maximal pour Tweedie](tweed_p.jpg)
+
+\vspace{8pt}
 
 ```{r GLM pred, echo = F}
 glm.pred <- predict(glm.tweed, newdata = dat.test)
-plot(glm.pred)
+#plot(glm.pred, ylab = "Prédictions")
 ```
 
-\newpage
+![Prédictions selon le GLM Tweedie](glm_pred.jpg)
+
+\clearpage
+
 # Ajustement des modèles
+
 <!-- Collectif -->
 
-\newpage
 ## Modèle des k plus proches voisins
-<!-- Félix & Henri -->
-```{r knn, echo = F}
 
+<!-- Félix & Henri -->
+
+```{r knn, echo = F}
 ### Création de data 2 pour éviter de #cancel le data original
 data2 <- data
 
@@ -163,28 +174,37 @@ EQM <- numeric(100)
 for(i in 1:100){
     EQM[i] <- 1 / n * sum((res_test - knnpred_mat[i, ]) ^ 2)
 }
-plot(EQM)
-which.min(EQM) ## donc k optimal est 15
+#plot(EQM)
+#which.min(EQM) ## donc k optimal est 15
 ### optimal knn model with the no 0 dataset
 
 pred_knn <- knn.reg(obs_train, obs_test, res_train, k = 15)
 pred.knn <- pred_knn$pred
-summary(pred.knn)
-summary(res_test)
+#summary(pred.knn)
+#summary(res_test)
 ```
-Pour construire un modèle de régression k-plus proche voisin, nous avons du tout d'abord transformer nos variables catégorielles en valeurs numériques. Cette étape fut nécessaire car nous voulions obtenir des chiffres plutôt que des classes. Après cette transformation, nous avons cherché à déterminer le facteur "k" optimal pour obtenir le meilleur modèle possible. Nous avons utilisé la méthode de l'erreur quadratique moyenne (EQM) pour évaluer la performance de notre modèle. Cette mesure est estimée à l'aide de la formule suivante: $$\frac{1}{n}\sum^{n}_{i = 1}[y_i-\hat{f}(x_i)]^2$$. 
+
+![Erreur quadratique moyenne selon le k](eqm_knn.jpg)
+
+\vspace{8pt}
+
+Pour construire un modèle de régression k-plus proche voisin, nous avons du tout d'abord transformé nos variables catégorielles en valeurs numériques. Cette étape fut nécessaire, car nous voulions obtenir des chiffres plutôt que des classes. Après cette transformation, nous avons cherché à déterminer le facteur "k" optimal pour obtenir le meilleur modèle possible. Nous avons utilisé la méthode de l'erreur quadratique moyenne (EQM) pour évaluer la performance de notre modèle. Cette mesure est estimée à l'aide de la formule suivante : $$\frac{1}{n}\sum^{n}_{i = 1}[y_i-\hat{f}(x_i)]^2.$$
 
 Nous avons testé différentes valeurs de k allant de 1 à 100 et avons observé que l'EQM augmente après un certain point. Après avoir analysé le graphique, nous avons constaté que le k optimal pour notre modèle était de 15, car c'est à ce point que l'EQM atteint son minimum.
 
 \newpage
+
 ## Arbre de décision
+
 <!-- Félix & Henri -->
 
-Dans le contexte de la modélisation de montants de réclamation en assurance inondation, il est important de trouver un modèle prédictif à la fois précis et interprétable. Les arbres de décision est très utile dans ce contexte car ils permettent une interprétation facile des résultats et la visualisation simple des règles de décision. Cependant, les arbres non élagués peuvent être très complexes et sujets à un surajustement.
+Dans le contexte de la modélisation de montants de réclamation en assurance inondation, il est important de trouver un modèle prédictif à la fois précis et interprétable. Les arbres de décision sont très utiles dans ce contexte, car ils permettent une interprétation facile des résultats et la visualisation simple des règles de décision. Cependant, les arbres non élagués peuvent être très complexes et sujets à un sur ajustement.
 
-Nous avons donc optimisé le paramètre de complexité pour l'élagage en utilisant une validation croisée LGOCV (Leave Group Out Cross Validation) à 10 ensembles, puis en minimisant la racine carrée de l'erreur quadratique moyenne (RMSE). L'optimisation du paramètre de complexité permet de trouver le bon niveau d'élagage pour éviter un surajustement tout en maintenant la précision prédictive du modèle.
+Nous avons donc optimisé le paramètre de complexité pour l'élagage en utilisant une validation croisée LGOCV (*Leave Group Out Cross Validation*) à 10 ensembles, puis en minimisant la racine carrée de l'erreur quadratique moyenne (RMSE). L'optimisation du paramètre de complexité permet de trouver le bon niveau d'élagage pour éviter un surajustement tout en maintenant la précision prédictive du modèle.
 
-```{r, arbre de régression}
+\vspace{8pt}
+
+```{r arbre de regression, echo=FALSE, warning=FALSE}
 set.seed(6969)
 fit.control <- trainControl(method="LGOCV",
                             p = 0.9,
@@ -199,20 +219,23 @@ cv.fitted.tree <- caret::train(totalAmount~.,
                                 metric="RMSE",
                                 trControl=fit.control
                                 )
-cv.fitted.tree
-rpart.plot(cv.fitted.tree$finalModel)
+#cv.fitted.tree
+#rpart.plot(cv.fitted.tree$finalModel)
 ```
 
-```{r}
-treepred <- predict(cv.fitted.tree, newdata = data.sev.test)
+![Arbre élagué](arbre.jpg)
+
+```{r arbre de regression-pred, echo=FALSE}
+treepred <- predict(cv.fitted.tree, newdata = dat.test)
 ```
-
-
 
 \newpage
-## Bagging
+
+## *Bagging*
+
 <!-- Isabelle -->
-```{r echo=FALSE}
+
+```{r bagging,echo=FALSE}
 # set.seed(12323)
 # bag <- randomForest(totalAmount~.,
 #                     data = dat.train,
@@ -224,9 +247,11 @@ treepred <- predict(cv.fitted.tree, newdata = data.sev.test)
 #                     cp = 0)
 ```
 
-Pour le bagging, on utilise le nombre de variables explicatives pour déterminer le nombre de variables prises en compte à chaque division de l'arbre de décision, soit 12. L'algorithme utilise également un échantillon avec remplacement de la même taille que l'échantillon des données d'entraînement.
+Pour le *bagging*, nous utilisons le nombre de variables explicatives pour déterminer le nombre de variables prises en compte à chaque division de l'arbre de décision, soit 12. L'algorithme utilise également un échantillon avec remplacement de la même taille que l'échantillon des données d'entraînement.
 
-```{r echo=FALSE}
+\vspace{8pt}
+
+```{r bagging-oob,echo=FALSE}
 # df.oob.bag <- data.frame(Tree = 1:400,
 #                     RMSE = sqrt(bag$mse))
 #
@@ -236,13 +261,18 @@ Pour le bagging, on utilise le nombre de variables explicatives pour déterminer
 #  labs(x = "Nombre d'arbre", title = "RMSE selon le nombre d'arbre pour le bagging")+
 #  theme(plot.title = element_text(hjust = 0.5))
 ```
-![](bag_nb_arbre.jpg)
 
-Le nombre d'arbres pour le bagging est déterminé à l'aide de la racine de l'erreur quadratique moyenne (RMSE), car le problème est de régression. En observant la figure ci-dessus, on constate que le nombre d'arbres se stabilise vers 200 arbres. Pour diminuer le temps de calcul, on prends 200 arbres même si un grand nombre d'arbres ne conduit pas à du surajustement.
+![REQM selon le nombre d'arbres](bag_nb_arbre.jpg)
 
-Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustement causé par des arbres trop profonds. Pour éviter un temps de calcul excessif, les valeurs manuellement testées pour nodesize vont de 500 et moins, en augmentant par bonds de 20.
+\vspace{8pt}
 
-```{r echo=FALSE}
+Le nombre d'arbres pour le *bagging* est déterminé à l'aide de la racine de l'erreur quadratique moyenne (RMSE), car il s'agit d'un problème de régression. En observant la figure ci-dessus (figure 5), nous constatons que le nombre d'arbres se stabilise vers 200 arbres. Pour diminuer le temps de calcul, nous prenons 200 arbres même si un grand nombre d'arbres ne conduit pas à du surajustement.
+
+Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustement causé par des arbres trop profonds. Pour éviter un temps de calcul excessif, les valeurs manuellement testées pour `nodesize` vont de 0 à 500, en augmentant par bonds de 20.
+
+\vspace{8pt}
+
+```{r bagging-nodesize, echo=FALSE}
 # set.seed(131)
 # ind.val.bag <- sample(1:nrow(dat.train), 0.2*nrow(dat.train), FALSE)
 # dat.valid.bag <- dat.train[ind.val.bag,]
@@ -271,7 +301,7 @@ Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustem
 #
 ```
 
-```{r echo=FALSE, warning=FALSE}
+```{r bagging-nodesize-rmse, echo=FALSE, warning=FALSE}
 # ggplot(df.node.bag, aes(x=Nodesize, y = RMSE ))+
 #   theme_minimal() +
 #   geom_line() +
@@ -283,11 +313,16 @@ Ensuite, l'hyperparamètre `nodesize` sera exploré pour prévenir le surajustem
 #    geom_text(aes(x = min.node.bag, y = 8200,
 #    label = "nodesize = 80", vjust = 1.5, angle = 90))
 ```
-![](bag_node.jpg)
 
-La figure ci-dessus montre que le `nodesize` qui minimise l'RMSE se trouve autour de 80. On va donc tester toutes les valeurs entre 60 et 100 pour trouver la valeur optimale de l'hyperparamètre.
+![REQM selon le nombre minimal d’observations par feuille](bag_node.jpg)
 
-```{r echo=FALSE}
+\vspace{8pt}
+
+La figure ci-dessus (figure 6) montre que le `nodesize` qui minimise l'RMSE se trouve autour de 80. Nous allons donc tester toutes les valeurs de 60 à 100 pour trouver la valeur optimale de l'hyperparamètre.
+
+\vspace{8pt}
+
+```{r bagging-nodesize-tune, echo=FALSE}
 # prev.nodesize.tune.bag <- rep(NA, 41)
 # for(i in (60:100)){
 #   set.seed(4757)
@@ -310,7 +345,7 @@ La figure ci-dessus montre que le `nodesize` qui minimise l'RMSE se trouve autou
 #                     )
 ```
 
-```{r echo=FALSE, warning=FALSE}
+```{r bagging-nodesize-rmse-tune, echo=FALSE, warning=FALSE}
 # ggplot(df.node.tune.bag, aes(x=Nodesize, y = RMSE ))+
 #   theme_minimal()+
 #   geom_line()+
@@ -321,24 +356,27 @@ La figure ci-dessus montre que le `nodesize` qui minimise l'RMSE se trouve autou
 #  geom_text(aes(x = min.node.tune.bag, y = 8170,
 #    label = "nodesize = 97"), vjust = 1.5, angle = 90)
 ```
-![](bag_node_tune.jpg)
 
-Dans la figure ci-dessus, on peut voir que la valeur de `nodesize` optimale est 97.
+![REQM selon le nombre minimal d’observations par feuille de 60 à 100](bag_node_tune.jpg)
 
-Les hyperparamètres optimaux pour le bagging sont donc les suivants : 
+\vspace{8pt}
 
-```{r echo=FALSE}
+Dans la figure ci-dessus (figure 7), nous pouvons voir que la valeur de `nodesize` optimale est 97.
 
+Les hyperparamètres optimaux pour le *bagging* sont donc les suivants :
+
+\vspace{8pt}
+
+```{r bagging-parametre-final, echo=FALSE}
 df.bag.final <- data.frame(
   "Hyperparamètre" = c("Nombre d'arbres", "Nombre d'observation dans les noeuds terminaux"),
   "Valeur" = c(200, 97)
 )
 
 knitr::kable(df.bag.final,caption = "Valeurs des hyperparamètres du modèle de bagging final")
-
 ```
 
-```{r echo=FALSE}
+```{r bagging-model-final, echo=FALSE, cache=TRUE}
 set.seed(12323)
 bag.final <- randomForest(totalAmount~.,
                     data = dat.train,
@@ -350,14 +388,13 @@ bag.final <- randomForest(totalAmount~.,
                     cp = 0)
 ```
 
-
 \newpage
+
 ## Forêt aléatoire
+
 <!-- Danny -->
 
-
 ```{r forest, cache=TRUE, echo = F}
-
 # set.seed(36738)
 # foret <- randomForest(totalAmount~.,
 #                       data = dat.train,
@@ -371,12 +408,11 @@ bag.final <- randomForest(totalAmount~.,
 
 ```
 
-Pour la forêt aléatoire, on commence avec quatres prédicteurs possibles pour chaque séparation, $i.e. \ m=4$, car $\lfloor 12/3 \rfloor = 4$. Cette valeur correspond à la "règle du pouce" en régression où l'on utilise la partie entière du nombre de valeurs explicatives divisé par 3. Deplus, en utilisant une proportion de de 50% pour les échantillons bootstrap, on aide a diminuer la corrélation entre les arbres.
+Pour la forêt aléatoire, nous commençons par quatre prédicteurs possibles pour chaque séparation, $i.e. \ m=4$, car $\lfloor 12/3 \rfloor = 4$. Cette valeur correspond à la « règle du pouce » en régression où l'on utilise la partie entière du nombre de valeurs explicatives divisé par 3. De plus, en utilisant une proportion de 50% pour les échantillons *bootstrap*, nous aidons à diminuer la corrélation entre les arbres.
 
 \vspace{8pt}
 
 ```{r forest-tree, cache=TRUE,echo = F , warning=F,  fig.dim= c(7,3)}
-
 # df.oob <- data.frame(Tree = 1:400,
 #                      RMSE = sqrt(foret$mse))
 # 
@@ -388,15 +424,13 @@ Pour la forêt aléatoire, on commence avec quatres prédicteurs possibles pour 
 
 ```
 
-![](forest_nb_tree.jpg)
+![REQM selon le nombre d'arbres](forest_nb_tree.jpg)
 
 \vspace{8pt}
 
-Étant en régression, la racine de l'erreur quadratique moyenne, ou RMSE, sera utilisée comme mesure de comparaison. On remarque ici (Graphique no. #) que la RMSE se stabilise aux alentours de 100-150 arbres, on utilisera alors 200 arbres pour l'optimisation des autres hyperparamètres, puisqu'on ne peut pas surajuster en ayant trop d'arbre avec les forêts aléatoires. Maintenant, on regarde plus en profondeur le nombre de prédicteurs possible à chaque séparation d'un arbre, la variable `mtry`. 
-
+Étant en régression, la racine de l'erreur quadratique moyenne (REQM) sera utilisée comme mesure de comparaison. Nous remarquons ici (figure 8) que la REQM se stabilise aux alentours de 100-150 arbres, nous utiliserons alors 200 arbres pour l'optimisation des autres hyperparamètres, puisque nous ne pouvons pas surajuster en ayant trop d'arbre avec les forêts aléatoires. Maintenant, nous regardons plus en profondeur le nombre de prédicteurs possible à chaque séparation d'un arbre, la variable `mtry`.
 
 ```{r forest-tunning, cache=TRUE, echo=FALSE}
-
 # control <- trainControl(method= "cv", number=5)
 # 
 # grille <- expand.grid(mtry = 1:12)
@@ -429,11 +463,10 @@ best.mtry <- which.min(forest.rmse)
 ```
 
 \vspace{8pt}
- 
-Les résultats de la table no. # ont été obtenus par validation croisée à 5 plis, pour ainsi réduire le biais d'échantillonage. L'utilisation des `r best.mtry` choix de variables explicatives à chaque noeud minimise la RMSE.
 
-Pour éviter un surajustement dû à des arbres inutillemnet trop profonds, on devra ajuster la valeur de `nodesize`, mais il est impossible de le faire directement avec le package `caret`. Puisque le modèle est entraîné sur `r nrow(dat.train)` observations, les valeurs de 500 et moins seront testées et comparées.
-Pour limiter le temps de calcul, un premier entraînement sera fait par bond de 20.
+Les résultats de la table 2 ont été obtenus par validation croisée à 5 plis, pour ainsi réduire le biais d'échantillonnage. L'utilisation des `r best.mtry` choix de variables explicatives à chaque noeud minimise la REQM.
+
+Pour éviter un surajustement dû à des arbres inutilement trop profonds, nous devrons ajuster la valeur de `nodesize`, mais il est impossible de le faire directement avec le package `caret`. Puisque le modèle est entraîné sur `r nrow(dat.train)` observations, les valeurs de 500 et moins seront testées et comparées. Pour limiter le temps de calcul, un premier entraînement sera fait par bond de 20.
 
 ```{r forest-nodesize, echo = FALSE, cache=TRUE, message=FALSE}
 ## Création de l'échantillon de validation, 20% des observations d'entraînement
@@ -474,7 +507,6 @@ Pour limiter le temps de calcul, un premier entraînement sera fait par bond de 
 \vspace{8pt}
 
 ```{r forest-nodesize-rmse, fig.dim= c(7,3), echo=FALSE, warning=FALSE}
-
 # ggplot(df.node, aes(x=Nodesize, y = RMSE ))+
 #   theme_minimal()+
 #   geom_line()+
@@ -490,16 +522,15 @@ Pour limiter le temps de calcul, un premier entraînement sera fait par bond de 
 
 ```
 
-![](forest_node.jpg)
+![REQM selon le nombre minimal d’observations par feuille](forest_node.jpg)
 
 \vspace{8pt}
 
-Dans le graphique no. #, la valeur minimale de nodesize est de 20. Puisque l'analyse précédente à été effectuée par bonds de 20, on la fera à nouveau, de manière plus précise, entre 1 et 40. 
+Dans la figure 9, la valeur minimale de `nodesize` est de 20. Puisque l'analyse précédente a été effectuée par bonds de 20, nous la ferons à nouveau, de manière plus précise, de 1 à 40.
 
 \vspace{8pt}
 
 ```{r forest-nodesize-tune, echo = FALSE, cache=TRUE, message=FALSE}
-
 # # Optimiser nodesize sur l'échantillon de validation de 1 a 40
 # prev.nodesize.rmse.tune <- rep(NA, 40)
 # for(i in 1:40 ){
@@ -526,13 +557,9 @@ Dans le graphique no. #, la valeur minimale de nodesize est de 20. Puisque l'ana
 # df.node.tune <- data.frame("Nodesize" = 1:40 ,
 #                      "RMSE" = prev.nodesize.rmse.tune 
 #                      )
-
 ```
 
-
-
 ```{r forest-nodesize-rmse-tune, fig.dim= c(7,3), echo=FALSE, warning=FALSE}
-
 # ggplot(df.node.tune, aes(x=Nodesize, y = RMSE ))+
 #   theme_minimal()+
 #   geom_line()+
@@ -545,33 +572,28 @@ Dans le graphique no. #, la valeur minimale de nodesize est de 20. Puisque l'ana
 #            y = prev.nodesize.rmse.tune[min.node.tune]+80,
 #            vjust = 1.5,
 #            angle = 90)
-
 ```
 
-![](forest_node_tune.jpg)
+![REQM selon le nombre minimal d’observations par feuille de 1 à 40](forest_node_tune.jpg)
 
 \vspace{8pt}
 
-Dans le graphique no. #, la valeur minimale de `nodesize` est de 27. 
+Dans la figure 10, la valeur minimale de `nodesize` est de 27.
 
-Par conséquent, les hyperparamètres finaux pour le modèle "Forêt aléatoire" sont ceux décrits dans la table suivante.
+Par conséquent, les hyperparamètres finaux pour le modèle de forêt aléatoire sont ceux décrits dans la table suivante.
 
 \vspace{8pt}
 
 ```{r forest-parametre-final, cache=TRUE, echo=FALSE}
-
 df.forest.final <- data.frame(
   "Hyperparamètre" = c("Nombre d'arbres", "Nombre de choix de variables à chaque noeud", "Nombre d'observation dans les noeuds terminaux"),
   "Valeur" = c(200, 8, 27)
 )
 
 knitr::kable(df.forest.final,caption = "Valeurs des hyperparamètres du modèle final")
-
 ```
 
-
 ```{r forest-model-final, cache=TRUE, echo=FALSE}
-
 set.seed(963852)
 foret.final <- randomForest(totalAmount~.,
                       data = dat.train,
@@ -584,17 +606,17 @@ foret.final <- randomForest(totalAmount~.,
                       )
 ```
 
-
 \newpage
-## Gradient Boosting
+
+## *Gradient Boosting*
+
 <!-- Danny -->
 
-On commence par entraîner un modèle GBM par validation croisée à 5 plis. On testes les valeurs de la taille maximale de chaque arbre $\{5,10,15\}$ et un nombre d'itérations entre 1000 et 6000 par bonds de 1000, tout en utilisant un paramètre d'apprentissage, $\lambda = 0.01$. 
+Nous commençons par entraîner un modèle GBM par validation croisée à 5 plis. Nous testons les valeurs de la taille maximale de chaque arbre $\{5,10,15\}$ et un nombre d'itérations de 1000 à 6000 par bonds de 1000, tout en utilisant un paramètre d'apprentissage, $\lambda = 0.01$.
 
-
+\vspace{8pt}
 
 ```{r gradient, cache=TRUE, echo=FALSE}
-
 # controles <- trainControl(method="cv", number= 5)
 # 
 # gbmGrille <-  expand.grid(n.trees = seq(1000,6000, 1000),
@@ -618,13 +640,15 @@ On commence par entraîner un modèle GBM par validation croisée à 5 plis. On 
 # plot(mod.gbm)
 ```
 
-![](gbm.jpg)
+![REQM selon la taille maximale de chaque arbre et le nombre d'itérations](gbm.jpg)
 
+\vspace{8pt}
 
-On voit dans le graphiq no. # qu'une profondeur de 15 et qu'environ 4000 arbres minimisent la RMSE. Une profondeur de 15 semble suffisante pour capter les intérations entre les variables, sans trop faire exploser le temps de calcul. Il est difficile de voir le nombre idéal.
+Nous voyons, dans la figure 11, qu'une profondeur de 15 et qu'environ 4000 arbres minimisent la REQM. Une profondeur de 15 semble suffisante pour capter les itérations entre les variables, sans trop faire exploser le temps de calcul. Il est difficile de voir le nombre idéal.
+
+\vspace{8pt}
 
 ```{r gradient-tune, cache=TRUE, echo=FALSE}
-
 # controles <- trainControl(method="cv", number= 5)
 # 
 # gbmGrille.tune <-  expand.grid(n.trees = seq(2500,4500, 500),
@@ -644,25 +668,27 @@ On voit dans le graphiq no. # qu'une profondeur de 15 et qu'environ 4000 arbres 
 ```
 
 ```{r gradient-plot-tune, echo=FALSE, cache=TRUE}
-plot(mod.gbm.tune)
+#plot(mod.gbm.tune)
 ```
-![](gbm_tune.jp  g)
 
-Après avoir fait une analyse plus précise, on remarque que 3000 itérations est optimal, et les paramètres finaux seront cex décrit à la table suibante.
+![REQM selon le nombre d'itérations](gbm_tune.jpg)
+
+\vspace{8pt}
+
+Après avoir fait une analyse plus précise, nous remarquons que 3000 itérations est optimal, et les paramètres finaux seront ceux décrits à la table suivante.
+
+\vspace{8pt}
 
 ```{r gbm-parametre-final, cache=TRUE, echo=FALSE}
-
 df.gbm.final <- data.frame(
   "Hyperparamètre" = c("Nombre d'arbres", "Profondeur de chaque arbre", "Taux d'apprentissage"),
   "Valeur" = c(3000, 15, 0.01)
 )
 
 knitr::kable(df.gbm.final,caption = "Valeurs des hyperparamètres du modèle final")
-
 ```
 
 ```{r gbm-model-final, cache=TRUE, echo=FALSE}
-
 controles <- trainControl(method="cv", number= 5)
 
 gbmGrille.fin <-  expand.grid(n.trees = 3000,
@@ -679,29 +705,146 @@ gbm.final <- caret::train(totalAmount~.,
                 verbose = FALSE)
 ```
 
-
 \newpage
+
 # Comparaison des modèles
+
 <!-- Collectif -->
 
+```{r predictions, echo=FALSE, warning=FALSE}
+knn.pred <- pred.knn
+arbre.pred <- treepred
+bag.pred <- predict(bag.final, newdata = dat.test)
+foret.pred <- predict(foret.final, newdata = dat.test)
+gbm.pred <- predict(gbm.final, newdata = dat.test)
+```
+
+Nous avons décidé d'utiliser la racine carrée de l'erreur quadratique moyenne(REQM) afin de comparer la performance prédictive des différents modèles discutés dans le rapport. Les deux modèles retenues selon cette métrique sont le *bagging* et la forêt aléatoire puisque ce sont ceux qui ont la plus petite valeur de REQM.
+
+\vspace{8pt}
+
+```{r comparaison-EQM, echo=FALSE, warning=FALSE}
+REQM <- function(pred) sqrt(mean((dat.test$totalAmount - pred)^2))
+
+reqm.knn <- sqrt(mean((res_test - knn.pred)^2))
+
+df.REQM <- data.frame("Modèle" = c("GLM Tweedie", "K plus proches voisins", "Arbre de décision", 
+                                  "Bagging", "Forêt aléatoire", "Gradient boosting"),
+                     "Valeur" = c(REQM(glm.pred), reqm.knn, REQM(arbre.pred), 
+                                  REQM(bag.pred), REQM(foret.pred), REQM(gbm.pred)))
+
+knitr::kable(df.REQM, 
+             caption = "Valeurs des racines des erreurs quadratiques moyennes des modèles finaux")
+```
+
+\vspace{8pt}
+
+Afin d'être sûr de nos choix, nous avons aussi mesuré l'erreur absolue moyenne(EAM).
+
+\vspace{8pt}
+
+```{r comparaison-EAM, echo=FALSE, warning=FALSE}
+EAM <- function(pred) mean(abs(dat.test$totalAmount - pred))
+
+eam.knn <- mean(abs(res_test - knn.pred))
+
+df.EAM <- data.frame("Modèle" = c("GLM Tweedie", "K plus proches voisins", "Arbre de décision", 
+                                  "Bagging", "Forêt aléatoire", "Gradient boosting"),
+                     "Valeur" = c(EAM(glm.pred), eam.knn, EAM(arbre.pred), 
+                                  EAM(bag.pred), EAM(foret.pred), EAM(gbm.pred)))
+
+knitr::kable(df.EAM, 
+             caption = "Valeurs des erreurs absolues moyennes des modèles finaux")
+```
+
+\vspace{8pt}
+
+Les modèles ayant les petites valeurs sont le GLM Tweedie et la forêt aléatoire. Cependant, le GLM Tweedie avait la deuxième valeur plus grande pour le REQM. Puisque l'EAM est vraiment sensible aux valeurs aberrantes et que le *bagging* a encore une des plus petites valeurs cette métrique, nous avons décidé de choisir les modèles *bagging* et forêt aléatoire comme la REQM nous l'indiquait.  
+
 \newpage
-# Interprétation des meilleurs modèles
+
+# Interprétation des meilleurs modèles 
+
 <!-- Maryjane -->
 
+```{r creation-mod.iml, echo=FALSE, cache=TRUE}
+mod.iml.fa <- Predictor$new(foret.final)
+mod.iml.bag <- Predictor$new(bag.final)
+```
+
+```{r importance-foret aleatoire, echo=FALSE, warning=FALSE, cache=TRUE}
+imp.fa <- FeatureImp$new(mod.iml.fa, loss = "mse", compare = "difference")
+
+#plot(imp.fa)
+```
+
+![Importances des variables pour le bagging](importance_fa.jpg)
+
+\vspace{8pt}
+
+Selon la figure 12, la variable la plus importantes pour le modèle *bagging* est `totalCoverage`.Pour mieux comprendre son effet marginal sur la prévision, nous visualisons le graphique de dépendance partielle.
+
+```{r pdp-foret aleatoire, echo=FALSE, cache=TRUE}
+pdp.fa.tc <- FeatureEffect$new(mod.iml.fa, "totalCoverage", method = "pdp", grid.size = 30)
+
+ggplot(pdp.fa.tc$results, aes(x = totalCoverage, y = .value)) + 
+  geom_line() +
+  theme_minimal()
+```
+
+```{r ice-foret aleatoire, echo=FALSE, cache=TRUE}
+ice.fa.tc <- FeatureEffect$new(mod.iml.fa, "totalCoverage", method = "ice", grid.size = 30)
+
+plot(ice.fa.tc)
+```
+
+```{r interactions-foret aleatoire, echo=FALSE, cache=TRUE}
+set.seed(5660)
+int.fa.tc <- Interaction$new(mod.iml.fa, "totalCoverage")
+
+plot(int.fa.tc)
+```
+
+
+```{r importance-bagging, echo=FALSE, warning=FALSE}
+imp.bag <- FeatureImp$new(mod.iml.bag, loss = "mse", compare = "difference")
+
+#plot(imp.bag)
+```
+
+![Importances des variables pour le bagging](importance_bag.jpg)
+
+```{r pdp-bagging, echo=FALSE, cache=TRUE}
+pdp.bag.tc <- FeatureEffect$new(mod.iml.bag, "totalCoverage", method = "pdp", grid.size = 30)
+
+ggplot(pdp.bag.tc$results, aes(x = totalCoverage, y = .value)) + 
+  geom_line() +
+  theme_minimal()
+```
+
+```{r ice-bagging, echo=FALSE, cache=TRUE}
+ice.bag.tc <- FeatureEffect$new(mod.iml.bag, "totalCoverage", method = "ice", grid.size = 30)
+
+plot(ice.bag.tc)
+```
+
+```{r interactions-bagging, echo=FALSE, cache=TRUE}
+set.seed(5660)
+int.bag.tc <- Interaction$new(mod.iml.bag, "totalCoverage")
+
+plot(int.bag.tc)
+```
 
 \newpage
+
 # Conclusion
+
 <!-- Isabelle -->
 
- 
 \newpage
+
 # Bibliographie
 
 The Federal Emergency Management Agency (2023). FIMA NFIP Redacted Claims - v1.
 
-Récupéré de https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v1
-
-
-
-
-
+Récupéré de <https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v1>
