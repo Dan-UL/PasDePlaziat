@@ -840,7 +840,13 @@ L'un des avantages du *bagging* est qu'il permet de réduire l'écart dans un al
 
 # Conclusion
 
-<!-- Isabelle -->
+<!-- Henri -->
+
+En conclusion, pour rappeler le but du présent rapport nous avons étudié la prédiction du montant des réclamations associées aux polices d'assurance inondation en Californie en ajustant plusieurs modèles prédictifs sur un jeu de données de la FEMA. Les résultats concernant les six modèles ajustés ont montré que la forêt aléatoire et le bagging sont les deux modèles les plus performants selon le critère RMSE, avec des valeurs respectives de 2705.454 et 2709.397.
+
+Cependant, il convient de noter que notre approche présente certaines limites. Tout d'abord, nous avons considéré un nombre limité de variables explicatives, qui ne couvrent pas nécessairement tous les aspects pertinents pour la prédiction des montants de réclamation. De plus, l'ajustement des modèles prédictifs est un processus complexe, et les résultats peuvent varier selon les choix méthodologiques et les hyperparamètres choisis. Enfin, la qualité des données utilisées peut également affecter la performance des modèles prédictifs.
+
+Malgré ces limites, notre étude montre le potentiel des modèles prédictifs pour la prédiction des montants de réclamation pour les polices d'assurance inondation en Californie. Des perspectives d'amélioration peuvent être envisagées, telles que collecte de nouvelles variables explicatives pertinentes ou l'utilisation de techniques de machine learning plus avancées pour un ajustement plus robuste des modèles prédictifs. En fin de compte, l'utilisation de modèles prédictifs peut aider les assureurs à mieux estimer les risques liés aux inondations en Californie et à fixer des primes adaptées, ce qui est crucial pour garantir la viabilité économique de l'assurance inondation dans cette région.
 
 \newpage
 
