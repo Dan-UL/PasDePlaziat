@@ -436,6 +436,8 @@ df.forest.mtry <- t(data.frame(mtry = round(1:12),
 knitr::kable(df.forest.mtry,caption = "RMSE par rapport au mtry")
 
 best.mtry <- which.min(forest.rmse)
+
+
 ```
 
 Les résultats de la table 2 ont été obtenus par validation croisée à 5 plis, pour ainsi réduire le biais d'échantillonnage. L'utilisation des `r best.mtry` choix de variables explicatives à chaque noeud minimise la REQM.
