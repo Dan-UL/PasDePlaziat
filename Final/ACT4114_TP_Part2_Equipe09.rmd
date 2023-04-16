@@ -82,7 +82,11 @@ dat.test <- data[-ind.train,]
 
 # Introduction
 
-<!-- Danny -->
+<!-- Henri -->
+
+Le présent rapport vise à répondre à un enjeu majeur pour les assureurs en Californie, qui est l'estimation précise du montant des réclamations associées aux polices d'assurance inondation. Pour ce faire, nous avons ajusté plusieurs modèles prédictifs à l'aide d'un jeu de données provenant de la Federal Emergency Management Agency (FEMA), qui contient des informations sur plus de 2 millions de polices d'assurance inondation à travers les États-Unis. Notre objectif est de déterminer le modèle le plus performant pour prédire le montant des réclamations en comparant la racine carrée de l'erreur quadratique moyenne de six modèles différents : un modèle GLM Tweedie, un modèle des k plus proches voisins, un arbre de régression, un modèle bagging, une forêt aléatoire et un modèle gradient boosting.
+
+Dans un premier temps, ce rapport présente la démarche d'ajustement des modèles prédictifs et les techniques utilisées pour optimiser les hyperparamètres de chacun des modèles. Dans un second temps, la procédure de comparaison entre la performance des modèles et les résultats obtenus, y compris la détermination du modèle prédictif le plus performant, sera détaillée. Enfin, nous conclurons sur les perspectives d'amélioration du modèle prédictif et les limites de notre approche.
 
 \newpage
 
