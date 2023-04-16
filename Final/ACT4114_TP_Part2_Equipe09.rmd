@@ -593,6 +593,7 @@ Nous commençons par entraîner un modèle GBM par validation croisée à 5 plis
 #                 data = dat.train,
 #                 method = "gbm",
 #                 trControl = controles,
+#                 distribution = "gamma",
 #                 tuneGrid = gbmGrille,
 #                 verbose = FALSE,
 #                 metric = "RMSE")
@@ -604,7 +605,7 @@ Nous commençons par entraîner un modèle GBM par validation croisée à 5 plis
 
 ![REQM selon la taille maximale de chaque arbre et le nombre d'itérations](gbm.jpg)
 
-Nous voyons, dans la figure 11, qu'une profondeur de 15 et qu'environ 4000 arbres minimisent la REQM. Une profondeur de 15 semble suffisante pour capter les itérations entre les variables, sans trop faire exploser le temps de calcul. Il est difficile de voir le nombre idéal.
+Nous voyons, dans la figure 11, qu'une profondeur de 15 et qu'environ 4000 arbres minimisent la REQM. Une profondeur de 15 semble suffisante pour capter les interactions entre les variables, sans trop faire exploser le temps de calcul. Il est difficile de voir le nombre idéal.
 
 ```{r gradient-tune, cache=TRUE, echo=FALSE}
 # controles <- trainControl(method="cv", number= 5)
